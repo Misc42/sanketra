@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Sanketra - Smart Remote</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0b;
+            color: #e5e5e7;
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        .subtitle {
+            color: #8e8e93;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+        p, li {
+            font-size: 15px;
+            color: #c7c7cc;
+            margin-bottom: 12px;
+        }
+        ul {
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+        li { margin-bottom: 6px; }
+        .highlight {
+            background: #1c1c1f;
+            border-left: 3px solid #34c759;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .highlight p { margin-bottom: 0; color: #e5e5e7; }
+        a { color: #0a84ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #1c1c1f;
+            color: #636366;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Privacy Policy</h1>
+        <p class="subtitle">Sanketra &mdash; Smart Remote &nbsp;|&nbsp; Last updated: February 15, 2026</p>
+
+        <div class="highlight">
+            <p><strong>Sanketra does not collect, store, or transmit any personal data to external servers.</strong> All communication stays within your local network between your phone and your own computer.</p>
+        </div>
+
+        <h2>What Sanketra Does</h2>
+        <p>Sanketra turns your Android phone into a smart remote for your computer. It provides:</p>
+        <ul>
+            <li>Voice-to-text input (speech recognition runs on your own computer)</li>
+            <li>Trackpad and gyroscope-based cursor control</li>
+            <li>Screen mirroring from your computer to your phone</li>
+            <li>Remote server setup via SSH</li>
+        </ul>
+
+        <h2>Permissions &amp; Why We Need Them</h2>
+
+        <p><strong>Microphone</strong> &mdash; Captures your voice for speech-to-text. Audio is streamed directly to your computer over your local Wi-Fi network. Audio is never sent to any cloud service, third-party server, or the internet.</p>
+
+        <p><strong>Internet / Wi-Fi</strong> &mdash; Used solely for local network (LAN) communication between your phone and your computer. Sanketra connects to a server running on your own machine within your home or office network.</p>
+
+        <p><strong>Foreground Service</strong> &mdash; Keeps audio recording active when the app is in the background or the screen is off, so voice input continues working uninterrupted.</p>
+
+        <p><strong>Wake Lock &amp; Wi-Fi Lock</strong> &mdash; Prevents the phone from dropping the Wi-Fi connection or sleeping during an active session, ensuring reliable real-time communication.</p>
+
+        <p><strong>Motion Sensors (Gyroscope)</strong> &mdash; Used for gyroscope pointer mode, where tilting your phone controls the cursor on your computer screen. Sensor data is sent only to your computer over your local network.</p>
+
+        <h2>Data Handling</h2>
+        <ul>
+            <li><strong>Audio data</strong> is streamed in real-time to your own computer for speech recognition. It is not recorded, stored, or transmitted anywhere else.</li>
+            <li><strong>Touch and motion data</strong> (trackpad gestures, gyroscope orientation) is sent to your computer for cursor control. It is not logged or stored.</li>
+            <li><strong>SSH credentials</strong> (if used for remote setup) are stored locally on your device in Android's encrypted storage (EncryptedSharedPreferences backed by Android Keystore). They are never transmitted to any third party.</li>
+            <li><strong>Authentication tokens</strong> are stored locally on your device in encrypted storage and are used only to communicate with your own computer.</li>
+        </ul>
+
+        <h2>No Data Collection</h2>
+        <p>Sanketra does not:</p>
+        <ul>
+            <li>Collect or store personal information</li>
+            <li>Use analytics, tracking, or advertising SDKs</li>
+            <li>Transmit any data to cloud servers or third parties</li>
+            <li>Require account creation or sign-in</li>
+            <li>Access contacts, photos, location, or any data unrelated to its function</li>
+        </ul>
+
+        <h2>Network Security</h2>
+        <p>All communication between your phone and computer uses TLS encryption (HTTPS/WSS). The app uses a trust-on-first-use (TOFU) certificate pinning model to verify your computer's identity and prevent man-in-the-middle attacks on your local network.</p>
+
+        <h2>Children's Privacy</h2>
+        <p>Sanketra is not directed at children under the age of 13. We do not knowingly collect any information from children.</p>
+
+        <h2>Changes to This Policy</h2>
+        <p>If this privacy policy is updated, the revised version will be posted on this page with an updated date. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+
+        <h2>Contact</h2>
+        <p>For questions about this privacy policy:</p>
+        <p><a href="mailto:tanaymisra97@gmail.com">tanaymisra97@gmail.com</a></p>
+
+        <div class="footer">
+            <p>&copy; 2026 Sanketra. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
