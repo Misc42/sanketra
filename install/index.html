@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Install Sanketra</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#08080A;color:#E5E5E7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.container{max-width:540px;width:100%;text-align:center}
+h1{font-size:2rem;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:-0.02em}
+.subtitle{color:#8E8E93;font-size:1rem;margin-bottom:40px}
+.primary-card{background:#1C1C1E;border-radius:16px;padding:32px 24px;margin-bottom:24px}
+.os-label{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:#8E8E93;margin-bottom:16px}
+.btn{display:inline-block;background:#34C759;color:#fff;font-size:1.05rem;font-weight:600;padding:14px 36px;border-radius:12px;text-decoration:none;border:none;cursor:pointer;transition:background .15s}
+.btn:hover{background:#2DB84D}
+.cmd-box{background:#000;border-radius:10px;padding:14px 16px;font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:.85rem;color:#34C759;text-align:left;display:flex;align-items:center;gap:10px;word-break:break-all}
+.cmd-box code{flex:1;user-select:all}
+.copy-btn{background:#2C2C2E;color:#E5E5E7;border:none;border-radius:8px;padding:8px 14px;font-size:.78rem;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s}
+.copy-btn:hover{background:#3A3A3C}
+.warning{background:#1C1C0E;border:1px solid #3A3A1E;border-radius:10px;padding:12px 16px;margin-top:16px;font-size:.82rem;color:#FFD60A;text-align:left;line-height:1.5}
+.others{margin-top:8px}
+.others-title{font-size:.78rem;color:#636366;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.os-cards{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.os-card{background:#1C1C1E;border-radius:12px;padding:20px 20px;flex:1;min-width:130px;max-width:170px;cursor:pointer;border:1px solid transparent;transition:border-color .15s}
+.os-card:hover{border-color:#3A3A3C}
+.os-card.active{border-color:#34C759}
+.os-card .os-name{font-size:.9rem;font-weight:600;color:#fff;margin-bottom:4px}
+.os-card .os-hint{font-size:.72rem;color:#8E8E93}
+.post-install{margin-top:32px;padding:20px;background:#1C1C1E;border-radius:12px;font-size:.85rem;color:#AEAEB2;line-height:1.6}
+.post-install strong{color:#E5E5E7}
+.hidden{display:none}
+@media(max-width:400px){
+  .os-cards{flex-direction:column;align-items:center}
+  .os-card{max-width:100%;width:100%}
+  .primary-card{padding:24px 16px}
+  h1{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Sanketra</h1>
+  <p class="subtitle">Your phone becomes your mic, trackpad, and pointer.</p>
+
+  <!-- Windows panel -->
+  <div id="panel-windows" class="primary-card hidden">
+    <div class="os-label">Windows</div>
+    <button class="btn" onclick="downloadFile('https://raw.githubusercontent.com/Misc42/sanketra-server/master/install.bat','install.bat')">Download Installer</button>
+    <p style="margin-top:14px;font-size:.82rem;color:#AEAEB2">Download and double-click <strong style="color:#E5E5E7">install.bat</strong> to run it.</p>
+    <div class="warning">If you see a blue SmartScreen warning, click <strong>More info</strong> then <strong>Run anyway</strong>. The installer only installs Python (if missing) and clones the Sanketra server.</div>
+  </div>
+
+  <!-- Mac panel -->
+  <div id="panel-mac" class="primary-card hidden">
+    <div class="os-label">macOS</div>
+    <p style="font-size:.9rem;color:#AEAEB2;margin-bottom:16px">Open <strong style="color:#E5E5E7">Terminal</strong> (Cmd+Space, type "Terminal") and paste:</p>
+    <div class="cmd-box">
+      <code id="cmd-mac">curl -fsSL https://raw.githubusercontent.com/Misc42/sanketra-server/master/install.sh | bash</code>
+      <button class="copy-btn" onclick="copyCmd('cmd-mac',this)">Copy</button>
+    </div>
+    <p style="margin-top:14px;font-size:.78rem;color:#636366">Or <a href="#" onclick="downloadFile('https://raw.githubusercontent.com/Misc42/sanketra-server/master/install.command','install.command');return false" style="color:#34C759;text-decoration:none">download install.command</a> and double-click it.</p>
+    <div class="warning">If macOS blocks the file, right-click it and choose <strong>Open</strong>, then click <strong>Open</strong> again in the dialog.</div>
+  </div>
+
+  <!-- Linux panel -->
+  <div id="panel-linux" class="primary-card hidden">
+    <div class="os-label">Linux</div>
+    <p style="font-size:.9rem;color:#AEAEB2;margin-bottom:16px">Open a terminal and run:</p>
+    <div class="cmd-box">
+      <code id="cmd-linux">curl -fsSL https://raw.githubusercontent.com/Misc42/sanketra-server/master/install.sh | bash</code>
+      <button class="copy-btn" onclick="copyCmd('cmd-linux',this)">Copy</button>
+    </div>
+  </div>
+
+  <!-- Unknown panel -->
+  <div id="panel-unknown" class="primary-card hidden">
+    <div class="os-label">Install</div>
+    <p style="font-size:.9rem;color:#AEAEB2;margin-bottom:12px">Select your operating system below to see install instructions.</p>
+  </div>
+
+  <!-- OS switcher -->
+  <div class="others">
+    <div class="others-title">All platforms</div>
+    <div class="os-cards">
+      <div class="os-card" id="card-windows" onclick="switchOS('windows')">
+        <div class="os-name">Windows</div>
+        <div class="os-hint">Download .bat</div>
+      </div>
+      <div class="os-card" id="card-mac" onclick="switchOS('mac')">
+        <div class="os-name">Mac</div>
+        <div class="os-hint">Terminal command</div>
+      </div>
+      <div class="os-card" id="card-linux" onclick="switchOS('linux')">
+        <div class="os-name">Linux</div>
+        <div class="os-hint">Terminal command</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post-install -->
+  <div class="post-install">
+    <strong>After installing:</strong> Open the Sanketra app on your phone. It will automatically discover your computer on the same Wi-Fi network.
+  </div>
+</div>
+
+<script>
+function detectOS(){
+  var u=navigator.userAgent;
+  if(u.indexOf('Win')!==-1)return'windows';
+  if(u.indexOf('Mac')!==-1)return'mac';
+  if(u.indexOf('Linux')!==-1&&u.indexOf('Android')===-1)return'linux';
+  return'unknown';
+}
+function switchOS(os){
+  var panels=['windows','mac','linux','unknown'];
+  for(var i=0;i<panels.length;i++){
+    document.getElementById('panel-'+panels[i]).classList.add('hidden');
+    var c=document.getElementById('card-'+panels[i]);
+    if(c)c.classList.remove('active');
+  }
+  document.getElementById('panel-'+os).classList.remove('hidden');
+  var ac=document.getElementById('card-'+os);
+  if(ac)ac.classList.add('active');
+}
+function downloadFile(url,name){
+  fetch(url).then(function(r){return r.blob()}).then(function(b){
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(b);
+    a.download=name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  }).catch(function(){window.open(url)});
+}
+function copyCmd(id,btn){
+  var text=document.getElementById(id).textContent;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){
+      btn.textContent='Copied!';
+      setTimeout(function(){btn.textContent='Copy'},1500);
+    });
+  }else{
+    var r=document.createRange();
+    r.selectNode(document.getElementById(id));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(r);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+    btn.textContent='Copied!';
+    setTimeout(function(){btn.textContent='Copy'},1500);
+  }
+}
+switchOS(detectOS());
+</script>
+</body>
+</html>
