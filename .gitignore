@@ -1,0 +1,19 @@
+
+cert.pem
+.DS_Store
+key.pem
+# Logs
+logs/*.log
+# macOS
+Nirmala-Sitaraman-Tax-Meme-1014x1024.webp
+*.pyc
+__pycache__/
+# Setup generated
+venv/
+.vercel
+vosk-model-*
+web/.next/
+web/node_modules/
+web/out/
+web/tsconfig.tsbuildinfo
+*.zip
