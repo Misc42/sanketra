@@ -24,9 +24,7 @@ export default function DesktopPage() {
         <span className="text-muted">native.</span>
       </h1>
       <p className="mt-6 max-w-3xl text-lg text-muted">
-        Local PC dictation — Whisper-based, Hindi + English, no cloud, no phone. Hold{" "}
-        <span className="font-mono text-saffron">Ctrl+Shift+Space</span>, speak, release. Text
-        types at your cursor in whichever app you&rsquo;re focused on.{" "}
+        Local PC dictation — Whisper-based, Hindi + English, no cloud, no phone.{" "}
         <strong className="text-ink">Free during beta.</strong>
       </p>
 
@@ -113,15 +111,17 @@ export default function DesktopPage() {
           One QR. <span className="deva text-saffron">दो device</span>, ek setup.
         </h2>
         <p className="mt-6 max-w-3xl text-lg text-muted">
-          Sanketra Desktop ships with the same server that powers{" "}
-          <a href="/download/" className="text-saffron underline decoration-rule">
+          Same server powers{" "}
+          <a
+            href="/download/"
+            className="text-ink underline decoration-rule underline-offset-4 hover:text-saffron transition"
+          >
             Sanketra Phone
           </a>{" "}
           (Android Play Store, free). Click <strong className="text-ink">Pair Phone</strong> in
-          the Desktop tray or main window — a QR appears. Point your phone&rsquo;s camera at it.
-          The app deep-links and auto-pairs in about two seconds — no manual IP entry, no 4-digit
-          code typing. Phone becomes a mic for your PC; transcripts type at your cursor on the
-          desktop side.
+          the Desktop tray — a QR shows up. Point your phone&rsquo;s camera at it. The app
+          deep-links, auto-pairs in two seconds. No IP, no 4-digit code typing. Phone becomes
+          a mic; transcripts type at your PC&rsquo;s cursor.
         </p>
 
         <div className="mt-10 grid gap-8 md:grid-cols-3">
@@ -144,7 +144,10 @@ export default function DesktopPage() {
             <p className="mt-2 text-sm text-muted">
               Phone and PC pair over your WiFi. No traffic leaves the network. If the QR scan
               shows{" "}
-              <a href="/pair/" className="text-saffron underline decoration-rule">
+              <a
+                href="/pair/"
+                className="text-ink underline decoration-rule underline-offset-4 hover:text-saffron transition"
+              >
                 a recovery page
               </a>
               , the phone is on a different network — switch WiFi and re-scan.
@@ -177,7 +180,10 @@ export default function DesktopPage() {
             <strong className="text-ink">Install on a new PC</strong> → tap{" "}
             <strong className="text-ink">Send on WhatsApp</strong>. Text the smart-install link to
             yourself, open it on your PC&rsquo;s browser, and{" "}
-            <a href="/get/" className="text-saffron underline decoration-rule">
+            <a
+              href="/get/"
+              className="text-ink underline decoration-rule underline-offset-4 hover:text-saffron transition"
+            >
               /get
             </a>{" "}
             auto-detects your OS + starts the right Mac/Win/Linux download. Zero typing on the PC.
@@ -199,7 +205,7 @@ export default function DesktopPage() {
             <h3 className="text-lg font-semibold text-ink">Local. Always.</h3>
             <p className="mt-2 text-sm text-muted">
               Audio never leaves your machine. Whisper runs on your CPU or GPU; the model lives in{" "}
-              <code className="font-mono text-saffron">~/.cache/whisper/</code>. No call-home, no
+              <code className="font-mono text-ink">~/.cache/whisper/</code>. No call-home, no
               account, no telemetry.
             </p>
           </div>
@@ -216,7 +222,10 @@ export default function DesktopPage() {
             <p className="mt-2 text-sm text-muted">
               All three builds are free while we shake bugs out. Pro features (long sessions,
               transcript history, advanced models) become a paid SKU later — see{" "}
-              <a href="/pricing/" className="text-saffron underline decoration-rule">
+              <a
+                href="/pricing/"
+                className="text-ink underline decoration-rule underline-offset-4 hover:text-saffron transition"
+              >
                 pricing
               </a>
               .
