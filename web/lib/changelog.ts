@@ -7,13 +7,15 @@ export type ChangelogSection = {
   bullets: string[];
 };
 
-// Codex F-Apr21-09: ../CHANGELOG.md works at build but Vercel serverless trace
-// may not bundle the parent file for ISR runtime regeneration. Try multiple
-// paths and fall back to a baked snapshot in content/ if all fail.
+// Originally a Codex Apr21 workaround for ISR runtime regeneration not
+// bundling the parent file. Kept on GitHub Pages too: `output: 'export'`
+// resolves `../CHANGELOG.md` at BUILD time relative to `web/`, so monorepo
+// vs single-repo paths still need probing. Fallback to `content/` baked
+// snapshot guarantees /changelog never 500s.
 function loadChangelogRaw(): string {
   const candidates = [
     path.resolve(process.cwd(), "../CHANGELOG.md"),       // monorepo dev
-    path.resolve(process.cwd(), "CHANGELOG.md"),          // some Vercel layouts
+    path.resolve(process.cwd(), "CHANGELOG.md"),          // single-repo layout
     path.resolve(process.cwd(), "content/CHANGELOG.md"),  // baked snapshot
   ];
   for (const p of candidates) {
