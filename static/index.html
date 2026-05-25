@@ -354,6 +354,18 @@
                 <label for="autoSwitchChk" style="flex:1; cursor:pointer;">Auto-switch to Trackpad on mouse</label>
                 <input type="checkbox" id="autoSwitchChk" checked style="width:18px; height:18px; accent-color:var(--accent); cursor:pointer;">
             </div>
+            <!-- Sensor-convention varies per OEM (Samsung / Xiaomi / Pixel use
+                 different sign for alpha/beta) — if the cursor moves the
+                 opposite way when you tilt, toggle these. Persists per device
+                 in localStorage so calibrating once is enough. -->
+            <div class="setting-row" style="margin-top: var(--space-xs);">
+                <label for="gyroInvertXChk" style="flex:1; cursor:pointer;">Invert horizontal (X) tilt</label>
+                <input type="checkbox" id="gyroInvertXChk" style="width:18px; height:18px; accent-color:var(--accent); cursor:pointer;">
+            </div>
+            <div class="setting-row" style="margin-top: var(--space-xs);">
+                <label for="gyroInvertYChk" style="flex:1; cursor:pointer;">Invert vertical (Y) tilt</label>
+                <input type="checkbox" id="gyroInvertYChk" style="width:18px; height:18px; accent-color:var(--accent); cursor:pointer;">
+            </div>
         </div>
         <button class="btn-done" id="settingsDone">Done</button>
     </div>
@@ -566,6 +578,28 @@
         const autoSwitchChk = document.getElementById('autoSwitchChk');
         autoSwitchChk.checked = gyroAutoSwitch;
         autoSwitchChk.addEventListener('change', () => { gyroAutoSwitch = autoSwitchChk.checked; localStorage.setItem('gyroAutoSwitch', gyroAutoSwitch); });
+        // Per-OEM sensor-axis sign varies: Samsung returns alpha increasing
+        // counter-clockwise (yaw right -> negative delta), Pixels increasing
+        // clockwise, beta sign flips on some Xiaomi/Realme firmwares. Toggling
+        // these flips the sign on the wire — applied at the delta calc below.
+        let gyroInvertX = localStorage.getItem('gyroInvertX') === 'true';
+        let gyroInvertY = localStorage.getItem('gyroInvertY') === 'true';
+        const gyroInvertXChk = document.getElementById('gyroInvertXChk');
+        const gyroInvertYChk = document.getElementById('gyroInvertYChk');
+        if (gyroInvertXChk) {
+            gyroInvertXChk.checked = gyroInvertX;
+            gyroInvertXChk.addEventListener('change', () => {
+                gyroInvertX = gyroInvertXChk.checked;
+                localStorage.setItem('gyroInvertX', gyroInvertX);
+            });
+        }
+        if (gyroInvertYChk) {
+            gyroInvertYChk.checked = gyroInvertY;
+            gyroInvertYChk.addEventListener('change', () => {
+                gyroInvertY = gyroInvertYChk.checked;
+                localStorage.setItem('gyroInvertY', gyroInvertY);
+            });
+        }
         // Discard old center format (had gamma, needs alpha)
         if (gyroCenter && gyroCenter.alpha === undefined) {
             gyroCenter = null;
@@ -751,7 +785,13 @@
             // Handle alpha wrapping (0↔360 boundary)
             if (da > 180) da -= 360;
             if (da < -180) da += 360;
-            const db = currentOrientation.beta - gyroCenter.beta;
+            let db = currentOrientation.beta - gyroCenter.beta;
+
+            // Per-OEM axis-sign correction (settings → Invert X / Y). Some
+            // phones report alpha increasing CCW vs CW; beta sign flips on
+            // some Xiaomi/Realme builds. The toggle persists per device.
+            if (gyroInvertX) da = -da;
+            if (gyroInvertY) db = -db;
 
             let x = screenSize.w / 2 + da * pxPerDeg;
             let y = screenSize.h / 2 + db * pxPerDeg;
