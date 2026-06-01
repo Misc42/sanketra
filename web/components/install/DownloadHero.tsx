@@ -27,7 +27,7 @@ const cards: readonly DownloadCard[] = [
     id: "mac",
     os: "macOS",
     deva: "मैक",
-    headline: "Universal .dmg for Apple Silicon + Intel.",
+    headline: "Apple Silicon (M-series) Mac required.",
     tagline: "Drag, right-click Open, allow mic + accessibility.",
     size: "286",
     fileName: "Sanketra-Desktop-universal.dmg",
