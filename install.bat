@@ -9,19 +9,9 @@ echo   Sanketra Installer for Windows
 echo  ========================================
 echo.
 
-:: ── Config ───────────────────────────────────────────────────────────
-:: Binary install: download the prebuilt server (PyInstaller onedir zip) from
-:: GitHub Releases, extract, and register a logon task at the binary. No git,
-:: no Python, no venv, no pip — the binary is self-contained.
-set "INSTALL_DIR=%USERPROFILE%\sanketra-server"
-set "ASSET=Sanketra-Server-x64.zip"
-if not defined RELEASE_BASE set "RELEASE_BASE=https://github.com/Misc42/sanketra/releases/latest/download"
-set "ASSET_URL=%RELEASE_BASE%/%ASSET%"
-:: PyInstaller names the bundle dir + exe after the spec name.
-set "BUNDLE_DIRNAME=sanketra-server"
-set "BINARY_NAME=sanketra-server.exe"
-set "TMP_ZIP=%TEMP%\sanketra-server.zip"
-set "STAGING=%TEMP%\sanketra-extract"
+set "INSTALL_DIR=%USERPROFILE%\sanketra"
+set "REPO_URL=https://github.com/Misc42/sanketra.git"
+set "BRANCH=master"
 
 :: ── Check for admin (not required, but warn) ────────────────────────
 net session >nul 2>&1
@@ -32,74 +22,97 @@ if %errorlevel% equ 0 (
 )
 echo.
 
-:: ── Stop any running service before we overwrite files ───────────────
-echo  -- Stopping any running Sanketra service...
-schtasks /end /tn "sanketra" >nul 2>&1
-taskkill /im "%BINARY_NAME%" /f >nul 2>&1
-
-:: ── Download the server binary ───────────────────────────────────────
-echo.
-echo  -- Downloading Sanketra server...
-echo     %ASSET_URL%
-if exist "%TMP_ZIP%" del /q "%TMP_ZIP%" >nul 2>&1
-:: PowerShell is present on every supported Windows; use it for HTTPS + unzip.
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-    "$ErrorActionPreference='Stop'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -UseBasicParsing -Uri '%ASSET_URL%' -OutFile '%TMP_ZIP%'"
+:: ── Check/Install Python ─────────────────────────────────────────────
+echo  -- Checking Python...
+where python >nul 2>&1
 if %errorlevel% neq 0 (
-    echo  [X] Download failed.
-    echo      Check your internet connection, then retry.
-    echo      URL: %ASSET_URL%
-    pause
-    exit /b 1
-)
-echo  [OK] Downloaded
-
-:: ── Extract to a staging dir, then swap into place ───────────────────
-echo.
-echo  -- Installing to %INSTALL_DIR% ...
-if exist "%STAGING%" rmdir /s /q "%STAGING%" >nul 2>&1
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-    "$ErrorActionPreference='Stop'; Expand-Archive -Path '%TMP_ZIP%' -DestinationPath '%STAGING%' -Force"
-if %errorlevel% neq 0 (
-    echo  [X] Extraction failed ^(corrupt download?^).
-    pause
-    exit /b 1
-)
-
-:: Resolve the bundle dir inside the zip (prefer the known name, else the only
-:: top-level folder) and verify the binary is present.
-set "BUNDLE_SRC="
-if exist "%STAGING%\%BUNDLE_DIRNAME%\%BINARY_NAME%" (
-    set "BUNDLE_SRC=%STAGING%\%BUNDLE_DIRNAME%"
-) else (
-    for /d %%D in ("%STAGING%\*") do (
-        if exist "%%D\%BINARY_NAME%" set "BUNDLE_SRC=%%D"
+    echo  [!] Python not found. Installing via winget...
+    winget install --id Python.Python.3.12 --accept-source-agreements --accept-package-agreements --silent
+    if !errorlevel! neq 0 (
+        echo  [X] Python install failed.
+        echo      Download manually: https://www.python.org/downloads/
+        echo      IMPORTANT: Check "Add Python to PATH" during install.
+        pause
+        exit /b 1
     )
+    echo  [i] Refreshing PATH...
+    call :RefreshPath
 )
-if not defined BUNDLE_SRC (
-    echo  [X] Could not find %BINARY_NAME% inside the downloaded archive.
-    pause
-    exit /b 1
-)
-
-:: Swap into place
-if exist "%INSTALL_DIR%" rmdir /s /q "%INSTALL_DIR%" >nul 2>&1
-move "%BUNDLE_SRC%" "%INSTALL_DIR%" >nul
+:: Verify python works
+python --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo  [X] Could not move the server into %INSTALL_DIR%.
-    pause
-    exit /b 1
+    :: Try python3
+    python3 --version >nul 2>&1
+    if %errorlevel% neq 0 (
+        echo  [X] Python still not in PATH. Please restart this installer.
+        echo      If that doesn't work, install Python manually and check "Add to PATH".
+        pause
+        exit /b 1
+    )
+    set "PYTHON=python3"
+) else (
+    set "PYTHON=python"
 )
-rmdir /s /q "%STAGING%" >nul 2>&1
-del /q "%TMP_ZIP%" >nul 2>&1
+for /f "tokens=*" %%i in ('%PYTHON% --version 2^>^&1') do echo  [OK] %%i
 
-set "SERVER_EXE=%INSTALL_DIR%\%BINARY_NAME%"
-if not exist "%SERVER_EXE%" (
-    echo  [X] Server binary missing after install: %SERVER_EXE%
+:: ── Check/Install Git ────────────────────────────────────────────────
+echo.
+echo  -- Checking Git...
+where git >nul 2>&1
+if %errorlevel% neq 0 (
+    echo  [!] Git not found. Installing via winget...
+    winget install --id Git.Git --accept-source-agreements --accept-package-agreements --silent
+    if !errorlevel! neq 0 (
+        echo  [X] Git install failed.
+        echo      Download manually: https://git-scm.com/download/win
+        pause
+        exit /b 1
+    )
+    echo  [i] Refreshing PATH...
+    call :RefreshPath
+)
+where git >nul 2>&1
+if %errorlevel% neq 0 (
+    echo  [X] Git still not in PATH. Please restart this installer.
     pause
     exit /b 1
 )
-echo  [OK] Server installed at %SERVER_EXE%
+for /f "tokens=*" %%i in ('git --version 2^>^&1') do echo  [OK] %%i
+
+:: ── Clone or Update Repository ───────────────────────────────────────
+echo.
+echo  -- Setting up Sanketra...
+if exist "%INSTALL_DIR%\.git" (
+    echo  [i] Existing install found — updating...
+    cd /d "%INSTALL_DIR%"
+    git fetch origin
+    git reset --hard "origin/%BRANCH%"
+) else (
+    echo  [i] Cloning repository...
+    git clone --depth 1 -b "%BRANCH%" "%REPO_URL%" "%INSTALL_DIR%"
+)
+echo  [OK] Repository ready at %INSTALL_DIR%
+
+:: ── Run setup.py ─────────────────────────────────────────────────────
+echo.
+echo  -- Running setup ^(venv, dependencies, GPU detection^)...
+cd /d "%INSTALL_DIR%"
+set PYTHONIOENCODING=utf-8
+%PYTHON% setup.py
+if %errorlevel% neq 0 (
+    echo  [X] Setup failed. Check the output above for errors.
+    pause
+    exit /b 1
+)
+echo  [OK] Setup complete
+
+:: ── Install Service ──────────────────────────────────────────────────
+echo.
+echo  -- Installing service ^(auto-start on login^)...
+%PYTHON% setup.py --install-service
+if %errorlevel% neq 0 (
+    echo  [!] Service install had issues. Server may need manual start.
+)
 
 :: ── Add Firewall Rules ───────────────────────────────────────────────
 echo.
@@ -115,17 +128,6 @@ if "%FW_OK%"=="1" (
     echo  [OK] Firewall rules added
 ) else (
     echo  [!] Firewall rules need admin. Right-click installer and Run as admin.
-)
-
-:: ── Register logon task at the binary ────────────────────────────────
-echo.
-echo  -- Installing service ^(auto-start on login^)...
-schtasks /delete /tn "sanketra" /f >nul 2>&1
-schtasks /create /tn "sanketra" /sc ONLOGON /rl HIGHEST /tr "\"%SERVER_EXE%\" --service" /f >nul 2>&1
-if %errorlevel% neq 0 (
-    echo  [!] Service registration had issues. Server may need manual start.
-) else (
-    echo  [OK] Logon task registered
 )
 
 :: ── Start Service ────────────────────────────────────────────────────
@@ -145,9 +147,22 @@ echo   Sanketra is ready!
 echo.
 echo   Open the Sanketra app on your phone.
 echo   Make sure your phone is on the same WiFi.
-echo   The app will find this computer automatically,
-echo   or scan the pairing QR shown by the server.
+echo   The app will find this computer automatically.
 echo  ========================================
 echo.
 pause
 exit /b 0
+
+:: ── Helper: Refresh PATH from registry ──────────────────────────────
+:RefreshPath
+set "SYS_PATH="
+set "USR_PATH="
+for /f "tokens=2*" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do set "SYS_PATH=%%b"
+for /f "tokens=2*" %%a in ('reg query "HKCU\Environment" /v Path 2^>nul') do set "USR_PATH=%%b"
+if defined SYS_PATH (
+    set "PATH=%SYS_PATH%;%USR_PATH%;%WINDIR%;%WINDIR%\System32"
+) else (
+    :: Registry query failed — keep existing PATH, just append common install dirs
+    set "PATH=%PATH%;%LOCALAPPDATA%\Programs\Python\Python312;%LOCALAPPDATA%\Programs\Python\Python312\Scripts;%ProgramFiles%\Git\cmd"
+)
+goto :eof
