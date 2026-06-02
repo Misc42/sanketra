@@ -5,34 +5,44 @@ import QRCode from "@/components/QRCode";
 
 const playStoreUrl = "https://play.google.com/store/apps/details?id=com.tanay.miconterm";
 
-const RAW_BASE = "https://raw.githubusercontent.com/Misc42/sanketra/master";
+const RELEASES_BASE = "https://github.com/Misc42/sanketra/releases/latest/download";
 
 const installers = [
   {
     id: "windows",
     os: "Windows",
-    title: "Windows PowerShell",
-    command: `irm ${RAW_BASE}/install.ps1 | iex`,
-    steps: ["Install runs in PowerShell", "PC shows a QR (4-digit code as fallback)", "Scan with your phone's camera — app deep-links & auto-pairs"]
+    title: "Windows installer",
+    kind: "download",
+    downloadUrl: `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`,
+    fileName: "Sanketra-Desktop-Setup-x64.exe",
+    ctaLabel: "Download for Windows",
+    steps: ["Run the installer", "PC shows a QR (4-digit code as fallback)", "Scan with your phone's camera — app deep-links & auto-pairs"]
   },
   {
     id: "mac",
     os: "Mac",
-    title: "Mac curl",
-    command: `curl -fsSL ${RAW_BASE}/install.sh | bash`,
-    steps: ["Install runs in Terminal", "PC shows a QR (4-digit code as fallback)", "Scan with your phone's camera — app deep-links & auto-pairs"]
+    title: "macOS disk image",
+    kind: "download",
+    downloadUrl: `${RELEASES_BASE}/Sanketra-Desktop-universal.dmg`,
+    fileName: "Sanketra-Desktop-universal.dmg",
+    ctaLabel: "Download for macOS",
+    steps: ["Open the .dmg, drag to Applications, run it", "PC shows a QR (4-digit code as fallback)", "Scan with your phone's camera — app deep-links & auto-pairs"]
   },
   {
     id: "linux",
     os: "Linux",
-    title: "Linux curl",
-    command: `curl -fsSL ${RAW_BASE}/install.sh | bash`,
-    steps: ["Install runs in your shell", "PC shows a QR (4-digit code as fallback)", "Scan with your phone's camera — app deep-links & auto-pairs"]
+    title: "Linux AppImage",
+    kind: "download",
+    downloadUrl: `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`,
+    fileName: "Sanketra-Desktop-x86_64.AppImage",
+    ctaLabel: "Download for Linux",
+    steps: ["chmod +x the AppImage, then run it", "PC shows a QR (4-digit code as fallback)", "Scan with your phone's camera — app deep-links & auto-pairs"]
   },
   {
     id: "android",
     os: "Android",
     title: "Android Play Store",
+    kind: "copy",
     command: playStoreUrl,
     steps: ["Install Sanketra from Play Store", "Open Sanketra Desktop on your PC → click Pair Phone", "Scan PC's QR with your phone's camera — auto-pairs in ~2 sec"]
   },
@@ -40,6 +50,7 @@ const installers = [
     id: "ios",
     os: "iPhone / iPad",
     title: "iOS — scan PC's QR in Safari",
+    kind: "copy",
     command: "https://sanketra.app/download",
     steps: [
       "No native iOS app yet — dictation runs in Safari",
@@ -117,10 +128,26 @@ export default function DownloadPage() {
               {item.id === "android" ? <QRCode value={playStoreUrl} /> : null}
               {item.id === "ios" ? <QRCode value="https://sanketra.app/download" /> : null}
             </div>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <pre className="command flex-1 p-4"><code>{item.command}</code></pre>
-              <CopyButton text={item.command} />
-            </div>
+            {item.kind === "download" ? (
+              <div className="mt-6 flex flex-col gap-2">
+                <a
+                  href={item.downloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-sm bg-saffron px-5 py-3 text-center font-mono text-[0.78rem] uppercase tracking-[0.14em] text-paper transition hover:bg-saffron/90"
+                >
+                  {item.ctaLabel}
+                </a>
+                <p className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-faint">
+                  {item.fileName}
+                </p>
+              </div>
+            ) : (
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <pre className="command flex-1 p-4"><code>{item.command}</code></pre>
+                <CopyButton text={item.command} />
+              </div>
+            )}
             <div className="mt-6">
               <p className="masthead mb-3">What happens next</p>
               <ol className="grid gap-2 text-muted md:grid-cols-3">

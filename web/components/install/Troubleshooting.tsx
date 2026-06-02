@@ -27,15 +27,6 @@ const TERMINAL_PATHS: TerminalEntry[] = [
     body:
       "Inno Setup honors /SILENT (progress bar only, no prompts) and /VERYSILENT (no UI at all). Useful for IT-managed deployments or scripted installs. The .exe must already be in your working directory.",
     command: "Sanketra-Desktop-Setup-x64.exe /SILENT /CLOSEAPPLICATIONS"
-  },
-  {
-    os: "Linux",
-    deva: "लिनक्स",
-    title: "Install from source — Python venv path",
-    body:
-      "Skips the AppImage entirely. Clones the repo, sets up a venv at ~/sanketra-desktop/, installs the slim desktop deps on top of Whisper, registers the .desktop launcher. The classic install for hackers who want to read every line.",
-    command:
-      "curl -fsSL https://raw.githubusercontent.com/Misc42/sanketra/master/desktop/install-desktop.sh | bash"
   }
 ];
 
@@ -107,7 +98,7 @@ const TROUBLE: TroubleEntry[] = [
   {
     os: "Linux",
     symptom: "AppImage refuses to run — 'cannot execute binary file'",
-    fix: "Either chmod +x is missing (see step 2 of the Linux guide) OR you're on a 32-bit/ARM system (AppImage is x86_64-only currently). Check 'uname -m'; if it's not x86_64, the AppImage won't work and you should use the install-desktop.sh source path instead."
+    fix: "Either chmod +x is missing (see step 2 of the Linux guide) OR you're on a 32-bit/ARM system (AppImage is x86_64-only currently). Check 'uname -m'; if it's not x86_64, a build for your architecture isn't available yet — please open an issue at https://github.com/Misc42/sanketra/issues so we can track demand."
   }
 ];
 
