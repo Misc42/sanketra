@@ -191,18 +191,12 @@ export function Troubleshooting() {
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-ink">Read the source</h3>
+            <h3 className="text-lg font-semibold text-ink">Your voice stays on your machine</h3>
             <p className="mt-2 text-sm text-muted">
-              The desktop client is open source.{" "}
-              <a
-                href="https://github.com/Misc42/sanketra"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-saffron underline decoration-rule"
-              >
-                Browse it
-              </a>{" "}
-              if you want to verify what Sanketra does (and doesn&rsquo;t) before installing.
+              Speech recognition runs entirely on your computer &mdash; your audio is
+              processed locally and never uploaded to any server. Questions about privacy
+              or what data Sanketra touches?{" "}
+              <span className="font-mono text-saffron">support@sanketra.app</span>.
             </p>
           </div>
         </div>
