@@ -1,33 +1,40 @@
-# Sanketra Desktop
+# Sanketra
 
 Local, private Hindi / Hinglish voice typing for your computer. Hold a hotkey,
 speak, and the text is typed at your cursor. Speech recognition runs entirely on
 your machine — your voice never leaves your computer.
 
-## Download
+## What it does
 
-**[misc42.github.io/sanketra](https://misc42.github.io/sanketra)** auto-detects
-your OS and starts the right download, or pick a file from the
-**[latest release](https://github.com/Misc42/sanketra/releases/latest)**:
-
-- **Windows 10/11 (x64)** — `Sanketra-Desktop-Setup-x64.exe` *(available now)*
-- **macOS (Apple Silicon / Intel)** — `Sanketra-Desktop-universal.dmg` *(rolling out)*
-- **Linux (x86_64)** — `Sanketra-Desktop-x86_64.AppImage` *(rolling out)*
+- Voice-types Hindi and Hinglish anywhere you can type
+- Runs fully on-device — nothing is sent to a server
+- Optional: use your phone as a wireless mic
 
 ## Install
 
-- **Windows** — run the installer. It isn't code-signed yet, so SmartScreen may
-  warn: click **More info → Run anyway**. Per-user install, no admin needed.
-- **macOS** — open the `.dmg`, drag Sanketra to Applications. First launch,
-  right-click the app → **Open** (unsigned for now).
-- **Linux** — `chmod +x Sanketra-Desktop-*.AppImage`, then run it.
+Download the build for your OS from the
+**[latest release](https://github.com/Misc42/sanketra/releases/latest)**, then run
+it. The **[download page](https://misc42.github.io/sanketra)** auto-detects your OS.
 
-On first launch it detects your hardware and helps you pick a speech model. Then
-hold the hotkey (default **Ctrl + Shift + Space**), speak, and release — the text
-is typed wherever your cursor is.
+- **Windows** — run the installer
+- **macOS** — open the `.dmg`, drag to Applications
+- **Linux** — make the AppImage executable, then run it
+
+No source build, no Python, no setup — the download is self-contained.
+
+## Use it
+
+Hold **Ctrl + Alt**, speak, release. The text is typed at your cursor.
+
+Want to use your phone as the mic? Open the same Sanketra page on your phone over
+WiFi and speak into it instead of your computer's mic.
 
 ## Links
 
 - Website — https://misc42.github.io/sanketra
-- Issues / bug reports — https://github.com/Misc42/sanketra/issues
+- Issues — https://github.com/Misc42/sanketra/issues
 - Misc42 Labs — https://misc42.github.io/misc42labs
+
+## License
+
+Proprietary — see [LICENSE](LICENSE).
