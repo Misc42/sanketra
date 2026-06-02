@@ -1,11 +1,12 @@
-# Sanketra — Windows one-liner wrapper
+# Sanketra - Windows one-liner wrapper
 # Usage: irm https://raw.githubusercontent.com/Misc42/sanketra/master/install.ps1 | iex
 #
-# Pulls install.bat and runs it. Keeps install.bat as the canonical
-# Windows installer (winget + git + venv + service); this wrapper is just
-# the network-fetch + launch glue so users get a clean copy-paste UX.
+# Pulls install.bat and runs it. install.bat is the canonical Windows installer
+# (downloads the prebuilt server binary from Releases + registers a logon task);
+# this wrapper is just the network-fetch + launch glue for a clean copy-paste UX.
 
 $ErrorActionPreference = 'Stop'
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $RawBase = 'https://raw.githubusercontent.com/Misc42/sanketra/master'
 $BatUrl  = "$RawBase/install.bat"
