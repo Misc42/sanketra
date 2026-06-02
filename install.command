@@ -9,9 +9,9 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 if [[ -f "$SCRIPT_DIR/install.sh" ]]; then
     bash "$SCRIPT_DIR/install.sh"
 else
-    # Download and run install.sh from GitHub (public deploy repo)
+    # Download and run install.sh from GitHub
     echo "Downloading Sanketra installer..."
-    curl -fsSL "https://raw.githubusercontent.com/Misc42/sanketra/master/install.sh" -o "/tmp/sanketra_install.sh"
+    curl -fsSL "https://raw.githubusercontent.com/Misc42/sanketra-server/master/install.sh" -o "/tmp/sanketra_install.sh"
     bash "/tmp/sanketra_install.sh"
 fi
 
