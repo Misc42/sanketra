@@ -24,7 +24,7 @@ function loadChangelogRaw(): string {
     } catch (_) { /* try next */ }
   }
   // Last-resort fallback so /changelog never 500s in production.
-  return "## v1.2.0 — Apr 21\nSee github.com/Misc42/mic_on_term for full changelog.";
+  return "## v1.2.0 — Apr 21\nSee the releases page for the latest.";
 }
 
 export function getChangelogSections(): ChangelogSection[] {

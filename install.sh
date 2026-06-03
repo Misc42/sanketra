@@ -303,7 +303,7 @@ check_linux_port() {
     local cmdline=""
     [[ -r "/proc/$pid/cmdline" ]] && cmdline=$(tr '\0' ' ' < "/proc/$pid/cmdline")
 
-    if printf '%s' "$cmdline" | grep -qE "(sanketra|mic_on_term)"; then
+    if printf '%s' "$cmdline" | grep -qE "sanketra"; then
         warn "Port 5000 occupied by a previous Sanketra server (PID $pid) — replacing"
         kill "$pid" 2>/dev/null || true
         local _i=0
