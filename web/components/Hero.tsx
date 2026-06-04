@@ -17,7 +17,7 @@ const tracks = [
     icon: "💻",
     title: "Global hotkey, PC mic, anywhere you type.",
     body: "Native Qt app for macOS, Windows and Linux — Ctrl+Shift+Space in any text field dictates Hindi with your PC's mic. Transcript history, hardware-aware model picker, full offline-first stack. Click Pair Phone for the cross-device flow.",
-    footer: "v0.3.0-rc9 LIVE · .dmg / .exe / .AppImage on GitHub Releases",
+    footer: "v0.4.0 LIVE · .dmg / .exe / .AppImage on GitHub Releases",
     href: "/desktop/",
     cta: "Get Sanketra Desktop",
   },
@@ -28,7 +28,7 @@ const bridge = {
   icon: "⚏",
   title: "Start anywhere — the other app is one-tap away.",
   body: "Install Desktop first? Click Pair Phone — its QR deep-links into the Play Store install + auto-pairs once Android lands. Install Phone first? Settings → Install on a new PC → tap Send on WhatsApp — text yourself the smart-install link, click on your PC, the right Mac/Win/Linux installer downloads automatically. No manual IP entry. Each product self-discloses the other at the moment it actually matters.",
-  footer: "Both directions live in v1.2.3 Phone + v0.3.1 Desktop",
+  footer: "Both directions live in v1.2.3 Phone + v0.4.0 Desktop",
   href: "/pricing/",
   cta: "See the Bundle SKU",
 } as const;
@@ -46,6 +46,27 @@ export default function Hero() {
           Pick the flow that matches where you are right now.
         </p>
       </div>
+      {/* v0.4.0 combo-engine ribbon — the headline feature, optional + on-device */}
+      <article className="card card-accent flex flex-col gap-4 p-7">
+        <div className="flex items-start justify-between gap-4">
+          <p className="masthead text-saffron">NEW · v0.4.0 · हिंदी + इंग्लिश कॉम्बो</p>
+          <span aria-hidden className="text-4xl leading-none">
+            ⚡
+          </span>
+        </div>
+        <p className="deva serif-italic text-[clamp(1.6rem,4vw,2.6rem)] leading-tight text-ink">
+          हिंदी और इंग्लिश, साथ में — तेज़ और शार्प।
+        </p>
+        <p className="text-muted">
+          Optional combo engine: pick it under <span className="text-ink">Settings → STT Engine</span> and
+          each utterance routes to a dedicated model — Hindi to IndicConformer, English to Parakeet — instead
+          of one model for everything. Cleaner Hindi, properly punctuated and capitalised English, running
+          10–20× faster than real-time on plain CPU. Downloads ~1.6&nbsp;GB once, then fully on-device — no
+          cloud, no account, same privacy promise. Faster aur sharper chahiye? On karo. Whisper still ships
+          as the default.
+        </p>
+      </article>
+
       <div className="grid gap-6 md:grid-cols-2">
         {tracks.map((track) => (
           <article

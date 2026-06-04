@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 
 const values = [
   ["Hindi typing stops being punishment", "Devanagari keyboard gymnastics disappear. Speak Hindi, Hinglish, or English and let the PC type where focus already is."],
+  ["The Hindi+English combo engine, optional", "New in v0.4.0: opt in under Settings → STT Engine for sharper, faster transcription. Hindi routes to IndicConformer, English to Parakeet — cleaner Hindi, properly punctuated English, 10–20× real-time on CPU. Whisper stays the default."],
   ["Your voice stays on your Wi-Fi", "Sanketra uses the PC you already own for speech-to-text. No cloud STT bill, no account, no tracking pixels."],
   ["Phone proximity beats laptop mics", "In noisy rooms, the mic near your mouth wins. Phone-as-mic is not a gimmick; it is better signal."],
   ["More than dictation", "Trackpad, screen mirror, PC audio, and dictation sit on one LAN pair-code flow instead of four separate utilities."]
