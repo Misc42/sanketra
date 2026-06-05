@@ -159,7 +159,7 @@ export function MainWindowMockup({ className }: { className?: string }) {
         बोल — टाइप हो जाए
       </text>
       <text x="676" y="528" textAnchor="end" fontFamily="var(--font-mono), monospace" fontSize="10" letterSpacing="1.8" style={FAINT}>
-        v0.4.0
+        v0.4.1
       </text>
     </svg>
   );
