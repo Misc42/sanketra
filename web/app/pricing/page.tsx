@@ -33,7 +33,7 @@ const skus: readonly Sku[] = [
     features: [
       "Dictation from any room — phone-as-mic beats laptop mics in noisy spaces",
       "Air-trackpad, gyro pointer, screen-mirror for couch / kitchen / treadmill use",
-      "Larger Whisper models unlocked (medium / large-v3) for higher accuracy",
+      "Higher-accuracy recognition tiers unlocked (the top of the Quality slider)",
       "Custom vocabulary + accent calibration",
       "Free Android app stays free — Pro unlocks server-side features"
     ],
@@ -70,10 +70,10 @@ const skus: readonly Sku[] = [
     priceNote: "One-time. Lifetime.",
     features: [
       "Native menubar app — macOS, Windows, Linux",
-      "Cmd+Shift+H global hotkey from any focused app",
+      "Ctrl + Alt global hotkey from any focused app (Ctrl + Option on Mac, customizable)",
       "Transcript history with search, export, vocab inline-edit",
-      "Larger Whisper models unlocked (medium / large-v3)",
-      "Free tier stays free — Pro unlocks long sessions + advanced models"
+      "Top-quality recognition tier unlocked (the top of the Quality slider)",
+      "Free tier stays free — Pro unlocks long sessions + the highest-accuracy tier"
     ],
     buyUrl: "https://rzp.io/rzp/QazIhoT",
     ctaLabel: "Buy Desktop Pro · ₹999"
@@ -103,8 +103,8 @@ export default function PricingPage() {
         Lifetime license, <span className="deva text-saffron">एक baar paid — hamesha tumhara.</span>
       </h1>
       <p className="mt-6 max-w-3xl text-lg text-muted">
-        Three SKUs, no subscription, no usage cap. Free tier stays free forever — Pro unlocks larger Whisper
-        models, vocabulary, history, and the conveniences worth paying for.
+        Three SKUs, no subscription, no usage cap. Free tier stays free forever — Pro unlocks higher-accuracy
+        recognition, vocabulary, history, and the conveniences worth paying for.
       </p>
 
       <div className="mt-12 grid gap-6 md:grid-cols-3">

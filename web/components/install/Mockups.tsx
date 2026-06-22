@@ -83,7 +83,7 @@ export function MainWindowMockup({ className }: { className?: string }) {
         Hold
       </text>
       <text x="138" y="148" fontFamily="var(--font-serif), serif" fontSize="46" fontStyle="italic" style={SAFFRON}>
-        Ctrl+Shift+Space
+        Ctrl+Alt
       </text>
       <text x="44" y="200" fontFamily="var(--font-sans), sans-serif" fontSize="46" fontWeight="600" style={INK}>
         to start talking.
@@ -254,7 +254,7 @@ export function TrayMenuMockup({ className }: { className?: string }) {
     { kind: "primary", label: "Open Sanketra…", shortcut: "↵" },
     { kind: "sep" as const },
     { kind: "status", label: "Idle" },
-    { kind: "status", label: "Hotkey: Ctrl+Shift+Space  (PTT)" },
+    { kind: "status", label: "Hotkey: Ctrl + Alt  (PTT)" },
     { kind: "sep" as const },
     { kind: "item", label: "Start dictation" },
     { kind: "check", label: "Always-on dictation", checked: false },
@@ -898,7 +898,7 @@ export function InputMonitoringMockup({ className }: { className?: string }) {
         Sanketra Desktop
       </text>
       <text x="100" y="192" fontFamily="var(--font-mono), monospace" fontSize="11" style={MUTED}>
-        Listening for Ctrl + Shift + Space
+        Listening for Ctrl + Option
       </text>
       <g transform="translate(456 160)">
         <rect x="0" y="0" width="44" height="22" rx="11" style={{ fill: "var(--accent)" }} />
@@ -1561,7 +1561,7 @@ export function HotkeyDemoMockup({ className }: { className?: string }) {
       aria-label="Hotkey pressed in a text editor — transcript types into the field"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Ctrl + Shift + Space · transcript types at cursor</title>
+      <title>Ctrl + Alt · transcript types at cursor</title>
 
       <rect x="0" y="0" width="560" height="320" rx="12" style={SURFACE} />
       <rect x="0.5" y="0.5" width="559" height="319" rx="11.5" style={{ ...RULE, strokeWidth: 1 }} />
@@ -1608,21 +1608,14 @@ export function HotkeyDemoMockup({ className }: { className?: string }) {
         </text>
         <rect x="100" y="0" width="80" height="34" rx="6" style={SURFACE_2} />
         <text x="140" y="22" textAnchor="middle" fontFamily="var(--font-mono), monospace" fontSize="12" fontWeight="600" style={SAFFRON}>
-          Shift
-        </text>
-        <text x="188" y="22" fontFamily="var(--font-sans), sans-serif" fontSize="14" style={MUTED}>
-          +
-        </text>
-        <rect x="200" y="0" width="100" height="34" rx="6" style={SURFACE_2} />
-        <text x="250" y="22" textAnchor="middle" fontFamily="var(--font-mono), monospace" fontSize="12" fontWeight="600" style={SAFFRON}>
-          Space
+          Alt
         </text>
 
         {/* mint dot for recording state */}
-        <circle cx="332" cy="17" r="6" style={{ fill: "var(--accent)" }}>
+        <circle cx="212" cy="17" r="6" style={{ fill: "var(--accent)" }}>
           <animate attributeName="opacity" values="1;0.3;1" dur="0.8s" repeatCount="indefinite" />
         </circle>
-        <text x="346" y="22" fontFamily="var(--font-mono), monospace" fontSize="11" style={{ fill: "var(--accent)" }}>
+        <text x="226" y="22" fontFamily="var(--font-mono), monospace" fontSize="11" style={{ fill: "var(--accent)" }}>
           LISTENING
         </text>
       </g>

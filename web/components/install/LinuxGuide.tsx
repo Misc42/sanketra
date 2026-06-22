@@ -127,7 +127,7 @@ sudo pacman -S xcb-util-cursor`}
       <StepBlock
         index={4}
         total={TOTAL}
-        title="Hold Ctrl+Shift+Space, speak, release"
+        title="Hold Ctrl + Alt, speak, release"
         visual={{
           kind: "mockup",
           node: <HotkeyDemoMockup />
@@ -135,9 +135,9 @@ sudo pacman -S xcb-util-cursor`}
       >
         <p>
           Focus any text field. Hold{" "}
-          <kbd className="font-mono text-saffron">Ctrl + Shift + Space</kbd>, say something,
-          release. Transcript types in within ~1.5 seconds on the small Whisper model (default for
-          free tier).
+          <kbd className="font-mono text-saffron">Ctrl + Alt</kbd>, say something,
+          release. Transcript types in within ~1.5 seconds on the model auto-selected for your
+          hardware.
         </p>
       </StepBlock>
 

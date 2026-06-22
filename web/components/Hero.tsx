@@ -16,7 +16,7 @@ const tracks = [
     eyebrow: "02 · AT YOUR DESK",
     icon: "💻",
     title: "Global hotkey, PC mic, anywhere you type.",
-    body: "Native Qt app for macOS, Windows and Linux — Ctrl+Shift+Space in any text field dictates Hindi with your PC's mic. Transcript history, hardware-aware model picker, full offline-first stack. Click Pair Phone for the cross-device flow.",
+    body: "Native Qt app for macOS, Windows and Linux — Ctrl + Alt in any text field dictates Hindi with your PC's mic. Transcript history, language-first setup that auto-picks the model for your hardware, full offline-first stack. Click Pair Phone for the cross-device flow.",
     footer: "v0.4.2 LIVE · .dmg / .exe / .AppImage on GitHub Releases",
     href: "/desktop/",
     cta: "Get Sanketra Desktop",
@@ -36,7 +36,13 @@ const bridge = {
 export default function Hero() {
   return (
     <section className="wrap grid gap-10 border-b border-rule pb-16 pt-12">
-      <div className="flex flex-col items-center text-center">
+      <div className="relative flex flex-col items-center text-center">
+        <img
+          src="/sanketra/hero-soundwave.png"
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 w-[min(100%,54rem)] -translate-x-1/2 -translate-y-1/2 opacity-45 [mask-image:radial-gradient(closest-side,black,transparent_85%)]"
+        />
         <p className="masthead mb-4">Sanketra · संकेतरा</p>
         <p className="deva serif-italic text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.05] text-ink">
           बोलो, टाइप होगा।
@@ -46,24 +52,24 @@ export default function Hero() {
           Pick the flow that matches where you are right now.
         </p>
       </div>
-      {/* combo-engine ribbon — the headline feature, optional + on-device */}
+      {/* one-stage Romanized (Hinglish) engine + language-first — the headline feature */}
       <article className="card card-accent flex flex-col gap-4 p-7">
         <div className="flex items-start justify-between gap-4">
-          <p className="masthead text-saffron">NEW · v0.4.2 · हिंदी + इंग्लिश कॉम्बो</p>
+          <p className="masthead text-saffron">NEW · हिंदी → Hinglish, सीधे</p>
           <span aria-hidden className="text-4xl leading-none">
             ⚡
           </span>
         </div>
         <p className="deva serif-italic text-[clamp(1.6rem,4vw,2.6rem)] leading-tight text-ink">
-          हिंदी और इंग्लिश, साथ में — तेज़ और शार्प।
+          बोलो हिंदी में, टाइप हो Hinglish में।
         </p>
         <p className="text-muted">
-          Optional combo engine: pick it under <span className="text-ink">Settings → STT Engine</span> and
-          each utterance routes to a dedicated model — Hindi to IndicConformer, English to Parakeet — instead
-          of one model for everything. Cleaner Hindi, properly punctuated and capitalised English, running
-          10–20× faster than real-time on plain CPU. Downloads ~1.6&nbsp;GB once, then fully on-device — no
-          cloud, no account, same privacy promise. Faster aur sharper chahiye? On karo. Whisper still ships
-          as the default.
+          Pick <span className="text-ink">Romanized</span> output and Sanketra transcribes Hindi speech
+          straight to Latin “Hinglish” with a single on-device engine — and real English loanwords land as
+          real English (<span className="text-ink">coffee, station, software</span>), not clumsy
+          transliteration. Setup is language-first: choose the languages you speak and the app auto-picks the
+          right model for your hardware — no model names to wade through, just a Quick ↔ Quality slider.
+          Fully offline, no cloud, no account, same privacy promise.
         </p>
       </article>
 

@@ -317,7 +317,7 @@ export function MacGuide() {
       <StepBlock
         index={11}
         total={TOTAL}
-        title="Hold ⌃ ⇧ Space, say something, release"
+        title="Hold ⌃ ⌥ (Ctrl + Option), say something, release"
         visual={{ kind: "mockup", node: <MainWindowMockup /> }}
         reassurance={
           <>
@@ -329,8 +329,9 @@ export function MacGuide() {
       >
         <p>
           Focus any text field — a note app, a chat window, your browser&rsquo;s address bar.
-          Hold <kbd className="font-mono text-saffron">Ctrl + Shift + Space</kbd> (yes, Ctrl, not
-          Cmd — same chord as Linux + Windows). Say a sentence. Release the keys. The transcript
+          Hold <kbd className="font-mono text-saffron">Ctrl + Option</kbd> (yes, Ctrl, not
+          Cmd — Option is the Mac name for Alt; same physical keys as Ctrl + Alt on Linux + Windows).
+          Say a sentence. Release the keys. The transcript
           types into the focused field within ~1.5 seconds.
         </p>
         <div className="rounded-md border border-rule bg-surface/40 px-4 py-3">
