@@ -68,12 +68,12 @@ export default function DesktopPage() {
               One hotkey, everywhere
             </p>
             <h3 className="mt-2 text-lg font-semibold text-ink">
-              Ctrl + Shift + Space
+              Ctrl + Alt
             </h3>
             <p className="mt-2 text-sm text-muted">
-              Same chord on every OS. Hold to start, release to transcribe. The text appears
-              wherever your cursor is — chat, code editor, browser, anywhere a keyboard would work.
-              Customizable in Settings.
+              Same chord on every OS (macOS shows it as Ctrl + Option). Hold to start, release to
+              transcribe. The text appears wherever your cursor is — chat, code editor, browser,
+              anywhere a keyboard would work. Customizable in Settings.
             </p>
           </div>
         </div>
@@ -214,14 +214,16 @@ export default function DesktopPage() {
             <p className="mt-2 text-sm text-muted">
               Code-switch mid-sentence — Whisper handles both.{" "}
               <span className="serif-italic">Aaj ka meeting note likh raha tha</span> flows the
-              same as pure English. Larger models (medium / large-v3) unlock with Pro.
+              same as pure English. Prefer Latin script? Romanized output writes Hindi speech
+              straight to Hinglish — and real English loanwords land as real English (coffee,
+              station, software). Higher-accuracy quality tiers unlock with Pro.
             </p>
           </div>
           <div>
             <h3 className="text-lg font-semibold text-ink">Free during beta.</h3>
             <p className="mt-2 text-sm text-muted">
               All three builds are free while we shake bugs out. Pro features (long sessions,
-              transcript history, advanced models) become a paid SKU later — see{" "}
+              transcript history, higher-quality recognition) become a paid SKU later — see{" "}
               <a
                 href="/pricing/"
                 className="text-ink underline decoration-rule underline-offset-4 hover:text-saffron transition"

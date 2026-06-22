@@ -242,7 +242,7 @@ export function WindowsGuide() {
       <StepBlock
         index={8}
         total={TOTAL}
-        title="Hold Ctrl + Shift + Space, speak, release"
+        title="Hold Ctrl + Alt, speak, release"
         visual={{ kind: "mockup", node: <MainWindowMockup /> }}
         branch={{
           title: "the hotkey doesn't fire when a game/IDE is focused",
@@ -258,7 +258,7 @@ export function WindowsGuide() {
       >
         <p>
           Focus any text field. Hold{" "}
-          <kbd className="font-mono text-saffron">Ctrl + Shift + Space</kbd>, speak a sentence,
+          <kbd className="font-mono text-saffron">Ctrl + Alt</kbd>, speak a sentence,
           release. The transcript types into the focused field within ~1.5 seconds.
         </p>
         <div className="rounded-md border border-rule bg-surface/40 px-4 py-3">
