@@ -28,10 +28,10 @@ export default function TermsPage() {
           <h2 className="deva">2. License</h2>
           <p>
             Paid SKU खरीदने पर आपको एक signed license key मिलती है (email से).
-            यह key आप अपने PC पर paste करते हैं — license आपके specific device
-            से bind होती है (cryptographic fingerprint), अपनी expiry tak valid
-            रहती है (typically 1 साल per purchase). दूसरे device पर use
-            करने के लिए license re-bind करना होगा (support से contact करें).
+            यह key आप अपने PC पर paste करते हैं — license आपके account / purchase
+            email से जुड़ी होती है, अपनी expiry tak valid रहती है (typically 1
+            साल per purchase). Apne personal devices par install karein; key
+            ko publicly share / resell na karein.
           </p>
 
           <h2 className="deva">3. Acceptable use</h2>
@@ -106,9 +106,9 @@ export default function TermsPage() {
           <p>
             Purchasing a paid SKU gets you a signed license key (delivered by
             email) which you paste into your local Sanketra installation. The
-            license is cryptographically bound to your specific device
-            fingerprint and is valid until its expiry (typically one year per
-            purchase). To re-bind to a different device, contact support.
+            license is tied to your account / purchase email and is valid until
+            its expiry (typically one year per purchase). Install it on your own
+            devices for personal use; do not publicly share or resell the key.
           </p>
 
           <h2>3. Acceptable use</h2>
