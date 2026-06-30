@@ -12,6 +12,7 @@
 // gets the action description first, screenshot second.
 
 import type { ReactNode } from "react";
+import { GuideImage } from "./GuideImage";
 
 type Visual =
   | { kind: "image"; src: string; alt: string }
@@ -67,19 +68,13 @@ export function StepBlock({ index, total, title, children, visual, reassurance, 
         <figure className="md:sticky md:top-24">
           {visual.kind === "image" ? (
             <div className="screenshot-frame relative overflow-hidden rounded-lg border border-rule bg-paper">
-              {/* Placeholder shows through until the <img> below paints over it.
-                  Until the screenshot is captured + uploaded, the img is missing
-                  (alt text gets read) and the placeholder remains visible. */}
+              {/* Placeholder shows through until the screenshot paints over it.
+                  GuideImage removes itself on a 404 (asset captured post-launch),
+                  so the placeholder stays visible rather than a broken glyph. */}
               <div className="flex aspect-video items-center justify-center px-6 text-center text-[0.66rem] font-mono uppercase tracking-[0.16em] text-faint">
                 screenshot pending capture — {visual.alt}
               </div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={visual.src}
-                alt={visual.alt}
-                loading="lazy"
-                className="absolute inset-0 block h-full w-full object-contain"
-              />
+              <GuideImage src={visual.src} alt={visual.alt} />
             </div>
           ) : (
             <div className="overflow-hidden rounded-lg border border-rule bg-paper p-4">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { withBase } from "@/lib/basePath";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -46,7 +47,7 @@ export default function TermsPage() {
 
           <h2 className="deva">4. Refund & cancellation</h2>
           <p>
-            Detailed terms <a href="/refund-policy">/refund-policy</a> page पर हैं.
+            Detailed terms <a href={withBase("/refund-policy/")}>/refund-policy</a> page पर हैं.
             Short version: पहली purchase पर 7-day no-questions refund. उसके बाद
             केवल technical defect (हम fix नहीं कर पा रहे) पर refund.
           </p>
@@ -54,14 +55,14 @@ export default function TermsPage() {
           <h2 className="deva">5. Privacy</h2>
           <p>
             हम कोई user data collect नहीं करते. Detailed stance{" "}
-            <a href="/privacy">/privacy</a> page पर है. Razorpay payment process
+            <a href={withBase("/privacy/")}>/privacy</a> page पर है. Razorpay payment process
             करते समय कुछ payment-rail data देख सकता है — Razorpay की अपनी
             privacy policy applicable है उस हिस्से पर.
           </p>
 
           <h2 className="deva">6. Liability</h2>
           <p>
-            Sanketra "as-is" provide की जाती है. हम guarantee नहीं देते कि यह
+            Sanketra &ldquo;as-is&rdquo; provide की जाती है. हम guarantee नहीं देते कि यह
             हर hardware combination पर 100% accurate transcription करेगी —
             speech recognition की inherent limits हैं. किसी भी indirect /
             consequential / incidental loss के लिए हमारी maximum liability
@@ -122,7 +123,7 @@ export default function TermsPage() {
 
           <h2>4. Refund &amp; cancellation</h2>
           <p>
-            See <a href="/refund-policy">/refund-policy</a> for the full
+            See <a href={withBase("/refund-policy/")}>/refund-policy</a> for the full
             policy. In short: first-time purchases qualify for a no-questions
             refund within 7 days; after that, only confirmed technical defects
             we cannot fix qualify.
@@ -130,7 +131,7 @@ export default function TermsPage() {
 
           <h2>5. Privacy</h2>
           <p>
-            We collect no user data — see <a href="/privacy">/privacy</a> for
+            We collect no user data — see <a href={withBase("/privacy/")}>/privacy</a> for
             details. Razorpay processes payment-rail data when you buy; their
             own privacy notice applies to that portion of the flow.
           </p>

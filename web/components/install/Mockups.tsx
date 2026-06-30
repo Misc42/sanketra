@@ -687,7 +687,7 @@ export function DragToAppsMockup({ className }: { className?: string }) {
       </text>
 
       <text x="280" y="278" textAnchor="middle" fontFamily="var(--font-mono), monospace" fontSize="10.5" letterSpacing="2" style={SAFFRON}>
-        DRAG · DON'T DOUBLE-CLICK IN THE DMG
+        DRAG · DON&apos;T DOUBLE-CLICK IN THE DMG
       </text>
     </svg>
   );

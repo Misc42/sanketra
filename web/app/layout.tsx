@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Serif, Tiro_Devanagari_Hindi }
 import "../styles/globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { withBase } from "@/lib/basePath";
 
 const plexSans = IBM_Plex_Sans({
   subsets: ["latin", "latin-ext"],
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
     images: ["/og-image.png"]
   },
   icons: {
-    icon: "/icon.svg"
+    icon: withBase("/icon.svg")
   }
 };
 

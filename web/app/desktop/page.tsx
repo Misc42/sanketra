@@ -6,6 +6,7 @@ import { LinuxGuide } from "@/components/install/LinuxGuide";
 import { MacGuide } from "@/components/install/MacGuide";
 import { Troubleshooting } from "@/components/install/Troubleshooting";
 import { WindowsGuide } from "@/components/install/WindowsGuide";
+import { withBase } from "@/lib/basePath";
 
 export const metadata: Metadata = {
   title: "Desktop — Sanketra",
@@ -113,7 +114,7 @@ export default function DesktopPage() {
         <p className="mt-6 max-w-3xl text-lg text-muted">
           Same server powers{" "}
           <a
-            href="/download/"
+            href={withBase("/download/")}
             className="text-ink underline decoration-rule underline-offset-4 hover:text-saffron transition"
           >
             Sanketra Phone
@@ -145,7 +146,7 @@ export default function DesktopPage() {
               Phone and PC pair over your WiFi. No traffic leaves the network. If the QR scan
               shows{" "}
               <a
-                href="/pair/"
+                href={withBase("/pair/")}
                 className="text-ink underline decoration-rule underline-offset-4 hover:text-saffron transition"
               >
                 a recovery page
@@ -181,7 +182,7 @@ export default function DesktopPage() {
             <strong className="text-ink">Send on WhatsApp</strong>. Text the smart-install link to
             yourself, open it on your PC&rsquo;s browser, and{" "}
             <a
-              href="/get/"
+              href={withBase("/get/")}
               className="text-ink underline decoration-rule underline-offset-4 hover:text-saffron transition"
             >
               /get
@@ -225,7 +226,7 @@ export default function DesktopPage() {
               All three builds are free while we shake bugs out. Pro features (long sessions,
               transcript history, higher-quality recognition) become a paid SKU later — see{" "}
               <a
-                href="/pricing/"
+                href={withBase("/pricing/")}
                 className="text-ink underline decoration-rule underline-offset-4 hover:text-saffron transition"
               >
                 pricing

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { withBase } from "@/lib/basePath";
 
 export const metadata: Metadata = {
   title: "Demo",
@@ -25,7 +26,8 @@ export default function DemoPage() {
       <div className="mt-12 overflow-hidden rounded-md border border-rule bg-black/40">
         <video
           className="aspect-video w-full"
-          src="/demo.mp4"
+          src={withBase("/demo.mp4")}
+          aria-hidden
           autoPlay
           loop
           muted

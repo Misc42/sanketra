@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { withBase } from "@/lib/basePath";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -179,7 +180,7 @@ export default function PricingPage() {
             <p className="mt-2 text-sm text-muted">
               7-day no-questions-asked refund. Email <span className="font-mono text-saffron">refunds@sanketra.app</span> with
               your payment ID. See the{" "}
-              <a href="/refund-policy/" className="text-saffron underline decoration-rule">
+              <a href={withBase("/refund-policy/")} className="text-saffron underline decoration-rule">
                 refund policy
               </a>{" "}
               for the longer version.

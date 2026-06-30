@@ -57,14 +57,14 @@ export default function RefundPolicyPage() {
             <li>License key share / re-sell / leak की हो</li>
             <li>License verification bypass / reverse-engineer किया हो</li>
             <li>7-day window expire हो चुकी हो AND कोई technical defect नहीं</li>
-            <li>"मुझे change of mind है" — 7-day window का whole point यही है</li>
+            <li>&ldquo;मुझे change of mind है&rdquo; — 7-day window का whole point यही है</li>
           </ul>
 
           <h2 className="deva">4. कैसे request करें</h2>
           <ol>
             <li>
               Email <a href="mailto:tanaymisra97@gmail.com">tanaymisra97@gmail.com</a> करें
-              subject में "Refund Request — [your payment ID]"
+              subject में &ldquo;Refund Request — [your payment ID]&rdquo;
             </li>
             <li>Body में: payment ID, खरीद का date, amount, reason (optional)</li>
             <li>Reply 24-48 hours में, refund initiate 3 working days में</li>
