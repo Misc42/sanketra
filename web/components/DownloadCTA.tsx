@@ -42,13 +42,13 @@ export function DownloadCTA() {
   return (
     <section className="wrap mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
       <a
-        href={withBase("/desktop")}
+        href={withBase("/desktop/")}
         className="rounded-full bg-saffron px-6 py-3 font-mono text-sm font-medium uppercase tracking-wider text-paper transition hover:bg-saffron/90"
       >
         Download for {osLabel} · ₹0 free
       </a>
       <a
-        href={withBase("/pricing")}
+        href={withBase("/pricing/")}
         className="text-faint underline-offset-4 transition hover:text-ink hover:underline"
       >
         Why ₹999 ↗

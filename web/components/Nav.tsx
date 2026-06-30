@@ -19,7 +19,7 @@ export default function Nav() {
     <header className="sticky top-0 z-20 wrap flex items-center justify-between bg-paper/85 py-7 font-mono text-[0.78rem] uppercase tracking-[0.08em] text-faint backdrop-blur-sm">
       <Link href="/" className="group flex items-baseline gap-2 border-b border-transparent text-ink">
         <span className="font-semibold tracking-[0.12em]">Sanketra</span>
-        <span className="deva text-base italic normal-case tracking-normal text-muted group-hover:text-saffron">
+        <span lang="hi" className="deva text-base italic normal-case tracking-normal text-muted group-hover:text-saffron">
           संकेतरा
         </span>
       </Link>
@@ -43,7 +43,7 @@ export default function Nav() {
       <div
         id="mobile-nav"
         className={`absolute left-[var(--pad)] right-[var(--pad)] top-20 z-20 grid gap-4 rounded-md border border-rule bg-surface p-5 shadow-2xl transition md:hidden ${
-          open ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-3 opacity-0"
+          open ? "visible translate-y-0 opacity-100" : "invisible pointer-events-none -translate-y-3 opacity-0"
         }`}
       >
         {links.map(([label, href]) => (

@@ -17,7 +17,7 @@ export default function HomePage() {
       <DownloadCTA />
       <section className="wrap flex flex-col items-center border-b border-rule py-24 text-center">
         <p className="masthead mb-6 text-saffron">The brand line</p>
-        <p className="deva text-[clamp(4.4rem,14vw,10rem)] font-normal leading-[0.92] tracking-normal text-saffron">
+        <p lang="hi" className="deva text-[clamp(4.4rem,14vw,10rem)] font-normal leading-[0.92] tracking-normal text-saffron">
           PC का कान।
         </p>
         <p className="serif-italic mt-6 max-w-2xl text-[clamp(1.4rem,3vw,2rem)] leading-snug text-muted">
