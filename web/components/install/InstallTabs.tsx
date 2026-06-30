@@ -10,7 +10,7 @@
 // tabs without re-rendering. This keeps Largest Contentful Paint fast for
 // users with their detected OS already correct (the common case).
 
-import { type ReactNode, useEffect, useState } from "react";
+import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
 
 type OsId = "mac" | "windows" | "linux";
 
@@ -40,12 +40,40 @@ export function InstallTabs({
   defaultOs?: OsId;
 }) {
   const [active, setActive] = useState<OsId>(defaultOs);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
     if (typeof navigator !== "undefined") {
       setActive(detectOS(navigator.userAgent));
     }
   }, []);
+
+  // WAI-ARIA tabs keyboard pattern: ArrowLeft/Right wrap around, Home/End jump
+  // to the ends, and focus follows selection (roving tabindex below keeps only
+  // the active tab in the page Tab order).
+  function onTabKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
+    const last = TABS.length - 1;
+    let next = index;
+    switch (event.key) {
+      case "ArrowRight":
+        next = index === last ? 0 : index + 1;
+        break;
+      case "ArrowLeft":
+        next = index === 0 ? last : index - 1;
+        break;
+      case "Home":
+        next = 0;
+        break;
+      case "End":
+        next = last;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    setActive(TABS[next].id);
+    tabRefs.current[next]?.focus();
+  }
 
   return (
     <div>
@@ -58,7 +86,7 @@ export function InstallTabs({
         aria-label="Choose your operating system"
         className="sticky top-20 z-30 -mx-4 mb-10 flex gap-1 overflow-x-auto bg-paper/95 px-4 py-3 backdrop-blur-md md:mx-0 md:px-0"
       >
-        {TABS.map((tab) => {
+        {TABS.map((tab, index) => {
           const isActive = active === tab.id;
           return (
             <button
@@ -68,6 +96,11 @@ export function InstallTabs({
               aria-selected={isActive}
               aria-controls={`panel-${tab.id}`}
               id={`tab-${tab.id}`}
+              tabIndex={isActive ? 0 : -1}
+              ref={(el) => {
+                tabRefs.current[index] = el;
+              }}
+              onKeyDown={(event) => onTabKeyDown(event, index)}
               onClick={() => setActive(tab.id)}
               className={`group flex flex-shrink-0 items-baseline gap-3 rounded-md px-5 py-3 font-mono text-[0.78rem] uppercase tracking-[0.14em] transition ${
                 isActive

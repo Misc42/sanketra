@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sanketra.app/sitemap.xml
+Sitemap: https://misc42.github.io/sanketra/sitemap.xml

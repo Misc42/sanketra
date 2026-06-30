@@ -35,7 +35,14 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sanketra.app"),
+  // Live deploy is the GitHub Pages project sub-path misc42.github.io/sanketra/
+  // (next.config.js basePath: '/sanketra', no CNAME). The /sanketra path segment
+  // MUST stay in metadataBase: Next does NOT add basePath to metadata URLs, it
+  // joins them against metadataBase.pathname — so a bare misc42.github.io would
+  // 404 the og-image. Relative og:url / images below track this automatically.
+  // When the apex domain attaches and basePath drops to "", switch this back to
+  // "https://sanketra.app" in the same change.
+  metadataBase: new URL("https://misc42.github.io/sanketra"),
   title: {
     default: "Sanketra — PC का कान",
     template: "%s — Sanketra"
@@ -44,7 +51,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sanketra — PC का कान",
     description: "Voice as a universal input layer for your PC.",
-    url: "https://sanketra.app",
+    url: "/",
     siteName: "Sanketra",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     locale: "en_IN",

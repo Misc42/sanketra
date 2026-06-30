@@ -55,13 +55,13 @@ const REDIRECT_SCRIPT = `(function(){
     var base = "https://github.com/Misc42/sanketra/releases/latest/download";
     var target;
     if (ua.indexOf("iphone") !== -1 || ua.indexOf("ipad") !== -1 || ua.indexOf("ipod") !== -1) {
-      target = "/sanketra/desktop/#ios";
+      target = "/sanketra/download/#ios";
     } else if (ua.indexOf("android") !== -1) {
       target = "https://play.google.com/store/apps/details?id=com.tanay.miconterm";
     } else if (ua.indexOf("win") !== -1) {
       target = base + "/Sanketra-Desktop-Setup-x64.exe";
     } else if (ua.indexOf("mac") !== -1) {
-      if ("ontouchend" in document) { target = "/sanketra/desktop/#ios"; }
+      if ("ontouchend" in document) { target = "/sanketra/download/#ios"; }
       else { target = base + "/Sanketra-Desktop-universal.dmg"; }
     } else if (ua.indexOf("linux") !== -1) {
       target = base + "/Sanketra-Desktop-x86_64.AppImage";

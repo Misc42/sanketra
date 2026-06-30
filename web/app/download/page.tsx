@@ -5,6 +5,11 @@ import QRCode from "@/components/QRCode";
 
 const playStoreUrl = "https://play.google.com/store/apps/details?id=com.tanay.miconterm";
 
+// Live deploy host (GitHub Pages project sub-path) — the apex sanketra.app is
+// not attached yet, so QR + copy CTAs must point at the host that actually
+// serves the page. Flip back to https://sanketra.app/download at apex cutover.
+const iosDownloadUrl = "https://misc42.github.io/sanketra/download";
+
 const RELEASES_BASE = "https://github.com/Misc42/sanketra/releases/latest/download";
 
 const installers = [
@@ -51,7 +56,7 @@ const installers = [
     os: "iPhone / iPad",
     title: "iOS — scan PC's QR in Safari",
     kind: "copy",
-    command: "https://sanketra.app/download",
+    command: iosDownloadUrl,
     steps: [
       "No native iOS app yet — dictation runs in Safari",
       "Install Sanketra Desktop on a Mac / Win / Linux PC on the same WiFi",
@@ -125,8 +130,12 @@ export default function DownloadPage() {
                 </p>
                 <h2 className="text-3xl font-semibold tracking-normal">{item.title}</h2>
               </div>
-              {item.id === "android" ? <QRCode value={playStoreUrl} /> : null}
-              {item.id === "ios" ? <QRCode value="https://sanketra.app/download" /> : null}
+              {item.id === "android" ? (
+                <QRCode value={playStoreUrl} title="QR code linking to the Sanketra Play Store listing" />
+              ) : null}
+              {item.id === "ios" ? (
+                <QRCode value={iosDownloadUrl} title="QR code linking to the Sanketra iOS download page" />
+              ) : null}
             </div>
             {item.kind === "download" ? (
               <div className="mt-6 flex flex-col gap-2">
