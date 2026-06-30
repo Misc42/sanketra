@@ -1,5 +1,6 @@
 import { DownloadCTA } from "@/components/DownloadCTA";
 import Hero from "@/components/Hero";
+import { withBase } from "@/lib/basePath";
 
 const values = [
   ["Hindi typing stops being punishment", "Devanagari keyboard gymnastics disappear. Speak Hindi, Hinglish, or English and let the PC type where focus already is."],
@@ -41,7 +42,8 @@ export default function HomePage() {
         <p className="masthead mb-5 text-center">Demo</p>
         <div className="aspect-video overflow-hidden rounded-md border border-rule bg-black">
           <video
-            src="/demo.mp4"
+            src={withBase("/demo.mp4")}
+            aria-hidden
             autoPlay
             loop
             muted

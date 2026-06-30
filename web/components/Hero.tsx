@@ -44,9 +44,9 @@ export default function Hero() {
           className="pointer-events-none absolute left-1/2 top-1/2 -z-10 w-[min(100%,54rem)] -translate-x-1/2 -translate-y-1/2 opacity-45 [mask-image:radial-gradient(closest-side,black,transparent_85%)]"
         />
         <p className="masthead mb-4">Sanketra · संकेतरा</p>
-        <p className="deva serif-italic text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.05] text-ink">
+        <h1 className="deva serif-italic text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.05] text-ink">
           बोलो, टाइप होगा।
-        </p>
+        </h1>
         <p className="mt-4 max-w-2xl text-lg text-muted">
           Hindi-first voice input for your PC. Local Whisper, no cloud, no account.
           Pick the flow that matches where you are right now.

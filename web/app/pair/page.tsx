@@ -10,6 +10,7 @@
 // stays in one file.
 
 import type { Metadata } from "next";
+import { withBase } from "@/lib/basePath";
 
 export const metadata: Metadata = {
   title: "QR pair — Sanketra unreachable",
@@ -146,7 +147,7 @@ export default function PairFallbackPage() {
                 Linux — all three are a single download.
               </p>
               <a
-                href="/desktop/"
+                href={withBase("/desktop/")}
                 className="mt-7 inline-flex items-center justify-center rounded-sm bg-saffron px-5 py-3 font-mono text-[0.78rem] uppercase tracking-[0.14em] text-paper transition hover:bg-saffron/90"
               >
                 Get Sanketra Desktop &rarr;
@@ -176,7 +177,7 @@ export default function PairFallbackPage() {
                 generates.
               </p>
               <a
-                href="/desktop/"
+                href={withBase("/desktop/")}
                 className="mt-7 inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink hover:text-saffron"
               >
                 <span>How the PC side works</span>

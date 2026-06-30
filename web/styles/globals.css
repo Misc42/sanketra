@@ -5,15 +5,14 @@
 :root {
   --ink: #F4EFE6;
   --ink-muted: #B8B0A2;
-  /* --ink-faint: AA-passing tertiary on --paper.
-     History: #5C5749 measured 2.67:1 (fail AA + AA-large). #7A7160 bumped
-     to ~4.0:1 on paper but dropped to 3.61-3.79:1 on surface/40-60 tiers
-     (fail AA-text). #8A8170 measures ~4.55:1 on #0F0E14 (clears AA-text)
-     and ~4.20:1 on bg-surface tiers (clears AA-large, near-AA-text).
-     --ink-muted (#B8B0A2) ≈ 11.4:1 stays comfortably above faint, so the
-     three-tier text hierarchy (ink → muted → faint) reads in the same
-     direction with adequate luminance gaps. */
-  --ink-faint: #8A8170;
+  /* --ink-faint: AA-passing (≥4.5:1 small-text) tertiary on EVERY surface tier.
+     History: #5C5749 = 2.67:1 (fail). #7A7160 = ~4.0 paper / 3.6-3.8 surface
+     (fail AA-text). #8A8170 cleared AA only on paper (4.99) but fell to ~4.13
+     on surface-2 (AA-large only). #969085 measures 6.06 paper / 5.49 surface /
+     5.02 surface-2 — clears AA-text across the board. --ink-muted (#B8B0A2)
+     stays well above faint, so the three-tier hierarchy (ink → muted → faint)
+     keeps adequate luminance gaps. */
+  --ink-faint: #969085;
   --paper: #0F0E14;
   --surface: #1A1922;
   --surface-2: #232128;
@@ -67,6 +66,16 @@ body::before {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Keyboard focus ring. :where() keeps specificity at 0 so component utility
+   classes still win on every other property; saffron reads on the dark theme;
+   offset keeps the ring off the glyphs. focus-visible only — pointer focus
+   stays ring-free. */
+:where(a, button, [role="button"], input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--accent-warm);
+  outline-offset: 2px;
+  border-radius: 3px;
 }
 
 button,

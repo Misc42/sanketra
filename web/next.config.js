@@ -10,6 +10,9 @@ const nextConfig = {
   basePath: '/sanketra',
   trailingSlash: true,
   images: { unoptimized: true },
+  // Lint is a separate gate (`npm run lint`) — keep it from failing the
+  // static-export build so a style nit can never block a deploy.
+  eslint: { ignoreDuringBuilds: true },
 };
 
 module.exports = nextConfig;

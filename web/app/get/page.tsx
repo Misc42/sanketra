@@ -11,6 +11,7 @@
 // file stays in one place to keep the route weight near zero.
 
 import type { Metadata } from "next";
+import { withBase } from "@/lib/basePath";
 
 export const metadata: Metadata = {
   title: "Install · Sanketra",
@@ -171,7 +172,7 @@ export default function GetPage() {
           <p className="text-muted">
             Need the full install guide with screenshots?{" "}
             <a
-              href="/desktop/"
+              href={withBase("/desktop/")}
               className="border-b border-rule pb-0.5 font-semibold text-ink transition hover:border-saffron hover:text-saffron"
             >
               Open the step-by-step walkthrough &rarr;
@@ -190,7 +191,7 @@ export default function GetPage() {
             <strong className="text-ink">Sanketra Phone</strong> on the
             Android side. Both are free during beta.{" "}
             <a
-              href="/pricing/"
+              href={withBase("/pricing/")}
               className="border-b border-rule pb-0.5 text-saffron transition hover:border-saffron"
             >
               See /pricing for the Bundle SKU
