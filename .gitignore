@@ -2,6 +2,10 @@
 cert.pem
 .DS_Store
 key.pem
+# License signing PRIVATE key — never ships to the public repo (issuer + private key stay DEV-only; only the Ed25519 *public* key is tracked here)
+*_private.key
+*.private.key
+sanketra_signing_private.key
 # Logs
 logs/*.log
 # macOS
