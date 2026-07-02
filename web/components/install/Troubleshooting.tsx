@@ -108,7 +108,7 @@ export function Troubleshooting() {
       <p className="masthead mb-4">Power users · alternate install paths</p>
       <h2 className="text-3xl font-semibold text-ink md:text-4xl">
         Skip the wizard. Run the command.{" "}
-        <span className="deva text-saffron">सीधा रास्ता</span>.
+        <span className="deva text-accent">सीधा रास्ता</span>.
       </h2>
       <p className="mt-4 max-w-3xl text-muted">
         For developers, IT admins, and anyone who prefers a shell. Each command does the same
@@ -133,7 +133,7 @@ export function Troubleshooting() {
         <p className="masthead mb-4">Troubleshooting · the things people email us about</p>
         <h2 className="text-3xl font-semibold text-ink md:text-4xl">
           If something went sideways{" "}
-          <span className="deva text-saffron">— यहाँ देखो</span>.
+          <span className="deva text-accent">— यहाँ देखो</span>.
         </h2>
         <p className="mt-4 max-w-3xl text-muted">
           Searchable matrix. Ctrl-F your error message. If your specific symptom isn&rsquo;t
@@ -144,7 +144,7 @@ export function Troubleshooting() {
           {(["macOS", "Windows", "Linux"] as const).map((os) => (
             <div key={os} className="not-last:border-b not-last:border-rule">
               <div className="bg-surface/60 px-5 py-3">
-                <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-saffron">
+                <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-accent">
                   {os}
                 </p>
               </div>
@@ -175,18 +175,18 @@ export function Troubleshooting() {
                 href="https://github.com/Misc42/sanketra/issues/new"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-saffron underline decoration-rule"
+                className="text-accent underline decoration-rule"
               >
                 Misc42/sanketra/issues
               </a>
               . Include your OS, the error message verbatim, and (if you can) the contents of
-              your <code className="font-mono text-saffron">last-crash.log</code> file.
+              your <code className="font-mono text-accent">last-crash.log</code> file.
             </p>
           </div>
           <div>
             <h3 className="text-lg font-semibold text-ink">Email support</h3>
             <p className="mt-2 text-sm text-muted">
-              <span className="font-mono text-saffron">support@sanketra.app</span>. Slower than
+              <span className="font-mono text-accent">support@sanketra.app</span>. Slower than
               GitHub for technical bugs, faster for license / payment questions.
             </p>
           </div>
@@ -196,7 +196,7 @@ export function Troubleshooting() {
               Speech recognition runs entirely on your computer &mdash; your audio is
               processed locally and never uploaded to any server. Questions about privacy
               or what data Sanketra touches?{" "}
-              <span className="font-mono text-saffron">support@sanketra.app</span>.
+              <span className="font-mono text-accent">support@sanketra.app</span>.
             </p>
           </div>
         </div>

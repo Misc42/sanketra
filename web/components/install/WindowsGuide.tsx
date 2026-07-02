@@ -21,12 +21,12 @@ export function WindowsGuide() {
   return (
     <div className="grid gap-12">
       <header>
-        <p className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-saffron">
+        <p className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-accent">
           Windows · 8 steps · 3 min
         </p>
         <h2 className="mt-2 text-3xl font-semibold text-ink md:text-4xl">
-          Click <em className="serif-italic text-saffron">More info → Run anyway</em>, then{" "}
-          <span className="deva text-saffron">आगे बढ़ो</span> through the wizard.
+          Click <em className="serif-italic text-accent">More info → Run anyway</em>, then{" "}
+          <span className="deva text-accent">आगे बढ़ो</span> through the wizard.
         </h2>
         <p className="mt-4 max-w-3xl text-muted">
           Windows SmartScreen will flag Sanketra Desktop because we&rsquo;re unsigned during the
@@ -48,8 +48,8 @@ export function WindowsGuide() {
         <p>
           Click the <em className="serif-italic text-ink">Download for Windows</em> button above.
           Your browser saves{" "}
-          <code className="font-mono text-saffron">Sanketra-Desktop-Setup-x64.exe</code> to{" "}
-          <code className="font-mono text-saffron">C:\Users\you\Downloads\</code>.
+          <code className="font-mono text-accent">Sanketra-Desktop-Setup-x64.exe</code> to{" "}
+          <code className="font-mono text-accent">C:\Users\you\Downloads\</code>.
         </p>
         <p>
           The .exe is about 98 MB. Edge may add an extra &ldquo;this file isn&rsquo;t commonly
@@ -89,13 +89,13 @@ export function WindowsGuide() {
               it sits below the headline, above the Don&rsquo;t run button. If you genuinely
               can&rsquo;t see it, your Windows version may have hidden it behind a group policy
               (corporate-managed laptops). In that case, ask your IT admin to whitelist{" "}
-              <code className="font-mono text-saffron">Sanketra-Desktop-Setup-x64.exe</code>.
+              <code className="font-mono text-accent">Sanketra-Desktop-Setup-x64.exe</code>.
             </>
           )
         }}
       >
         <p>
-          Double-click <code className="font-mono text-saffron">Sanketra-Desktop-Setup-x64.exe</code>{" "}
+          Double-click <code className="font-mono text-accent">Sanketra-Desktop-Setup-x64.exe</code>{" "}
           in your Downloads folder. A big blue dialog appears.
         </p>
       </StepBlock>
@@ -141,7 +141,7 @@ export function WindowsGuide() {
         reassurance={
           <>
             The wizard installs to{" "}
-            <code className="font-mono text-saffron">%LOCALAPPDATA%\SanketraDesktop\</code> by
+            <code className="font-mono text-accent">%LOCALAPPDATA%\SanketraDesktop\</code> by
             default — your personal user folder. No UAC prompt because no admin rights are needed.
             Pick a different folder if you like; default is fine for everyone.
           </>
@@ -180,7 +180,7 @@ export function WindowsGuide() {
       >
         <p>
           The wizard copies Sanketra into{" "}
-          <code className="font-mono text-saffron">%LOCALAPPDATA%\SanketraDesktop\</code>, registers
+          <code className="font-mono text-accent">%LOCALAPPDATA%\SanketraDesktop\</code>, registers
           Start menu shortcuts, and (if you ticked it) adds the run-at-login entry. Total time on a
           modern PC: under 30 seconds.
         </p>
@@ -258,7 +258,7 @@ export function WindowsGuide() {
       >
         <p>
           Focus any text field. Hold{" "}
-          <kbd className="font-mono text-saffron">Ctrl + Alt</kbd>, speak a sentence,
+          <kbd className="font-mono text-accent">Ctrl + Alt</kbd>, speak a sentence,
           release. The transcript types into the focused field within ~1.5 seconds.
         </p>
         <div className="rounded-md border border-rule bg-surface/40 px-4 py-3">

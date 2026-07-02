@@ -104,7 +104,7 @@ export default function GetPage() {
           Install · <span className="deva normal-case tracking-normal">इंस्टॉल</span>
         </p>
         <h1 className="section-title max-w-3xl">
-          Pick your OS. <span className="text-saffron">We&rsquo;ll start the download.</span>
+          Pick your OS. <span className="text-accent">We&rsquo;ll start the download.</span>
         </h1>
         <p className="deva mt-5 max-w-2xl text-2xl text-muted">
           अपना OS चुनो — बाक़ी हम कर देंगे।
@@ -115,54 +115,48 @@ export default function GetPage() {
           <div className="grid gap-4 md:grid-cols-3">
             <a
               href={ARTIFACTS.mac}
-              className="card flex flex-col gap-2 p-6 transition hover:border-saffron"
+              className="card flex flex-col gap-2 p-6 transition hover:border-ink"
             >
               <p className="masthead">macOS · <span className="deva normal-case tracking-normal">मैक</span></p>
-              <p className="mt-2 inline-flex items-center justify-center rounded-sm bg-saffron px-4 py-3 font-mono text-[0.78rem] uppercase tracking-[0.14em] text-paper transition hover:bg-saffron/90">
+              <p className="mt-2 inline-flex items-center justify-center rounded-[10px] bg-accent px-4 py-3 text-[14.5px] font-semibold text-paper transition hover:bg-accent-hover">
                 Download .dmg
               </p>
-              <p className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-faint">
-                Sanketra-Desktop-universal.dmg
-              </p>
+              <p className="mt-2 font-mono text-xs text-faint">Sanketra-Desktop-universal.dmg</p>
             </a>
 
             <a
               href={ARTIFACTS.windows}
-              className="card flex flex-col gap-2 p-6 transition hover:border-saffron"
+              className="card flex flex-col gap-2 p-6 transition hover:border-ink"
             >
               <p className="masthead">Windows · <span className="deva normal-case tracking-normal">विंडोज़</span></p>
-              <p className="mt-2 inline-flex items-center justify-center rounded-sm bg-saffron px-4 py-3 font-mono text-[0.78rem] uppercase tracking-[0.14em] text-paper transition hover:bg-saffron/90">
+              <p className="mt-2 inline-flex items-center justify-center rounded-[10px] bg-accent px-4 py-3 text-[14.5px] font-semibold text-paper transition hover:bg-accent-hover">
                 Download .exe
               </p>
-              <p className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-faint">
-                Sanketra-Desktop-Setup-x64.exe
-              </p>
+              <p className="mt-2 font-mono text-xs text-faint">Sanketra-Desktop-Setup-x64.exe</p>
             </a>
 
             <a
               href={ARTIFACTS.linux}
-              className="card flex flex-col gap-2 p-6 transition hover:border-saffron"
+              className="card flex flex-col gap-2 p-6 transition hover:border-ink"
             >
               <p className="masthead">Linux · <span className="deva normal-case tracking-normal">लिनक्स</span></p>
-              <p className="mt-2 inline-flex items-center justify-center rounded-sm bg-saffron px-4 py-3 font-mono text-[0.78rem] uppercase tracking-[0.14em] text-paper transition hover:bg-saffron/90">
+              <p className="mt-2 inline-flex items-center justify-center rounded-[10px] bg-accent px-4 py-3 text-[14.5px] font-semibold text-paper transition hover:bg-accent-hover">
                 Download .AppImage
               </p>
-              <p className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-faint">
-                Sanketra-Desktop-x86_64.AppImage
-              </p>
+              <p className="mt-2 font-mono text-xs text-faint">Sanketra-Desktop-x86_64.AppImage</p>
             </a>
           </div>
         </section>
 
         {/* ─── Reassurance (below the fold; JS-on users already redirected) */}
         <section className="mt-14 rule-top pt-10">
-          <p className="masthead mb-3 text-saffron">Auto-detect on · <span className="deva normal-case tracking-normal">ऑटो-डिटेक्ट चालू</span></p>
-          <p className="serif-italic max-w-2xl text-lg text-muted">
+          <p className="masthead mb-3">Auto-detect on · <span className="deva normal-case tracking-normal">ऑटो-डिटेक्ट चालू</span></p>
+          <p className="max-w-2xl text-lg text-muted">
             If JavaScript is on, we&rsquo;ve already kicked off the right file
             for your OS. The cards above are the manual route — for JS-off,
             popup-blocked, or Back-button arrivals.
           </p>
-          <p className="mt-4 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-faint">
+          <p className="mt-4 text-[13px] text-faint">
             Apne PC par auto-install ho jayega — bas correct file ka download finish hone do.
           </p>
         </section>
@@ -173,7 +167,7 @@ export default function GetPage() {
             Need the full install guide with screenshots?{" "}
             <a
               href={withBase("/desktop/")}
-              className="border-b border-rule pb-0.5 font-semibold text-ink transition hover:border-saffron hover:text-saffron"
+              className="border-b border-rule pb-0.5 font-semibold text-ink transition hover:border-accent hover:text-accent"
             >
               Open the step-by-step walkthrough &rarr;
             </a>
@@ -181,18 +175,16 @@ export default function GetPage() {
         </section>
 
         {/* ─── Phone-shared callout ────────────────────────────────────── */}
-        <aside className="mt-12 border-l-2 border-saffron bg-surface/60 p-6">
-          <p className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-saffron">
-            ★ Shared from a phone?
-          </p>
+        <aside className="callout mt-12 p-6">
+          <p className="text-[13px] font-semibold text-accent">★ Shared from a phone?</p>
           <p className="mt-3 text-muted">
             You&rsquo;ll want <strong className="text-ink">Sanketra Desktop</strong> on
-            your PC <em className="serif-italic text-ink">and</em>{" "}
+            your PC <em className="text-ink">and</em>{" "}
             <strong className="text-ink">Sanketra Phone</strong> on the
             Android side. Both are free during beta.{" "}
             <a
               href={withBase("/pricing/")}
-              className="border-b border-rule pb-0.5 text-saffron transition hover:border-saffron"
+              className="border-b border-rule pb-0.5 text-accent transition hover:border-accent"
             >
               See /pricing for the Bundle SKU
             </a>
@@ -203,10 +195,7 @@ export default function GetPage() {
         {/* Attribution — revealed by inline script when ?ref=phone is in
             the URL. Always present in DOM; CSS hides it otherwise so the
             statically-exported HTML works without server-side query parse. */}
-        <p
-          data-shared-from-phone
-          className="mt-16 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-faint"
-        >
+        <p data-shared-from-phone className="mt-16 text-[13px] text-faint">
           Shared from your phone · <span className="deva normal-case tracking-normal">फ़ोन से</span> from phone se
         </p>
       </main>

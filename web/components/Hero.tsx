@@ -1,133 +1,88 @@
+"use client";
+
+// Home hero. Client component because the primary CTA label swaps to the
+// visitor's detected OS post-hydration — same detect ladder as
+// components/install/DownloadHero.tsx (kept inline rather than hoisted to a
+// shared lib/ helper because both call sites are five lines each). SSR
+// renders the design's literal fallback copy ("your OS") so there's no
+// hydration mismatch and no flash for JS-off / slow-hydration visitors.
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { withBase } from "@/lib/basePath";
 
-const tracks = [
-  {
-    id: "couch",
-    eyebrow: "01 · FROM YOUR COUCH",
-    icon: "📱",
-    title: "Phone as your mic, trackpad, pointer.",
-    body: "Sanketra on Android pairs with your PC over Wi-Fi. Hold-to-speak for Hindi dictation, trackpad gestures for cursor control, gyro for pointer, screen mirror for watching from across the room.",
-    footer: "Live on Play Store · Closed testing",
-    href: "/download#android",
-    cta: "Download for Android",
-  },
-  {
-    id: "desk",
-    eyebrow: "02 · AT YOUR DESK",
-    icon: "💻",
-    title: "Global hotkey, PC mic, anywhere you type.",
-    body: "Native Qt app for macOS, Windows and Linux — Ctrl + Alt in any text field dictates Hindi with your PC's mic. Transcript history, language-first setup that auto-picks the model for your hardware, full offline-first stack. Click Pair Phone for the cross-device flow.",
-    footer: "v0.4.2 LIVE · .dmg / .exe / .AppImage on GitHub Releases",
-    href: "/desktop/",
-    cta: "Get Sanketra Desktop",
-  },
-] as const;
+type OsId = "mac" | "windows" | "linux" | null;
 
-const bridge = {
-  eyebrow: "03 · BRIDGE ·",
-  eyebrowDeva: "दोनों एक-दूसरे को ढूंढ़ लेंगे",
-  icon: "⚏",
-  title: "Start anywhere — the other app is one-tap away.",
-  body: "Install Desktop first? Click Pair Phone — its QR deep-links into the Play Store install + auto-pairs once Android lands. Install Phone first? Settings → Install on a new PC → tap Send on WhatsApp — text yourself the smart-install link, click on your PC, the right Mac/Win/Linux installer downloads automatically. No manual IP entry. Each product self-discloses the other at the moment it actually matters.",
-  footer: "Both directions live in v1.2.3 Phone + v0.4.2 Desktop",
-  href: "/pricing/",
-  cta: "See the Bundle SKU",
-} as const;
+function detectOS(userAgent: string): OsId {
+  const ua = userAgent.toLowerCase();
+  if (ua.includes("mac")) return "mac";
+  if (ua.includes("win")) return "windows";
+  if (ua.includes("linux")) return "linux";
+  return "linux";
+}
+
+const OS_LABEL: Record<NonNullable<OsId>, string> = {
+  mac: "macOS",
+  windows: "Windows",
+  linux: "Linux"
+};
 
 export default function Hero() {
+  const [detected, setDetected] = useState<OsId>(null);
+
+  useEffect(() => {
+    if (typeof navigator !== "undefined") {
+      setDetected(detectOS(navigator.userAgent));
+    }
+  }, []);
+
+  const osLabel = detected ? OS_LABEL[detected] : "your OS";
+
   return (
-    <section className="wrap grid gap-10 border-b border-rule pb-16 pt-12">
-      <div className="relative flex flex-col items-center text-center">
+    <section className="wrap flex flex-col items-center pb-0 pt-[88px] text-center">
+      <p className="mb-4 text-[13.5px] font-semibold text-accent">
+        <span aria-hidden>●</span> Live · free during beta · a{" "}
+        <a
+          href="https://misc42.github.io/misc42labs/"
+          target="_blank"
+          rel="noreferrer"
+          className="underline underline-offset-[3px]"
+        >
+          Misc42 Labs
+        </a>{" "}
+        product
+      </p>
+      <h1
+        lang="hi"
+        className="deva mx-auto max-w-[860px] text-[clamp(2.75rem,6.4vw,5.5rem)] font-bold leading-[1.08] tracking-[-0.01em] text-ink"
+      >
+        बोलो, टाइप होगा।
+      </h1>
+      <p className="mx-auto mt-5 max-w-[540px] text-[19px] leading-relaxed text-muted">
+        Speak Hindi, Hinglish, or English — text lands wherever you type. Your voice never leaves your Wi-Fi.
+      </p>
+      <div className="mt-[34px] flex flex-wrap justify-center gap-3">
+        <a
+          href={withBase("/download/")}
+          className="rounded-[10px] bg-accent px-7 py-[13px] text-[15px] font-semibold text-paper transition hover:bg-accent-hover"
+        >
+          Download for {osLabel} — ₹0
+        </a>
+        <Link
+          href="/pricing"
+          className="rounded-[10px] border border-[color:var(--input-border)] px-7 py-[13px] text-[15px] font-semibold text-ink transition hover:border-ink"
+        >
+          Why ₹999 later
+        </Link>
+      </div>
+      <p className="mt-3.5 text-[13px] text-faint">Android · macOS · Windows · Linux</p>
+      <div className="mx-auto mt-14 max-w-[980px] overflow-hidden rounded-t-2xl border border-b-0 border-rule bg-[#0F0E14] shadow-[0_32px_64px_-32px_rgba(19,19,21,0.3)]">
         <img
           src={withBase("/hero-soundwave.png")}
-          alt=""
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 w-[min(100%,54rem)] -translate-x-1/2 -translate-y-1/2 opacity-45 [mask-image:radial-gradient(closest-side,black,transparent_85%)]"
+          alt="Sanketra waveform"
+          className="block aspect-[21/9] w-full object-cover"
         />
-        <p className="masthead mb-4">Sanketra · <span lang="hi">संकेतरा</span></p>
-        <h1 lang="hi" className="deva serif-italic text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.05] text-ink">
-          बोलो, टाइप होगा।
-        </h1>
-        <p className="mt-4 max-w-2xl text-lg text-muted">
-          Hindi-first voice input for your PC. Local Whisper, no cloud, no account.
-          Pick the flow that matches where you are right now.
-        </p>
       </div>
-      {/* one-stage Romanized (Hinglish) engine + language-first — the headline feature */}
-      <article className="card card-accent flex flex-col gap-4 p-7">
-        <div className="flex items-start justify-between gap-4">
-          <p className="masthead text-saffron">NEW · <span lang="hi">हिंदी</span> → Hinglish, <span lang="hi">सीधे</span></p>
-          <span aria-hidden className="text-4xl leading-none">
-            ⚡
-          </span>
-        </div>
-        <p className="deva serif-italic text-[clamp(1.6rem,4vw,2.6rem)] leading-tight text-ink">
-          <span lang="hi">बोलो हिंदी में, टाइप हो</span> Hinglish <span lang="hi">में।</span>
-        </p>
-        <p className="text-muted">
-          Pick <span className="text-ink">Romanized</span> output and Sanketra transcribes Hindi speech
-          straight to Latin “Hinglish” with a single on-device engine — and real English loanwords land as
-          real English (<span className="text-ink">coffee, station, software</span>), not clumsy
-          transliteration. Setup is language-first: choose the languages you speak and the app auto-picks the
-          right model for your hardware — no model names to wade through, just a Quick ↔ Quality slider.
-          Fully offline, no cloud, no account, same privacy promise.
-        </p>
-      </article>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        {tracks.map((track) => (
-          <article
-            key={track.id}
-            className="card flex flex-col gap-5 p-7 transition hover:border-saffron"
-          >
-            <div className="flex items-start justify-between">
-              <p className="masthead text-saffron">{track.eyebrow}</p>
-              <span aria-hidden className="text-4xl leading-none">
-                {track.icon}
-              </span>
-            </div>
-            <h2 className="text-2xl font-semibold leading-tight text-ink">
-              {track.title}
-            </h2>
-            <p className="text-muted">{track.body}</p>
-            <p className="font-mono text-xs uppercase tracking-[0.12em] text-faint">
-              {track.footer}
-            </p>
-            <Link
-              href={track.href}
-              className="mt-auto inline-flex items-center gap-2 border-b border-rule pb-2 text-sm font-semibold uppercase tracking-[0.12em] text-ink transition hover:border-saffron hover:text-saffron"
-            >
-              {track.cta}
-              <span aria-hidden>→</span>
-            </Link>
-          </article>
-        ))}
-      </div>
-
-      {/* Bridge card — bidirectional acquisition story */}
-      <article className="card card-accent flex flex-col gap-4 p-7">
-        <div className="flex items-start justify-between">
-          <p className="masthead text-saffron">{bridge.eyebrow} <span lang="hi">{bridge.eyebrowDeva}</span></p>
-          <span aria-hidden className="text-4xl leading-none">
-            {bridge.icon}
-          </span>
-        </div>
-        <h2 className="text-2xl font-semibold leading-tight text-ink">
-          {bridge.title}
-        </h2>
-        <p className="text-muted">{bridge.body}</p>
-        <p className="font-mono text-xs uppercase tracking-[0.12em] text-faint">
-          {bridge.footer}
-        </p>
-        <Link
-          href={bridge.href}
-          className="mt-auto inline-flex items-center gap-2 self-start border-b border-rule pb-2 text-sm font-semibold uppercase tracking-[0.12em] text-ink transition hover:border-saffron hover:text-saffron"
-        >
-          {bridge.cta}
-          <span aria-hidden>→</span>
-        </Link>
-      </article>
     </section>
   );
 }

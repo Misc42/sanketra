@@ -1,7 +1,7 @@
 "use client";
 
 // Zone 1: the three OS download cards. Client component so we can highlight
-// the detected OS with a saffron ring and prepend a "Detected" badge.
+// the detected OS with a accent ring and prepend a "Detected" badge.
 // Kept tightly scoped — the rest of the page is server-rendered.
 
 import { useEffect, useMemo, useState } from "react";
@@ -89,15 +89,15 @@ export function DownloadHero() {
             key={card.id}
             id={card.id}
             className={`card flex flex-col p-7 transition ${
-              isDetected ? "ring-1 ring-saffron/50" : ""
+              isDetected ? "ring-1 ring-accent/50" : ""
             }`}
           >
             {/* Mobile-only ribbon: on phone viewports the three cards stack
-                identically, so the saffron ring alone gets lost in thumb-scroll.
+                identically, so the accent ring alone gets lost in thumb-scroll.
                 A loud "start here" pointer above the detected card breaks the
                 tie. Hidden on md+ where the ring + Detected pill are visible. */}
             {isDetected ? (
-              <span className="md:hidden mb-3 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-saffron">
+              <span className="md:hidden mb-3 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-accent">
                 <span aria-hidden>↓</span>
                 <span>Detected — start here</span>
               </span>
@@ -105,7 +105,7 @@ export function DownloadHero() {
             <div className="flex items-baseline justify-between">
               <p className="masthead">{card.os}</p>
               {isDetected ? (
-                <span className="rounded-sm border border-saffron/50 px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-saffron">
+                <span className="rounded-sm border border-accent/50 px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-accent">
                   Detected
                 </span>
               ) : null}
@@ -120,7 +120,7 @@ export function DownloadHero() {
               href={downloadUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-7 inline-flex items-center justify-center rounded-sm bg-saffron px-5 py-3 text-center font-mono text-[0.78rem] uppercase tracking-[0.14em] text-paper transition hover:bg-saffron/90"
+              className="mt-7 inline-flex items-center justify-center rounded-sm bg-accent px-5 py-3 text-center font-mono text-[0.78rem] uppercase tracking-[0.14em] text-paper transition hover:bg-accent/90"
             >
               {card.ctaLabel}
             </a>
@@ -130,7 +130,7 @@ export function DownloadHero() {
 
             <a
               href={card.jumpAnchor}
-              className="mt-5 inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-muted hover:text-saffron"
+              className="mt-5 inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-muted hover:text-accent"
             >
               <span aria-hidden>↓</span>
               <span>Walk me through it</span>
