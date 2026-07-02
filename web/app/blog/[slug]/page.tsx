@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getBlogPost, getBlogSlugs } from "@/lib/blog";
 
@@ -35,15 +36,26 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   return (
-    <main className="narrow py-16">
-      <p className="masthead mb-4">
-        {new Date(post.date).toLocaleDateString("en-IN", { dateStyle: "long" })} · {post.readTime}
-      </p>
-      <h1 className="section-title">{post.title}</h1>
-      <p className="serif-italic mt-6 text-2xl leading-snug text-muted">{post.excerpt}</p>
-      <article className="prose prose-invert prose-editorial mt-12 max-w-none prose-headings:tracking-normal prose-p:text-lg prose-p:leading-8">
+    <main className="narrow py-20">
+      {/* Byline is date-only — no author name, per brand rules. */}
+      <p className="text-[13.5px] text-faint">{new Date(post.date).toLocaleDateString("en-IN", { dateStyle: "long" })}</p>
+      <h1 className="mt-3 text-[clamp(2.25rem,4.2vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.03em]">
+        {post.title}
+      </h1>
+      <article className="prose prose-editorial mt-9 max-w-none text-[17px] leading-[1.75] prose-headings:tracking-[-0.02em] prose-p:my-[22px] prose-p:text-[17px] prose-p:leading-[1.75] prose-p:text-[#3C3C42]">
         <MDXRemote source={post.content} />
       </article>
+      <div className="mt-12 flex items-center justify-between border-t border-rule pt-6">
+        <Link href="/blog" className="text-[14.5px] font-semibold text-muted transition hover:text-ink">
+          ← All posts
+        </Link>
+        <Link
+          href="/desktop"
+          className="rounded-[10px] bg-accent px-[22px] py-2.5 text-[14.5px] font-semibold text-paper transition hover:bg-accent-hover"
+        >
+          Try Sanketra free
+        </Link>
+      </div>
     </main>
   );
 }

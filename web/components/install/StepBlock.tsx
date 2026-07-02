@@ -46,8 +46,8 @@ export function StepBlock({ index, total, title, children, visual, reassurance, 
         </div>
 
         {reassurance ? (
-          <div className="mt-5 rounded-md border-l-2 border-saffron/70 bg-saffron/[0.05] px-4 py-3">
-            <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-saffron">
+          <div className="mt-5 rounded-md border-l-2 border-accent/70 bg-accent/[0.05] px-4 py-3">
+            <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-accent">
               You will see this — it is normal
             </p>
             <p className="mt-1 text-sm text-muted">{reassurance}</p>

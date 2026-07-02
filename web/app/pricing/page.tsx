@@ -9,13 +9,12 @@ export const metadata: Metadata = {
 
 type Sku = {
   id: "phone" | "desktop" | "bundle";
-  badge: string | null;
+  recommended: boolean;
   eyebrow: string;
   deva: string;
-  title: string;
-  tagline: string;
   price: number;
   priceNote: string;
+  tagline: string;
   features: readonly string[];
   buyUrl: string;
   ctaLabel: string;
@@ -24,188 +23,140 @@ type Sku = {
 const skus: readonly Sku[] = [
   {
     id: "phone",
-    badge: null,
+    recommended: false,
     eyebrow: "Phone Pro",
     deva: "फ़ोन प्रो",
-    title: "Phone as mic, trackpad, gyro.",
-    tagline: "From your couch.",
     price: 999,
-    priceNote: "One-time. Lifetime.",
+    priceNote: "one-time · lifetime",
+    tagline: "From your couch — phone as mic, trackpad, gyro pointer.",
     features: [
-      "Dictation from any room — phone-as-mic beats laptop mics in noisy spaces",
-      "Air-trackpad, gyro pointer, screen-mirror for couch / kitchen / treadmill use",
-      "Higher-accuracy recognition tiers unlocked (the top of the Quality slider)",
-      "Custom vocabulary + accent calibration",
-      "Free Android app stays free — Pro unlocks server-side features"
+      "Dictation from any room",
+      "Air-trackpad · gyro · screen mirror",
+      "Top accuracy tier unlocked",
+      "Custom vocabulary + accent calibration"
     ],
     buyUrl: "https://rzp.io/rzp/6UkS3s2N",
-    ctaLabel: "Buy Phone Pro · ₹999"
+    ctaLabel: "Buy Phone Pro"
   },
   {
     id: "bundle",
-    badge: "Recommended",
+    recommended: true,
     eyebrow: "Bundle",
     deva: "बंडल",
-    title: "Phone Pro + Desktop Pro, one price.",
-    tagline: "Couch and desk. Sanketra everywhere.",
     price: 1499,
-    priceNote: "Save ₹499 vs buying separately.",
+    priceNote: "save ₹499",
+    tagline: "Phone Pro + Desktop Pro. Couch and desk, one license file.",
     features: [
       "Everything in Phone Pro",
       "Everything in Desktop Pro",
-      "One license file works for both tracks",
-      "Future SKUs that join either track auto-unlock at no extra cost",
-      "Recommended for users who already have Sanketra on phone and desk"
+      "One license, both tracks",
+      "Future track SKUs auto-unlock"
     ],
     buyUrl: "https://rzp.io/rzp/6r3tm3x",
-    ctaLabel: "Buy Bundle · ₹1,499"
+    ctaLabel: "Buy Bundle"
   },
   {
     id: "desktop",
-    badge: null,
+    recommended: false,
     eyebrow: "Desktop Pro",
     deva: "डेस्कटॉप प्रो",
-    title: "Global hotkey. Transcript history. At your desk.",
-    tagline: "At your desk.",
     price: 999,
-    priceNote: "One-time. Lifetime.",
+    priceNote: "one-time · lifetime",
+    tagline: "At your desk — global hotkey, native app, transcript history.",
     features: [
-      "Native menubar app — macOS, Windows, Linux",
-      "Ctrl + Alt global hotkey from any focused app (Ctrl + Option on Mac, customizable)",
-      "Transcript history with search, export, vocab inline-edit",
-      "Top-quality recognition tier unlocked (the top of the Quality slider)",
-      "Free tier stays free — Pro unlocks long sessions + the highest-accuracy tier"
+      "macOS · Windows · Linux",
+      "Ctrl + Alt in any app",
+      "History with search + export",
+      "Top accuracy tier unlocked"
     ],
     buyUrl: "https://rzp.io/rzp/QazIhoT",
-    ctaLabel: "Buy Desktop Pro · ₹999"
+    ctaLabel: "Buy Desktop Pro"
   }
 ] as const;
 
-const trustPoints = [
-  {
-    label: "Offline-first",
-    body: "License verification runs on your PC. No call-home, no servers checking up on you, no DRM that breaks when our infra dies."
-  },
-  {
-    label: "Indian rupee, Razorpay",
-    body: "Pay via UPI / card / netbanking / wallet. GST invoice on email. No foreign currency, no FX surprises."
-  },
-  {
-    label: "Instant license email",
-    body: "Webhook mints an Ed25519-signed license file and emails it within seconds of payment capture. Drop it in the server, done."
-  }
-];
+const finePrint = [
+  ["Refunds?", <>7 days, no questions asked. Email your payment ID. <a href={withBase("/refund-policy/")} className="text-accent underline decoration-rule underline-offset-[3px]">Full policy</a>.</>],
+  ["Multi-device?", "One license per buyer, every PC you personally use. No DRM lockouts — we trust you."],
+  ["Upgrade Phone → Bundle?", "Pay the ₹500 difference — email support with your payment ID."],
+  ["Updates?", "All v1.x and v2.x updates included — same license, new features."],
+  ["Does the license call home?", "No. Verification runs on your PC — no servers checking up on you."],
+  ["What stays free?", "Core dictation, forever. Pro adds accuracy tiers, history, vocabulary."]
+] as const;
 
 export default function PricingPage() {
   return (
-    <main className="wrap py-16">
-      <p className="masthead mb-4">Pricing</p>
-      <h1 className="section-title max-w-4xl">
-        Lifetime license, <span className="deva text-saffron">एक baar paid — hamesha tumhara.</span>
-      </h1>
-      <p className="mt-6 max-w-3xl text-lg text-muted">
-        Three SKUs, no subscription, no usage cap. Free tier stays free forever — Pro unlocks higher-accuracy
-        recognition, vocabulary, history, and the conveniences worth paying for.
-      </p>
+    <main>
+      <section className="wrap flex flex-col items-center pb-14 pt-20 text-center">
+        <h1 className="mx-auto max-w-[720px] text-[clamp(2.5rem,4.6vw,3.75rem)] font-bold leading-[1.04] tracking-[-0.03em]">
+          Pay once. <span className="text-faint">Yours forever.</span>
+        </h1>
+        <p className="mx-auto mt-[18px] max-w-[520px] text-lg leading-relaxed text-muted">
+          No subscription, no usage cap. The free tier stays free — Pro unlocks the conveniences worth paying for.
+        </p>
+      </section>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-3">
-        {skus.map((sku) => {
-          const isHero = sku.badge !== null;
-          return (
-            <section
+      <section className="wrap pb-[72px]">
+        <div className="grid items-start gap-5 md:grid-cols-3">
+          {skus.map((sku) => (
+            <article
               key={sku.id}
-              className={`card flex flex-col p-7 ${isHero ? "ring-1 ring-saffron/40" : ""}`}
+              className={`relative flex flex-col rounded-2xl bg-surface p-[30px] ${
+                sku.recommended
+                  ? "border-2 border-accent shadow-[0_24px_48px_-28px_rgba(21,128,61,0.25)]"
+                  : "border border-rule"
+              }`}
             >
-              <div className="flex items-baseline justify-between">
-                <p className="masthead">{sku.eyebrow}</p>
-                {sku.badge ? (
-                  <span className="rounded-sm border border-saffron/50 px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-saffron">
-                    {sku.badge}
-                  </span>
-                ) : null}
-              </div>
-              <p className="deva mt-2 text-xl text-muted">{sku.deva}</p>
-              <h2 className="mt-3 text-2xl font-semibold leading-tight text-ink">{sku.title}</h2>
-              <p className="mt-2 serif-italic text-muted">{sku.tagline}</p>
-
-              <div className="mt-8 flex items-baseline gap-2">
-                <span className="font-mono text-4xl font-semibold text-saffron">
-                  ₹{sku.price.toLocaleString("en-IN")}
+              {sku.recommended ? (
+                <span className="absolute -top-3 left-[30px] rounded-full bg-accent px-3 py-[3px] text-xs font-bold text-paper">
+                  Recommended
                 </span>
+              ) : null}
+              <p className={`text-[13.5px] font-semibold ${sku.recommended ? "text-accent" : "text-muted"}`}>
+                {sku.eyebrow} <span lang="hi" className="deva text-faint">· {sku.deva}</span>
+              </p>
+              <div className="mt-4 flex items-baseline gap-2">
+                <span className="text-[40px] font-bold tracking-[-0.02em]">₹{sku.price.toLocaleString("en-IN")}</span>
+                <span className="text-[13px] text-faint">{sku.priceNote}</span>
               </div>
-              <p className="mt-1 font-mono text-xs uppercase tracking-[0.14em] text-faint">{sku.priceNote}</p>
-
-              <ul className="mt-6 grid gap-3 text-sm text-muted">
+              <p className="mt-3.5 text-[15px] leading-relaxed text-muted">{sku.tagline}</p>
+              <ul className="mt-5 grid gap-2.5 text-sm text-muted">
                 {sku.features.map((feature) => (
-                  <li key={feature} className="border-l border-rule pl-3">
+                  <li key={feature} className="flex gap-2.5">
+                    <span className="font-bold text-accent">✓</span>
                     {feature}
                   </li>
                 ))}
               </ul>
-
               <a
                 href={sku.buyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`mt-8 inline-flex items-center justify-center rounded-sm px-5 py-3 font-mono text-[0.78rem] uppercase tracking-[0.14em] transition ${
-                  isHero
-                    ? "bg-saffron text-paper hover:bg-saffron/90"
-                    : "border border-rule text-ink hover:border-saffron hover:text-saffron"
+                className={`mt-[26px] rounded-[10px] py-3 text-center text-[14.5px] font-semibold transition ${
+                  sku.recommended
+                    ? "bg-accent text-paper hover:bg-accent-hover"
+                    : "border border-[color:var(--input-border)] text-ink hover:border-ink"
                 }`}
               >
                 {sku.ctaLabel}
               </a>
-            </section>
-          );
-        })}
-      </div>
-
-      <section className="mt-20 rule-top pt-12">
-        <p className="masthead mb-4">Fine print, plainly</p>
-        <div className="grid gap-8 md:grid-cols-3">
-          {trustPoints.map((point) => (
-            <div key={point.label}>
-              <h3 className="text-lg font-semibold text-ink">{point.label}</h3>
-              <p className="mt-2 text-sm text-muted">{point.body}</p>
-            </div>
+            </article>
           ))}
         </div>
+        <p className="mt-6 text-center text-[13.5px] text-faint">
+          UPI · card · netbanking via Razorpay — GST invoice by email, license file within seconds.
+        </p>
       </section>
 
-      <section className="mt-16 rule-top pt-12">
-        <p className="masthead mb-4">FAQ</p>
-        <div className="grid gap-8 md:grid-cols-2">
-          <div>
-            <h3 className="text-lg font-semibold text-ink">Refunds?</h3>
-            <p className="mt-2 text-sm text-muted">
-              7-day no-questions-asked refund. Email <span className="font-mono text-saffron">refunds@sanketra.app</span> with
-              your payment ID. See the{" "}
-              <a href={withBase("/refund-policy/")} className="text-saffron underline decoration-rule">
-                refund policy
-              </a>{" "}
-              for the longer version.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-ink">Multi-device?</h3>
-            <p className="mt-2 text-sm text-muted">
-              One license file per buyer. Use it on every PC you personally run Sanketra on. Sharing with other
-              people is not licensed — but we trust you, no DRM lockouts.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-ink">Upgrade Phone → Bundle?</h3>
-            <p className="mt-2 text-sm text-muted">
-              Yes, pay the difference. Email <span className="font-mono text-saffron">support@sanketra.app</span> with your
-              existing payment ID; we send a one-time razorpay.me link for the ₹500 delta.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-ink">Updates?</h3>
-            <p className="mt-2 text-sm text-muted">
-              All v1.x and v2.x updates included — same SKU, same license, new features. Major version bumps
-              (v3 someday, far away) get their own pricing decision.
-            </p>
+      <section className="border-t border-rule bg-surface">
+        <div className="wrap py-16">
+          <h2 className="mb-8 text-[28px] font-bold tracking-[-0.02em]">Fine print, plainly.</h2>
+          <div className="grid gap-x-12 gap-y-3 md:grid-cols-2">
+            {finePrint.map(([question, answer]) => (
+              <div key={question} className="border-t border-rule py-4">
+                <p className="text-[15.5px] font-semibold">{question}</p>
+                <p className="mt-1.5 text-[14.5px] leading-relaxed text-muted">{answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

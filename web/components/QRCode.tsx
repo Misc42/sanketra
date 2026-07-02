@@ -8,8 +8,8 @@ import { QRCodeSVG } from "qrcode.react";
 // adjacent copyable text, so this is the text alternative for the graphic).
 export default function QRCode({ value, title }: { value: string; title: string }) {
   return (
-    <div className="inline-flex rounded-md bg-[#f4efe6] p-4">
-      <QRCodeSVG value={value} title={title} size={196} bgColor="#F4EFE6" fgColor="#0F0E14" level="M" />
+    <div className="inline-flex rounded-lg border border-rule bg-surface p-4">
+      <QRCodeSVG value={value} title={title} size={128} bgColor="#FFFFFF" fgColor="#131315" level="M" />
     </div>
   );
 }

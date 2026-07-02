@@ -17,12 +17,12 @@ export function LinuxGuide() {
   return (
     <div className="grid gap-12">
       <header>
-        <p className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-saffron">
+        <p className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-accent">
           Linux · 5 steps · 2 min
         </p>
         <h2 className="mt-2 text-3xl font-semibold text-ink md:text-4xl">
           Make it executable, run it.{" "}
-          <span className="deva text-saffron">Linux वालों ke liye sabse seedha hai.</span>
+          <span className="deva text-accent">Linux वालों ke liye sabse seedha hai.</span>
         </h2>
         <p className="mt-4 max-w-3xl text-muted">
           The .AppImage runs on any distro — Ubuntu, Fedora, Arch, Debian, Mint. No package
@@ -44,8 +44,8 @@ export function LinuxGuide() {
       >
         <p>
           Click <em className="serif-italic text-ink">Download for Linux</em> above. Your browser
-          saves <code className="font-mono text-saffron">Sanketra-Desktop-x86_64.AppImage</code> to{" "}
-          <code className="font-mono text-saffron">~/Downloads/</code> (about 104 MB).
+          saves <code className="font-mono text-accent">Sanketra-Desktop-x86_64.AppImage</code> to{" "}
+          <code className="font-mono text-accent">~/Downloads/</code> (about 104 MB).
         </p>
       </StepBlock>
 
@@ -135,7 +135,7 @@ sudo pacman -S xcb-util-cursor`}
       >
         <p>
           Focus any text field. Hold{" "}
-          <kbd className="font-mono text-saffron">Ctrl + Alt</kbd>, say something,
+          <kbd className="font-mono text-accent">Ctrl + Alt</kbd>, say something,
           release. Transcript types in within ~1.5 seconds on the model auto-selected for your
           hardware.
         </p>
@@ -160,7 +160,7 @@ sudo pacman -S xcb-util-cursor`}
               Use the in-app <em className="serif-italic">Start dictation</em> button (or the tray
               menu&rsquo;s same item) instead of the hotkey. Same engine, same transcription —
               just an extra click vs. holding the chord. Future Sanketra versions may use the
-              <code className="font-mono text-saffron"> XDG Portals GlobalShortcuts</code> API once
+              <code className="font-mono text-accent"> XDG Portals GlobalShortcuts</code> API once
               GNOME ships it stable.
             </>
           )

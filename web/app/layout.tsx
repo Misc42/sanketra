@@ -1,36 +1,28 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Serif, Tiro_Devanagari_Hindi } from "next/font/google";
+import { Anek_Devanagari, Geist_Mono, Schibsted_Grotesk } from "next/font/google";
 import "../styles/globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { withBase } from "@/lib/basePath";
 
-const plexSans = IBM_Plex_Sans({
+const schibstedGrotesk = Schibsted_Grotesk({
   subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap"
 });
 
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
-  variable: "--font-mono",
-  display: "swap"
-});
-
-const tiroDeva = Tiro_Devanagari_Hindi({
+const anekDevanagari = Anek_Devanagari({
   subsets: ["devanagari", "latin"],
-  weight: "400",
+  weight: ["400", "500", "600", "700"],
   variable: "--font-deva",
   display: "swap"
 });
 
-const instrumentSerif = Instrument_Serif({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-serif",
+  weight: ["400", "500"],
+  variable: "--font-mono",
   display: "swap"
 });
 
@@ -44,12 +36,12 @@ export const metadata: Metadata = {
   // "https://sanketra.app" in the same change.
   metadataBase: new URL("https://misc42.github.io/sanketra"),
   title: {
-    default: "Sanketra — PC का कान",
+    default: "Sanketra — speak, and your PC types",
     template: "%s — Sanketra"
   },
   description: "Voice as a universal input layer for your PC. Hindi-first, LAN-only, zero cloud speech-to-text.",
   openGraph: {
-    title: "Sanketra — PC का कान",
+    title: "Sanketra — speak, and your PC types",
     description: "Voice as a universal input layer for your PC.",
     url: "/",
     siteName: "Sanketra",
@@ -59,7 +51,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sanketra — PC का कान",
+    title: "Sanketra — speak, and your PC types",
     description: "Voice as a universal input layer for your PC.",
     images: ["/og-image.png"]
   },
@@ -72,7 +64,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en-IN"
-      className={`${plexSans.variable} ${plexMono.variable} ${tiroDeva.variable} ${instrumentSerif.variable}`}
+      className={`${schibstedGrotesk.variable} ${anekDevanagari.variable} ${geistMono.variable}`}
     >
       <body>
         <Nav />

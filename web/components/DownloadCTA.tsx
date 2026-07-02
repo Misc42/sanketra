@@ -43,7 +43,7 @@ export function DownloadCTA() {
     <section className="wrap mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
       <a
         href={withBase("/desktop/")}
-        className="rounded-full bg-saffron px-6 py-3 font-mono text-sm font-medium uppercase tracking-wider text-paper transition hover:bg-saffron/90"
+        className="rounded-full bg-accent px-6 py-3 font-mono text-sm font-medium uppercase tracking-wider text-paper transition hover:bg-accent/90"
       >
         Download for {osLabel} · ₹0 free
       </a>

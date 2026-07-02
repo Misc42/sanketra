@@ -10,7 +10,7 @@
 //
 // Palette comes from CSS vars in globals.css so dark-mode tweaks ripple
 // here automatically: --paper, --ink, --ink-muted, --ink-faint, --rule,
-// --accent (green), --accent-warm (saffron).
+// --accent (green), --accent-warm (accent).
 
 import type { CSSProperties } from "react";
 
@@ -224,7 +224,7 @@ export function PermissionPromptMockup({ className }: { className?: string }) {
         </div>
       </foreignObject>
 
-      {/* button row — saffron primary, ghost secondary */}
+      {/* button row — accent primary, ghost secondary */}
       <g transform="translate(60 256)">
         <rect x="218" y="0" width="100" height="36" rx="6" style={SURFACE_2} />
         <rect x="218.5" y="0.5" width="99" height="35" rx="5.5" style={{ stroke: "var(--rule)", fill: "none" }} />

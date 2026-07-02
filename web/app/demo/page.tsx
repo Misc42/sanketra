@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { withBase } from "@/lib/basePath";
 
 export const metadata: Metadata = {
@@ -6,47 +7,66 @@ export const metadata: Metadata = {
   description: "Watch Sanketra dictation, trackpad, and screen mirror demos."
 };
 
-const gifs = [
-  ["Dictation", "/gifs/dictation.gif", "Speak Hindi or Hinglish into your phone and type into the active PC field."],
-  ["Trackpad", "/gifs/trackpad.gif", "Use the phone as a precise LAN trackpad when the laptop is across the room."],
-  ["Screen Mirror", "/gifs/screen-mirror.gif", "See the PC screen on your phone and control it without an internet relay."]
+const clips = [
+  ["Dictation", "Speak Hindi or Hinglish into your phone; text lands in the active PC field."],
+  ["Trackpad", "The phone as a precise LAN trackpad when the laptop is across the room."],
+  ["Screen mirror", "See and control the PC from your phone — no internet relay."]
 ] as const;
 
 export default function DemoPage() {
   return (
-    <main className="wrap py-16">
-      <p className="masthead mb-4">Demo</p>
-      <h1 className="section-title">Bolo, move karo, mirror karo.</h1>
-      <p className="mt-6 max-w-3xl text-lg text-muted">
-        One PC server, one phone, one local Wi-Fi loop. The media files are referenced
-        here so Tanay can drop final captures into `public/` before launch.
-      </p>
-      {/* Hero reel — 30s Remotion-rendered Apple-style piece at public/demo.mp4.
-          Muted/autoplay/loop/playsInline so it acts like a motion poster. */}
-      <div className="mt-12 overflow-hidden rounded-md border border-rule bg-black/40">
-        <video
-          className="aspect-video w-full"
-          src={withBase("/demo.mp4")}
-          aria-hidden
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        />
-      </div>
-      <section className="mt-10 grid gap-5 md:grid-cols-3">
-        {gifs.map(([label, , caption]) => (
-          <article key={label} className="card overflow-hidden">
-            <div className="flex aspect-video w-full items-center justify-center bg-black/40 text-center">
-              <span className="masthead text-saffron">{label}</span>
-            </div>
-            <div className="p-5">
-              <h2 className="text-xl font-semibold">{label}</h2>
-              <p className="mt-2 text-sm text-muted">{caption}</p>
-            </div>
-          </article>
-        ))}
+    <main>
+      <section className="wrap pb-12 pt-20">
+        <h1 className="max-w-[760px] text-[clamp(2.5rem,4.6vw,3.75rem)] font-bold leading-[1.04] tracking-[-0.03em]">
+          Watch it work.
+        </h1>
+        <p className="mt-[18px] max-w-[540px] text-lg leading-relaxed text-muted">
+          One PC, one phone, one local Wi-Fi loop — dictation, trackpad, and screen mirror.
+        </p>
+        {/* demo.mp4 exists in public/; a dedicated poster frame is still pending
+            from the owner (see README §Assets), so the video itself doubles
+            as the hero — muted/autoplay/loop acts like a motion poster. */}
+        <div className="mt-9 aspect-video overflow-hidden rounded-2xl border border-rule bg-[#0F0E14]">
+          <video
+            src={withBase("/demo.mp4")}
+            aria-hidden
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="h-full w-full object-cover"
+          />
+        </div>
+      </section>
+
+      <section className="border-t border-rule bg-surface">
+        <div className="wrap py-16">
+          <div className="grid gap-5 md:grid-cols-3">
+            {clips.map(([title, caption]) => (
+              <article key={title} className="overflow-hidden rounded-2xl border border-rule bg-paper">
+                {/* Clip frames (dictation/trackpad/screen-mirror captures) are
+                    pending from the owner — see README §Assets. Placeholder
+                    keeps the correct 16/9 slot instead of faking an image. */}
+                <div className="flex aspect-video items-center justify-center bg-surface-2 text-center">
+                  <span className="text-[13px] font-semibold text-faint">Capture pending</span>
+                </div>
+                <div className="p-6">
+                  <h2 className="text-lg font-bold">{title}</h2>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted">{caption}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link
+              href="/desktop"
+              className="inline-block rounded-[10px] bg-accent px-7 py-[13px] text-[15px] font-semibold text-paper transition hover:bg-accent-hover"
+            >
+              Try it yourself — free
+            </Link>
+          </div>
+        </div>
       </section>
     </main>
   );

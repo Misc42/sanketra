@@ -25,12 +25,12 @@ export function MacGuide() {
   return (
     <div className="grid gap-12">
       <header>
-        <p className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-saffron">
+        <p className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-accent">
           macOS · 11 steps · 5 min
         </p>
         <h2 className="mt-2 text-3xl font-semibold text-ink md:text-4xl">
           Drag, right-click Open,{" "}
-          <span className="deva text-saffron">अनुमति दो</span>, done.
+          <span className="deva text-accent">अनुमति दो</span>, done.
         </h2>
         <p className="mt-4 max-w-3xl text-muted">
           macOS will show you <strong className="text-ink">one warning</strong> the first time
@@ -52,8 +52,8 @@ export function MacGuide() {
       >
         <p>
           Click the <em className="serif-italic text-ink">Download for macOS</em> button above. Your
-          browser saves <code className="font-mono text-saffron">Sanketra-Desktop-universal.dmg</code> to
-          your <code className="font-mono text-saffron">~/Downloads/</code> folder. The file is about
+          browser saves <code className="font-mono text-accent">Sanketra-Desktop-universal.dmg</code> to
+          your <code className="font-mono text-accent">~/Downloads/</code> folder. The file is about
           112 MB; on a normal connection it lands in under a minute.
         </p>
       </StepBlock>
@@ -92,7 +92,7 @@ export function MacGuide() {
         <p>
           <strong className="text-ink">Drag</strong> the Sanketra Desktop icon onto the Applications
           shortcut. Don&rsquo;t double-click the app from inside the .dmg — apps run from{" "}
-          <code className="font-mono text-saffron">/Applications</code>, not from the mounted disk.
+          <code className="font-mono text-accent">/Applications</code>, not from the mounted disk.
           Dragging is the standard Mac install gesture.
         </p>
         <p>
@@ -277,7 +277,7 @@ export function MacGuide() {
         }
       >
         <p>
-          Press <kbd className="font-mono text-saffron">⌘ Q</kbd> to quit Sanketra (or right-click
+          Press <kbd className="font-mono text-accent">⌘ Q</kbd> to quit Sanketra (or right-click
           its Dock icon → Quit). Then relaunch it from Applications — this time a normal
           double-click works.
         </p>
@@ -329,7 +329,7 @@ export function MacGuide() {
       >
         <p>
           Focus any text field — a note app, a chat window, your browser&rsquo;s address bar.
-          Hold <kbd className="font-mono text-saffron">Ctrl + Option</kbd> (yes, Ctrl, not
+          Hold <kbd className="font-mono text-accent">Ctrl + Option</kbd> (yes, Ctrl, not
           Cmd — Option is the Mac name for Alt; same physical keys as Ctrl + Alt on Linux + Windows).
           Say a sentence. Release the keys. The transcript
           types into the focused field within ~1.5 seconds.

@@ -11,18 +11,25 @@ export default function BlogPage() {
   const posts = getAllBlogPosts();
 
   return (
-    <main className="wrap py-16">
-      <p className="masthead mb-4">Blog</p>
-      <h1 className="section-title">Sharp notes from the build.</h1>
-      <div className="mt-12 grid gap-5">
+    <main className="narrow py-20">
+      <h1 className="text-[clamp(2.375rem,4.4vw,3.375rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+        Notes from the studio
+      </h1>
+      <div className="mt-11">
         {posts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`} className="card block p-6 transition hover:border-saffron">
-            <div className="flex flex-wrap gap-4 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-faint">
-              <span>{new Date(post.date).toLocaleDateString("en-IN", { dateStyle: "medium" })}</span>
-              <span>{post.readTime}</span>
-            </div>
-            <h2 className="mt-4 text-3xl font-semibold tracking-normal">{post.title}</h2>
-            <p className="mt-3 max-w-3xl text-muted">{post.excerpt}</p>
+          <Link
+            key={post.slug}
+            href={`/blog/${post.slug}`}
+            className="group block border-t border-rule py-7"
+          >
+            <p className="text-[13px] text-faint">
+              {new Date(post.date).toLocaleDateString("en-IN", { dateStyle: "long" })}
+            </p>
+            <h2 className="mt-2 text-[26px] font-bold tracking-[-0.02em] transition group-hover:text-accent">
+              {post.title}
+            </h2>
+            <p className="mt-2.5 max-w-[620px] text-[15.5px] leading-relaxed text-muted">{post.excerpt}</p>
+            <span className="mt-3.5 inline-block text-[14.5px] font-semibold text-accent">Read →</span>
           </Link>
         ))}
       </div>

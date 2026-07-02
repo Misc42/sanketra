@@ -15,15 +15,15 @@ const config: Config = {
         faint: "var(--ink-faint)",
         paper: "var(--paper)",
         surface: "var(--surface)",
+        "surface-2": "var(--surface-2)",
         rule: "var(--rule)",
-        saffron: "var(--accent-warm)",
-        green: "var(--accent)"
+        accent: "var(--accent)",
+        "accent-hover": "var(--accent-hover)"
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
-        deva: ["var(--font-deva)"],
-        serif: ["var(--font-serif)"]
+        deva: ["var(--font-deva)"]
       }
     }
   },
