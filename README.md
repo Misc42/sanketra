@@ -1,5 +1,7 @@
 # Sanketra
 
+**Live · https://misc42.github.io/sanketra/**
+
 Local, private Hindi / Hinglish voice typing for your computer. Hold a hotkey,
 speak, and the text is typed at your cursor. Speech recognition runs entirely on
 your machine — your voice never leaves your computer.
