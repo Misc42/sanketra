@@ -57,7 +57,7 @@ const REDIRECT_SCRIPT = `(function(){
     if (ua.indexOf("iphone") !== -1 || ua.indexOf("ipad") !== -1 || ua.indexOf("ipod") !== -1) {
       target = "/sanketra/download/#ios";
     } else if (ua.indexOf("android") !== -1) {
-      target = "https://play.google.com/store/apps/details?id=com.tanay.miconterm";
+      target = "https://play.google.com/store/apps/details?id=com.miconterm.app";
     } else if (ua.indexOf("win") !== -1) {
       target = base + "/Sanketra-Desktop-Setup-x64.exe";
     } else if (ua.indexOf("mac") !== -1) {

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Get Sanketra Phone on Android (Play Store) or scan into the Safari web client on iPhone — paired in two minutes."
 };
 
-const playStoreUrl = "https://play.google.com/store/apps/details?id=com.tanay.miconterm";
+const playStoreUrl = "https://play.google.com/store/apps/details?id=com.miconterm.app";
 // Live deploy host (GitHub Pages project sub-path) — the apex sanketra.app is
 // not attached yet, so the QR + iOS card must point at the host that
 // actually serves the page. Flip back to https://sanketra.app/download at
