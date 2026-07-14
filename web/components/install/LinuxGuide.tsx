@@ -6,7 +6,6 @@ import {
   FilesPermissionsMockup,
   HotkeyDemoMockup,
   LinuxDownloadMockup,
-  MainWindowMockup,
   TrayMenuMockup
 } from "./Mockups";
 import { StepBlock } from "./StepBlock";
@@ -88,7 +87,7 @@ export function LinuxGuide() {
         index={3}
         total={TOTAL}
         title="The main window opens — no prompts"
-        visual={{ kind: "mockup", node: <MainWindowMockup /> }}
+        visual={{ kind: "image", src: "/screenshots/app/main-window.png", alt: "Sanketra Desktop's main window after setup: the Start dictation button, push-to-talk / click-toggle / always-on modes, the Ctrl + Alt hotkey and the microphone privacy switch" }}
         reassurance={
           <>
             Linux has no equivalent of Gatekeeper or SmartScreen for portable executables.

@@ -7,7 +7,6 @@ import {
   InnoFinishMockup,
   InnoSetupWizardMockup,
   InstallProgressMockup,
-  MainWindowMockup,
   SmartScreenExpandedMockup,
   TrayMenuMockup,
   WarningDialogMockup,
@@ -243,7 +242,7 @@ export function WindowsGuide() {
         index={8}
         total={TOTAL}
         title="Hold Ctrl + Alt, speak, release"
-        visual={{ kind: "mockup", node: <MainWindowMockup /> }}
+        visual={{ kind: "image", src: "/screenshots/app/main-window.png", alt: "Sanketra Desktop's main window after setup: the Start dictation button, push-to-talk / click-toggle / always-on modes, the Ctrl + Alt hotkey and the microphone privacy switch" }}
         branch={{
           title: "the hotkey doesn't fire when a game/IDE is focused",
           body: (
