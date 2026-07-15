@@ -118,8 +118,6 @@ export function DownloadHero() {
 
             <a
               href={downloadUrl}
-              target="_blank"
-              rel="noopener noreferrer"
               className="mt-7 inline-flex items-center justify-center rounded-sm bg-accent px-5 py-3 text-center font-mono text-[0.78rem] uppercase tracking-[0.14em] text-paper transition hover:bg-accent/90"
             >
               {card.ctaLabel}

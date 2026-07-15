@@ -113,8 +113,6 @@ export default function DownloadPage() {
               <a
                 key={os}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="rounded-2xl border border-rule bg-paper p-6 transition hover:border-ink"
               >
                 <p className="text-[17px] font-bold">{os}</p>
