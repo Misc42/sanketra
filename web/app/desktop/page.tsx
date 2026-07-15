@@ -77,8 +77,6 @@ export default function DesktopPage() {
             <a
               key={os}
               href={href}
-              target="_blank"
-              rel="noopener noreferrer"
               className="rounded-2xl border border-rule bg-surface p-[22px] transition hover:border-ink"
             >
               <p className="text-[16.5px] font-bold">{os} ↓</p>
