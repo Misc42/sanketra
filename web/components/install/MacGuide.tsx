@@ -10,7 +10,6 @@ import {
   DragToAppsMockup,
   FinderDownloadsMockup,
   InputMonitoringMockup,
-  MainWindowMockup,
   PermissionPromptMockup,
   QuitRelaunchMockup,
   RightClickMenuMockup,
@@ -318,7 +317,7 @@ export function MacGuide() {
         index={11}
         total={TOTAL}
         title="Hold ⌃ ⌥ (Ctrl + Option), say something, release"
-        visual={{ kind: "mockup", node: <MainWindowMockup /> }}
+        visual={{ kind: "image", src: "/screenshots/app/main-window.png", alt: "Sanketra Desktop's main window after setup: the Start dictation button, push-to-talk / click-toggle / always-on modes, the Ctrl + Alt hotkey and the microphone privacy switch" }}
         reassurance={
           <>
             Sanketra also lives in your menu bar — look for the स glyph near the clock. Click it
