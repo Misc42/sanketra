@@ -12,6 +12,12 @@ export const metadata: Metadata = {
 
 const entries = [
   {
+    version: "Desktop v0.5.0",
+    date: "Jul 15, 2026",
+    title: "Hindi transcribes right, and words you teach it now stick",
+    body: "Dictation no longer mis-hears Hindi as Urdu, and Devanagari finally comes through on the phone — the app now uses the languages you picked in setup instead of guessing. Custom words you teach Sanketra reach desktop dictation too, not just the phone. Setup is simpler (two tiles — Hindi, English, or both for Hinglish), the whole app moves to the new light look, and the window reflows instead of clipping when you shrink it."
+  },
+  {
     version: "Desktop v0.4.2",
     date: "Jun 5, 2026",
     title: "Phone pairing fixed",
