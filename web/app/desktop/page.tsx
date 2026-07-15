@@ -88,6 +88,53 @@ export default function DesktopPage() {
         </div>
       </section>
 
+      <section className="border-t border-rule">
+        <div className="wrap py-16">
+          <h2 className="mb-2 text-[28px] font-bold tracking-[-0.02em]">This is the whole app.</h2>
+          <p className="mb-8 max-w-[560px] text-[15px] text-muted">
+            Two screens of setup, then a hotkey. No model names, no jargon, nothing to configure.
+          </p>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            <figure>
+              <div className="overflow-hidden rounded-2xl border border-rule bg-paper">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={withBase("/screenshots/app/setup-03-hinglish.png")}
+                  alt="Sanketra setup asking which languages you dictate in. English and हिन्दी are both selected, so it reads Hindi + English → Hinglish and pre-picks Romanized output, previewing the line: main coffee station par hoon"
+                  width={820}
+                  height={640}
+                  loading="lazy"
+                  className="block h-auto w-full"
+                />
+              </div>
+              <figcaption className="mt-3 text-sm leading-relaxed text-muted">
+                <span className="font-semibold text-ink">Tell it how you talk.</span> Pick Hindi and English
+                together and it knows you mean Hinglish — and writes it the way you&apos;d actually type it.
+              </figcaption>
+            </figure>
+
+            <figure>
+              <div className="overflow-hidden rounded-2xl border border-rule bg-paper">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={withBase("/screenshots/app/main-window.png")}
+                  alt="Sanketra Desktop's main window: a Start dictation button, push-to-talk / click-toggle / always-on modes, the Ctrl + Alt hotkey, and a microphone privacy switch"
+                  width={720}
+                  height={611}
+                  loading="lazy"
+                  className="block h-auto w-full"
+                />
+              </div>
+              <figcaption className="mt-3 text-sm leading-relaxed text-muted">
+                <span className="font-semibold text-ink">Then it stays out of the way.</span> Hold Ctrl + Alt,
+                speak, let go. The text lands wherever your cursor is.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
       <section className="border-t border-rule bg-surface">
         <div className="wrap py-16">
           <h2 className="mb-2 text-[28px] font-bold tracking-[-0.02em]">Install, step by step.</h2>
