@@ -12,6 +12,12 @@ export const metadata: Metadata = {
 
 const entries = [
   {
+    version: "Desktop v0.5.1",
+    date: "Jul 16, 2026",
+    title: "Installers no longer carry the source, and Mac pairing works again",
+    body: "The Windows, Mac, and Linux installers had been shipping the app's own code in readable form inside the download — they now ship compiled only. And on Mac, pairing a phone had quietly stopped working (a library mismatch inside the packaged app); that's fixed. Dictation itself was never affected, and no licence was ever at risk. A new automated check now launches the packaged server on every build so this kind of break can't ship again."
+  },
+  {
     version: "Desktop v0.5.0",
     date: "Jul 15, 2026",
     title: "Hindi transcribes right, and words you teach it now stick",
