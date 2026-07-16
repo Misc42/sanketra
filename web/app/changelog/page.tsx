@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 
-// Curated customer-facing entries — matches Sanketra Changelog.dc.html
-// verbatim. The full engineering log lives in content/CHANGELOG.md (still
-// read by lib/changelog.ts, kept for internal reference) but that file is a
-// bug-by-bug audit trail, not something to ship on the marketing site; this
-// page trades it for the 5 plain-language entries the design specifies.
+// Curated customer-facing entries. The full engineering changelog is a
+// bug-by-bug audit trail kept private in the source repo — never shipped on
+// the marketing site; this page carries only plain-language release notes.
 export const metadata: Metadata = {
   title: "Changelog",
   description: "Sanketra release notes."
