@@ -96,7 +96,7 @@ PNG needed.
 ## Provenance
 
 These captures need a real installation on each OS. The Linux v0.2.0 build
-runs on Tanay's `ninja` dev box; macOS + Windows need the v0.3.0 native
+runs on the maintainer's dev box; macOS + Windows need the v0.3.0 native
 installers (which are in CI as of May 18, 2026 — see `TODO.md` task M1+).
 
 Once captured, drop the PNGs into the matching `mac/`, `win/`, `linux/`
