@@ -15,7 +15,7 @@ const EN = [
   { h: "6. Liability", p: "Sanketra is provided as-is. We do not guarantee 100% transcription accuracy across every hardware combination — speech recognition has inherent limits. For any indirect, consequential, or incidental loss, our maximum liability is limited to the amount you paid in the preceding 12 months." },
   { h: "7. Governing law", p: "These terms are governed by the laws of India. Any disputes will be resolved in Indian courts." },
   { h: "8. Changes", p: "We may update these terms occasionally. Material changes will be announced to license owners by email and noticed on the changelog page. Continued use after a change implies acceptance." },
-  { h: "9. Contact", p: "Sanketra is a Misc42 Labs product, operated as a sole proprietorship in India. Questions? Email hello@misc42.com." }
+  { h: "9. Contact", p: "Sanketra is a Misc42 Labs product, operated as a sole proprietorship in India. Questions? Open an issue at github.com/Misc42/sanketra/issues." }
 ] as const;
 
 const HI = [
@@ -27,7 +27,7 @@ const HI = [
   { h: "6. Liability", p: "Sanketra “as-is” provide की जाती है। हम guarantee नहीं देते कि यह हर hardware combination पर 100% accurate transcription करेगी — speech recognition की inherent limits हैं। किसी भी indirect / consequential / incidental loss के लिए हमारी maximum liability उस specific user ने जो amount paid किया है उसी तक limited है (last 12 months में)।" },
   { h: "7. Governing law", p: "ये terms India के laws के under govern होते हैं। कोई dispute हो तो jurisdiction Indian courts ही होगी।" },
   { h: "8. Changes", p: "हम इन terms को कभी-कभी update कर सकते हैं — material changes हों तो आपको email पर inform करेंगे (license owners), और changelog page पर notice रहेगा। Continued use = acceptance।" },
-  { h: "9. Contact", p: "Sanketra एक Misc42 Labs product है, operated as a sole proprietorship in India। सवाल? Email hello@misc42.com।" }
+  { h: "9. Contact", p: "Sanketra एक Misc42 Labs product है, operated as a sole proprietorship in India। सवाल? github.com/Misc42/sanketra/issues पर issue खोलें।" }
 ] as const;
 
 function Sections({ items }: { items: readonly { h: string; p: string }[] }) {

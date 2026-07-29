@@ -35,12 +35,9 @@ export default function RefundPolicyPage() {
       <div className="callout mt-8 p-7">
         <p className="text-[16.5px] leading-relaxed text-ink">
           <span className="font-bold">The short version:</span> first purchase, 7 days, full refund, no questions.
-          Email{" "}
-          <a href="mailto:hello@misc42.com" className="font-semibold text-accent">
-            hello@misc42.com
-          </a>{" "}
-          with your Razorpay payment ID (<span className="font-mono text-sm">pay_XXXXX</span> on the receipt).
-          Money lands back in 5–7 working days.
+          Reply to the Razorpay receipt you were emailed at checkout, quoting your payment ID
+          (<span className="font-mono text-sm">pay_XXXXX</span> on that receipt) &mdash; it reaches us and keeps
+          your payment details off any public page. Money lands back in 5&ndash;7 working days.
         </p>
       </div>
 

@@ -49,8 +49,13 @@ export default function PrivacyPage() {
 
       <p className="mt-11 border-t border-rule pt-5 text-[13.5px] text-faint">
         A Misc42 Labs product · sole proprietorship, India ·{" "}
-        <a href="mailto:hello@misc42.com" className="text-accent">
-          hello@misc42.com
+        <a
+          href="https://github.com/Misc42/sanketra/issues/new"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-accent"
+        >
+          contact us on GitHub
         </a>
       </p>
     </main>
