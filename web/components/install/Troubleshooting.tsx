@@ -184,10 +184,18 @@ export function Troubleshooting() {
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-ink">Email support</h3>
+            <h3 className="text-lg font-semibold text-ink">Licence or payment questions</h3>
             <p className="mt-2 text-sm text-muted">
-              <span className="font-mono text-accent">support@sanketra.app</span>. Slower than
-              GitHub for technical bugs, faster for license / payment questions.
+              Also{" "}
+              <a
+                href="https://github.com/Misc42/sanketra/issues/new"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent underline decoration-rule"
+              >
+                GitHub issues
+              </a>{" "}
+              for now. Issues are public, so leave out anything you would not post openly.
             </p>
           </div>
           <div>
@@ -195,8 +203,16 @@ export function Troubleshooting() {
             <p className="mt-2 text-sm text-muted">
               Speech recognition runs entirely on your computer &mdash; your audio is
               processed locally and never uploaded to any server. Questions about privacy
-              or what data Sanketra touches?{" "}
-              <span className="font-mono text-accent">support@sanketra.app</span>.
+              or what data Sanketra touches? Ask on{" "}
+              <a
+                href="https://github.com/Misc42/sanketra/issues/new"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent underline decoration-rule"
+              >
+                GitHub
+              </a>
+              .
             </p>
           </div>
         </div>
