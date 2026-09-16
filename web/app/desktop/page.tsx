@@ -4,6 +4,7 @@ import { InstallTabs } from "@/components/install/InstallTabs";
 import { MacGuide } from "@/components/install/MacGuide";
 import { WindowsGuide } from "@/components/install/WindowsGuide";
 import { LinuxGuide } from "@/components/install/LinuxGuide";
+import { Troubleshooting } from "@/components/install/Troubleshooting";
 import { withBase } from "@/lib/basePath";
 
 export const metadata: Metadata = {
@@ -111,6 +112,13 @@ export default function DesktopPage() {
             windows={<WindowsGuide />}
             linux={<LinuxGuide />}
           />
+          {/* Orphaned by the same redesign as the guides above. It carries what
+              the steps deliberately leave out: the Terminal escape hatches
+              (xattr quarantine strip, silent-install flags) and the failures
+              that are not ours to fix — Secure Input blocking key injection,
+              Sequoia's stricter unsigned-app cache. */}
+          <Troubleshooting />
+
           <p className="mt-[18px] text-[13.5px] text-faint">
             Something looks different? The{" "}
             <a
