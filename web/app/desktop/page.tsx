@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { InstallTabs } from "@/components/install/InstallTabs";
+import { MacGuide } from "@/components/install/MacGuide";
+import { WindowsGuide } from "@/components/install/WindowsGuide";
+import { LinuxGuide } from "@/components/install/LinuxGuide";
 import { withBase } from "@/lib/basePath";
 
 export const metadata: Metadata = {
@@ -16,48 +19,6 @@ const downloadTiles = [
   ["Windows", `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`, "Setup-x64.exe"],
   ["Linux", `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage"]
 ] as const;
-
-type Step = { title: string; body: string };
-
-const STEPS: Record<"mac" | "windows" | "linux", readonly Step[]> = {
-  mac: [
-    { title: "Open the .dmg, drag to Applications", body: "Double-click Sanketra-Desktop-universal.dmg and drag the app into Applications." },
-    { title: "Right-click → Open (once)", body: "The beta is unsigned, so Gatekeeper warns you. Right-click the app → Open → Open. macOS remembers after the first time." },
-    { title: "Allow the microphone", body: "macOS asks so Sanketra can hear you. Reversible anytime in System Settings → Privacy." },
-    { title: "Allow Accessibility", body: "This lets Sanketra type at your cursor. System Settings → Privacy & Security → Accessibility → enable Sanketra." },
-    { title: "Hold Ctrl + Option and speak", body: "In any text field. Release to transcribe — the text lands at your cursor." }
-  ],
-  windows: [
-    { title: "Run the installer", body: "Double-click Sanketra-Desktop-Setup-x64.exe." },
-    { title: "SmartScreen: More info → Run anyway", body: "The beta is unsigned, so Windows warns you once. Click More info, then Run anyway." },
-    { title: "Allow the microphone", body: "One prompt, so Sanketra can hear you. Reversible in Settings → Privacy." },
-    { title: "Find स in the system tray", body: "Sanketra runs in the tray. Right-click it for Settings and Pair Phone." },
-    { title: "Hold Ctrl + Alt and speak", body: "In any text field. Release to transcribe — the text lands at your cursor." }
-  ],
-  linux: [
-    { title: "Make it executable", body: "chmod +x Sanketra-Desktop-x86_64.AppImage — or right-click → Properties → allow executing." },
-    { title: "Run it", body: "No warnings on Linux — it just runs, and registers itself in your app menu on first launch." },
-    { title: "Find स in the system tray", body: "Right-click the tray icon for Settings and Pair Phone." },
-    { title: "Hold Ctrl + Alt and speak", body: "In any text field. Release to transcribe — the text lands at your cursor." },
-    { title: "Optional: pick your mic", body: "Settings → Microphone lists every input; switching is live, no restart." }
-  ]
-};
-
-function StepList({ steps }: { steps: readonly Step[] }) {
-  return (
-    <ol className="mt-6 overflow-hidden rounded-2xl border border-rule bg-paper">
-      {steps.map((step, index) => (
-        <li key={step.title} className="grid grid-cols-[40px_1fr] gap-4 border-b border-rule px-6 py-5 last:border-b-0 sm:grid-cols-[56px_1fr]">
-          <span className="text-[15px] font-bold text-accent">0{index + 1}</span>
-          <div>
-            <p className="text-base font-semibold">{step.title}</p>
-            <p className="mt-1 text-[14.5px] leading-relaxed text-muted">{step.body}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  );
-}
 
 export default function DesktopPage() {
   return (
@@ -139,10 +100,16 @@ export default function DesktopPage() {
           <p className="mb-6 max-w-[560px] text-[15px] text-muted">
             The beta is unsigned — your OS will warn you exactly once. Here&rsquo;s every screen you&rsquo;ll see.
           </p>
+          {/* The per-OS guides, back on the page. The 2026-07-03 redesign swapped
+              them for the five-line list that used to live in this file and left
+              them behind, unreachable, for ten weeks: 24 steps against 15, with
+              every dialog the installer actually shows drawn as a mockup rather
+              than described. Their tokens were repointed at the current theme
+              (see components/install/Mockups.tsx). */}
           <InstallTabs
-            mac={<StepList steps={STEPS.mac} />}
-            windows={<StepList steps={STEPS.windows} />}
-            linux={<StepList steps={STEPS.linux} />}
+            mac={<MacGuide />}
+            windows={<WindowsGuide />}
+            linux={<LinuxGuide />}
           />
           <p className="mt-[18px] text-[13.5px] text-faint">
             Something looks different? The{" "}

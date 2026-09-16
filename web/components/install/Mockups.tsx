@@ -1,3 +1,10 @@
+// NOTE (2026-09-16): these mockups predate the 2026-07-03 redesign, which
+// renamed the saffron accent token to --accent (green, the real brand colour)
+// and dropped --accent-warm and --font-serif entirely. Both were still
+// referenced here, so every "saffron" stroke would have computed to nothing and
+// the italic line would have fallen back to the browser's default serif. Names
+// like SAFFRON are kept because they are what the shapes are called throughout
+// this file; the value they carry is the current accent.
 // Brand-controlled UI mockups for the /desktop install guide.
 //
 // Why inline SVG instead of screenshots: these depict Sanketra's OWN UI —
@@ -21,7 +28,7 @@ const RULE: CSSProperties = { stroke: "var(--rule)", fill: "none" };
 const INK: CSSProperties = { fill: "var(--ink)" };
 const MUTED: CSSProperties = { fill: "var(--ink-muted)" };
 const FAINT: CSSProperties = { fill: "var(--ink-faint)" };
-const SAFFRON: CSSProperties = { fill: "var(--accent-warm)" };
+const SAFFRON: CSSProperties = { fill: "var(--accent)" };
 const GREEN: CSSProperties = { fill: "var(--accent)" };
 
 /* -------------------------------------------------------------------------- */
@@ -82,7 +89,7 @@ export function MainWindowMockup({ className }: { className?: string }) {
       <text x="44" y="148" fontFamily="var(--font-sans), sans-serif" fontSize="46" fontWeight="600" style={INK}>
         Hold
       </text>
-      <text x="138" y="148" fontFamily="var(--font-serif), serif" fontSize="46" fontStyle="italic" style={SAFFRON}>
+      <text x="138" y="148" fontFamily="var(--font-sans), sans-serif" fontSize="46" fontStyle="italic" style={SAFFRON}>
         Ctrl+Alt
       </text>
       <text x="44" y="200" fontFamily="var(--font-sans), sans-serif" fontSize="46" fontWeight="600" style={INK}>
@@ -101,7 +108,7 @@ export function MainWindowMockup({ className }: { className?: string }) {
       <g transform="translate(44 308)">
         {/* hold (active) */}
         <rect x="0" y="0" width="120" height="40" rx="6" style={SURFACE_2} />
-        <rect x="0.5" y="0.5" width="119" height="39" rx="5.5" style={{ stroke: "var(--accent-warm)", fill: "none" }} />
+        <rect x="0.5" y="0.5" width="119" height="39" rx="5.5" style={{ stroke: "var(--accent)", fill: "none" }} />
         <text x="16" y="25" fontFamily="var(--font-sans), sans-serif" fontSize="13" fontWeight="500" style={SAFFRON}>
           Hold
         </text>
@@ -193,7 +200,7 @@ export function PermissionPromptMockup({ className }: { className?: string }) {
 
       {/* app icon — स glyph in rounded square */}
       <g transform="translate(60 64)">
-        <rect x="0" y="0" width="56" height="56" rx="12" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="56" height="56" rx="12" style={{ fill: "var(--accent)" }} />
         <text
           x="28"
           y="40"
@@ -231,7 +238,7 @@ export function PermissionPromptMockup({ className }: { className?: string }) {
         <text x="268" y="23" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="13" style={MUTED}>
           Don&apos;t Allow
         </text>
-        <rect x="328" y="0" width="96" height="36" rx="6" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="328" y="0" width="96" height="36" rx="6" style={{ fill: "var(--accent)" }} />
         <text x="376" y="23" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="13" fontWeight="600" style={{ fill: "var(--paper)" }}>
           Allow
         </text>
@@ -304,14 +311,14 @@ export function TrayMenuMockup({ className }: { className?: string }) {
 
       {/* Sanketra tray icon with halo to show it's clicked */}
       <g transform="translate(132 4)">
-        <rect x="0" y="0" width="28" height="28" rx="6" style={{ fill: "var(--accent-warm)", opacity: 0.16 }} />
+        <rect x="0" y="0" width="28" height="28" rx="6" style={{ fill: "var(--accent)", opacity: 0.16 }} />
         <text x="14" y="22" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="17" style={SAFFRON}>
           स
         </text>
       </g>
 
       {/* connector arrow from icon to menu */}
-      <path d="M 146 36 L 146 48" style={{ stroke: "var(--accent-warm)", strokeWidth: 1.5, fill: "none" }} />
+      <path d="M 146 36 L 146 48" style={{ stroke: "var(--accent)", strokeWidth: 1.5, fill: "none" }} />
 
       {/* menu container */}
       <rect x="20" y="48" width="340" height={cursor + 4} rx="8" style={SURFACE} />
@@ -327,7 +334,7 @@ export function TrayMenuMockup({ className }: { className?: string }) {
           <g key={idx} transform={`translate(0 ${y})`}>
             {item.kind === "check" && (
               <g transform="translate(36 7)">
-                <rect x="0" y="0" width="12" height="12" rx="2" style={item.checked ? { fill: "var(--accent-warm)" } : SURFACE_2} />
+                <rect x="0" y="0" width="12" height="12" rx="2" style={item.checked ? { fill: "var(--accent)" } : SURFACE_2} />
                 {item.checked && (
                   <path d="M 3 6 l 3 3 l 5 -6" style={{ stroke: "var(--paper)", strokeWidth: 1.6, fill: "none" }} />
                 )}
@@ -396,7 +403,7 @@ export function WarningDialogMockup({
 
       {/* warning icon (triangle with !) */}
       <g transform="translate(60 70)">
-        <path d="M 28 0 L 56 48 L 0 48 Z" style={{ fill: "var(--accent-warm)" }} />
+        <path d="M 28 0 L 56 48 L 0 48 Z" style={{ fill: "var(--accent)" }} />
         <rect x="26" y="14" width="4" height="20" rx="1" style={{ fill: "var(--paper)" }} />
         <circle cx="28" cy="40" r="2.2" style={{ fill: "var(--paper)" }} />
       </g>
@@ -426,15 +433,15 @@ export function WarningDialogMockup({
 
       {/* highlighted escape button */}
       <g transform="translate(370 216)">
-        <rect x="-4" y="-4" width="120" height="42" rx="8" style={{ fill: "var(--accent-warm)", opacity: 0.18 }} />
-        <rect x="0" y="0" width="112" height="34" rx="6" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="-4" y="-4" width="120" height="42" rx="8" style={{ fill: "var(--accent)", opacity: 0.18 }} />
+        <rect x="0" y="0" width="112" height="34" rx="6" style={{ fill: "var(--accent)" }} />
         <text x="56" y="22" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="12" fontWeight="600" style={{ fill: "var(--paper)" }}>
           {hintLabel}
         </text>
       </g>
 
       {/* annotation arrow */}
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 1.5, fill: "none" }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 1.5, fill: "none" }}>
         <path d="M 510 180 q 30 -10 -10 30" />
         <path d="M 504 208 l 6 6 l 6 -6" />
       </g>
@@ -494,7 +501,7 @@ export function FinderDownloadsMockup({ className }: { className?: string }) {
         const isActive = label === "Downloads";
         return (
           <g key={label}>
-            {isActive && <rect x="8" y={60 + i * 28} width="132" height="22" rx="4" style={{ fill: "var(--accent-warm)", opacity: 0.16 }} />}
+            {isActive && <rect x="8" y={60 + i * 28} width="132" height="22" rx="4" style={{ fill: "var(--accent)", opacity: 0.16 }} />}
             <text x="22" y={75 + i * 28} fontFamily="var(--font-sans), sans-serif" fontSize="11.5" style={isActive ? SAFFRON : MUTED}>
               {label}
             </text>
@@ -512,10 +519,10 @@ export function FinderDownloadsMockup({ className }: { className?: string }) {
       <line x1="160" y1="78" x2="540" y2="78" style={RULE} />
 
       {/* file row — highlighted */}
-      <rect x="160" y="86" width="380" height="34" rx="4" style={{ fill: "var(--accent-warm)", opacity: 0.10 }} />
+      <rect x="160" y="86" width="380" height="34" rx="4" style={{ fill: "var(--accent)", opacity: 0.10 }} />
       {/* dmg icon */}
       <g transform="translate(174 92)">
-        <rect x="0" y="0" width="22" height="22" rx="3" style={{ fill: "var(--accent-warm)", opacity: 0.5 }} />
+        <rect x="0" y="0" width="22" height="22" rx="3" style={{ fill: "var(--accent)", opacity: 0.5 }} />
         <text x="11" y="16" textAnchor="middle" fontFamily="var(--font-mono), monospace" fontSize="8" fontWeight="700" style={{ fill: "var(--paper)" }}>
           DMG
         </text>
@@ -528,7 +535,7 @@ export function FinderDownloadsMockup({ className }: { className?: string }) {
       </text>
 
       {/* annotation arrow */}
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 1.4, fill: "none" }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 1.4, fill: "none" }}>
         <path d="M 540 220 q -30 -40 -60 -100" />
         <path d="M 480 124 l -3 -7 l 7 1" />
       </g>
@@ -572,7 +579,7 @@ export function DmgMountedMockup({ className }: { className?: string }) {
 
       {/* app icon (left) */}
       <g transform="translate(120 110)">
-        <rect x="0" y="0" width="88" height="88" rx="18" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="88" height="88" rx="18" style={{ fill: "var(--accent)" }} />
         <text x="44" y="60" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="46" style={{ fill: "var(--paper)" }}>
           स
         </text>
@@ -585,7 +592,7 @@ export function DmgMountedMockup({ className }: { className?: string }) {
       </text>
 
       {/* drag arrow */}
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 2, fill: "none" }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 2, fill: "none" }}>
         <path d="M 230 154 L 330 154" />
         <path d="M 322 148 L 332 154 L 322 160" />
       </g>
@@ -643,7 +650,7 @@ export function DragToAppsMockup({ className }: { className?: string }) {
 
       {/* faint app icon at start position */}
       <g transform="translate(60 100)" style={{ opacity: 0.35 }}>
-        <rect x="0" y="0" width="68" height="68" rx="14" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="68" height="68" rx="14" style={{ fill: "var(--accent)" }} />
         <text x="34" y="48" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="36" style={{ fill: "var(--paper)" }}>
           स
         </text>
@@ -651,7 +658,7 @@ export function DragToAppsMockup({ className }: { className?: string }) {
 
       {/* cursor + dragged icon mid-flight */}
       <g transform="translate(250 130)">
-        <rect x="0" y="0" width="68" height="68" rx="14" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="68" height="68" rx="14" style={{ fill: "var(--accent)" }} />
         <text x="34" y="48" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="36" style={{ fill: "var(--paper)" }}>
           स
         </text>
@@ -663,7 +670,7 @@ export function DragToAppsMockup({ className }: { className?: string }) {
       </g>
 
       {/* motion lines */}
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 1.2, fill: "none", opacity: 0.6 }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 1.2, fill: "none", opacity: 0.6 }}>
         <path d="M 134 134 q 50 -10 116 0" strokeDasharray="3 3" />
         <path d="M 130 152 q 60 0 122 4" strokeDasharray="3 3" />
         <path d="M 134 170 q 50 12 116 4" strokeDasharray="3 3" />
@@ -671,7 +678,7 @@ export function DragToAppsMockup({ className }: { className?: string }) {
 
       {/* Applications target with drop highlight */}
       <g transform="translate(420 100)">
-        <rect x="-4" y="-4" width="76" height="76" rx="16" style={{ fill: "var(--accent-warm)", opacity: 0.18 }} />
+        <rect x="-4" y="-4" width="76" height="76" rx="16" style={{ fill: "var(--accent)", opacity: 0.18 }} />
         <rect x="0" y="0" width="68" height="68" rx="14" style={SURFACE_2} />
         <g transform="translate(16 18)">
           {[0, 18, 36].map((x) =>
@@ -713,7 +720,7 @@ export function RightClickMenuMockup({ className }: { className?: string }) {
 
       {/* faint app icon */}
       <g transform="translate(60 60)">
-        <rect x="0" y="0" width="58" height="58" rx="12" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="58" height="58" rx="12" style={{ fill: "var(--accent)" }} />
         <text x="29" y="42" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="30" style={{ fill: "var(--paper)" }}>
           स
         </text>
@@ -737,7 +744,7 @@ export function RightClickMenuMockup({ className }: { className?: string }) {
           return (
             <g key={label}>
               {isOpen && (
-                <rect x="4" y={6 + i * 24} width="212" height="22" rx="4" style={{ fill: "var(--accent-warm)" }} />
+                <rect x="4" y={6 + i * 24} width="212" height="22" rx="4" style={{ fill: "var(--accent)" }} />
               )}
               <text
                 x="16"
@@ -755,7 +762,7 @@ export function RightClickMenuMockup({ className }: { className?: string }) {
       </g>
 
       {/* annotation arrow pointing to Open */}
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 1.4, fill: "none" }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 1.4, fill: "none" }}>
         <path d="M 410 130 q -40 -4 -52 0" />
         <path d="M 364 124 l -8 5 l 6 6" />
       </g>
@@ -819,7 +826,7 @@ export function AccessibilityListMockup({ className }: { className?: string }) {
             {i > 0 && <line x1="56" y1={y - 6} x2="504" y2={y - 6} style={RULE} />}
             {/* app icon */}
             <g transform={`translate(52 ${y + 4})`}>
-              <rect x="0" y="0" width="32" height="32" rx="6" style={isSanketra ? { fill: "var(--accent-warm)" } : SURFACE_2} />
+              <rect x="0" y="0" width="32" height="32" rx="6" style={isSanketra ? { fill: "var(--accent)" } : SURFACE_2} />
               {isSanketra ? (
                 <text x="16" y="24" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="18" style={{ fill: "var(--paper)" }}>
                   स
@@ -843,7 +850,7 @@ export function AccessibilityListMockup({ className }: { className?: string }) {
       })}
 
       {/* annotation */}
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 1.4, fill: "none" }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 1.4, fill: "none" }}>
         <path d="M 528 196 q 18 -6 -22 -8" />
         <path d="M 484 188 l -3 6 l 7 1" />
       </g>
@@ -886,10 +893,10 @@ export function InputMonitoringMockup({ className }: { className?: string }) {
 
       {/* single highlighted row */}
       <rect x="32" y="138" width="496" height="68" rx="8" style={PAPER} />
-      <rect x="32.5" y="138.5" width="495" height="67" rx="7.5" style={{ stroke: "var(--accent-warm)", fill: "none" }} />
+      <rect x="32.5" y="138.5" width="495" height="67" rx="7.5" style={{ stroke: "var(--accent)", fill: "none" }} />
 
       <g transform="translate(52 154)">
-        <rect x="0" y="0" width="36" height="36" rx="7" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="36" height="36" rx="7" style={{ fill: "var(--accent)" }} />
         <text x="18" y="27" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="20" style={{ fill: "var(--paper)" }}>
           स
         </text>
@@ -945,14 +952,14 @@ export function QuitRelaunchMockup({ className }: { className?: string }) {
       </text>
 
       {/* arrow */}
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 1.6, fill: "none" }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 1.6, fill: "none" }}>
         <path d="M 168 120 L 264 120" />
         <path d="M 256 114 L 266 120 L 256 126" />
       </g>
 
       {/* applications launchpad icon */}
       <g transform="translate(296 80)">
-        <rect x="0" y="0" width="80" height="80" rx="18" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="80" height="80" rx="18" style={{ fill: "var(--accent)" }} />
         <text x="40" y="56" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="42" style={{ fill: "var(--paper)" }}>
           स
         </text>
@@ -994,7 +1001,7 @@ export function EdgeDownloadBarMockup({ className }: { className?: string }) {
       <circle cx="58" cy="25" r="5" style={FAINT} />
       <rect x="92" y="14" width="380" height="22" rx="11" style={PAPER} />
       <text x="106" y="29" fontFamily="var(--font-mono), monospace" fontSize="10" style={MUTED}>
-        sanketra.app/download
+        misc42.github.io/sanketra/download
       </text>
 
       {/* page placeholder */}
@@ -1008,7 +1015,7 @@ export function EdgeDownloadBarMockup({ className }: { className?: string }) {
 
       {/* download bar */}
       <rect x="40" y="216" width="480" height="56" rx="8" style={PAPER} />
-      <rect x="40.5" y="216.5" width="479" height="55" rx="7.5" style={{ stroke: "var(--accent-warm)", fill: "none" }} />
+      <rect x="40.5" y="216.5" width="479" height="55" rx="7.5" style={{ stroke: "var(--accent)", fill: "none" }} />
 
       {/* file icon */}
       <g transform="translate(60 230)">
@@ -1031,13 +1038,13 @@ export function EdgeDownloadBarMockup({ className }: { className?: string }) {
         <text x="32" y="14" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="10" style={MUTED}>
           Show in folder
         </text>
-        <rect x="0" y="26" width="64" height="20" rx="4" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="26" width="64" height="20" rx="4" style={{ fill: "var(--accent)" }} />
         <text x="32" y="40" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="10" fontWeight="600" style={{ fill: "var(--paper)" }}>
           Open
         </text>
       </g>
 
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 1.4, fill: "none" }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 1.4, fill: "none" }}>
         <path d="M 530 256 q -20 4 -50 -10" />
         <path d="M 482 244 l -4 6 l 7 0" />
       </g>
@@ -1098,8 +1105,8 @@ export function SmartScreenExpandedMockup({ className }: { className?: string })
 
       {/* buttons — Run anyway highlighted */}
       <g transform="translate(64 280)">
-        <rect x="-4" y="-4" width="120" height="42" rx="8" style={{ fill: "var(--accent-warm)", opacity: 0.18 }} />
-        <rect x="0" y="0" width="112" height="34" rx="4" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="-4" y="-4" width="120" height="42" rx="8" style={{ fill: "var(--accent)", opacity: 0.18 }} />
+        <rect x="0" y="0" width="112" height="34" rx="4" style={{ fill: "var(--accent)" }} />
         <text x="56" y="22" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="12" fontWeight="600" style={{ fill: "var(--paper)" }}>
           Run anyway
         </text>
@@ -1111,7 +1118,7 @@ export function SmartScreenExpandedMockup({ className }: { className?: string })
       </g>
 
       {/* arrow */}
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 1.4, fill: "none" }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 1.4, fill: "none" }}>
         <path d="M 40 298 q -22 12 -8 32" />
         <path d="M 28 326 l 6 4 l 0 -7" />
       </g>
@@ -1168,7 +1175,7 @@ export function InnoSetupWizardMockup({ className }: { className?: string }) {
           <rect x="12" y="70" width="80" height="6" rx="1.6" style={{ fill: "var(--rule)" }} />
           <rect x="12" y="82" width="44" height="6" rx="1.6" style={{ fill: "var(--rule)" }} />
           {/* CTA at bottom */}
-          <rect x="56" y="122" width="44" height="22" rx="4" style={{ fill: "var(--accent-warm)" }} />
+          <rect x="56" y="122" width="44" height="22" rx="4" style={{ fill: "var(--accent)" }} />
           <text x="78" y="138" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="10" fontWeight="600" style={{ fill: "var(--paper)" }}>
             Next
           </text>
@@ -1285,7 +1292,7 @@ export function InnoFinishMockup({ className }: { className?: string }) {
 
       {/* checkbox row */}
       <g transform="translate(40 160)">
-        <rect x="0" y="0" width="16" height="16" rx="2" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="16" height="16" rx="2" style={{ fill: "var(--accent)" }} />
         <path d="M 4 8 L 7 11 L 12 5" style={{ stroke: "var(--paper)", strokeWidth: 2, fill: "none", strokeLinecap: "round", strokeLinejoin: "round" }} />
         <text x="28" y="13" fontFamily="var(--font-sans), sans-serif" fontSize="12.5" style={INK}>
           Launch Sanketra Desktop
@@ -1300,7 +1307,7 @@ export function InnoFinishMockup({ className }: { className?: string }) {
 
       {/* Finish CTA */}
       <g transform="translate(420 244)">
-        <rect x="0" y="0" width="100" height="34" rx="4" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="100" height="34" rx="4" style={{ fill: "var(--accent)" }} />
         <text x="50" y="22" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="12" fontWeight="600" style={{ fill: "var(--paper)" }}>
           Finish
         </text>
@@ -1332,7 +1339,7 @@ export function WinMicToastMockup({ className }: { className?: string }) {
       <g transform="translate(380 252)">
         <rect x="0" y="0" width="14" height="14" rx="2" style={MUTED} />
         <rect x="20" y="0" width="14" height="14" rx="2" style={MUTED} />
-        <rect x="40" y="0" width="14" height="14" rx="2" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="40" y="0" width="14" height="14" rx="2" style={{ fill: "var(--accent)" }} />
         <text x="47" y="11" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="9" style={{ fill: "var(--paper)" }}>
           स
         </text>
@@ -1346,7 +1353,7 @@ export function WinMicToastMockup({ className }: { className?: string }) {
       <rect x="240.5" y="92.5" width="207" height="123" rx="7.5" style={{ stroke: "var(--rule)", fill: "none" }} />
 
       <g transform="translate(252 104)">
-        <rect x="0" y="0" width="22" height="22" rx="4" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="22" height="22" rx="4" style={{ fill: "var(--accent)" }} />
         <text x="11" y="16" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="13" style={{ fill: "var(--paper)" }}>
           स
         </text>
@@ -1362,7 +1369,7 @@ export function WinMicToastMockup({ className }: { className?: string }) {
       </foreignObject>
 
       <g transform="translate(252 184)">
-        <rect x="0" y="0" width="60" height="22" rx="3" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="60" height="22" rx="3" style={{ fill: "var(--accent)" }} />
         <text x="30" y="15" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="10.5" fontWeight="600" style={{ fill: "var(--paper)" }}>
           Yes
         </text>
@@ -1373,7 +1380,7 @@ export function WinMicToastMockup({ className }: { className?: string }) {
       </g>
 
       {/* arrow */}
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 1.4, fill: "none" }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 1.4, fill: "none" }}>
         <path d="M 226 200 L 252 192" />
         <path d="M 248 186 L 254 192 L 248 198" />
       </g>
@@ -1408,7 +1415,7 @@ export function LinuxDownloadMockup({ className }: { className?: string }) {
       <rect x="0" y="0" width="560" height="44" rx="12" style={SURFACE_2} />
       <rect x="0" y="32" width="560" height="12" style={SURFACE_2} />
       <text x="280" y="28" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="12.5" fontWeight="500" style={MUTED}>
-        sanketra.app / download
+        misc42.github.io / sanketra / download
       </text>
 
       {/* page area */}
@@ -1422,7 +1429,7 @@ export function LinuxDownloadMockup({ className }: { className?: string }) {
 
       {/* download bar */}
       <rect x="40" y="188" width="480" height="56" rx="8" style={PAPER} />
-      <rect x="40.5" y="188.5" width="479" height="55" rx="7.5" style={{ stroke: "var(--accent-warm)", fill: "none" }} />
+      <rect x="40.5" y="188.5" width="479" height="55" rx="7.5" style={{ stroke: "var(--accent)", fill: "none" }} />
 
       <g transform="translate(60 202)">
         <rect x="0" y="0" width="28" height="28" rx="4" style={SAFFRON} />
@@ -1439,7 +1446,7 @@ export function LinuxDownloadMockup({ className }: { className?: string }) {
       </text>
 
       <g transform="translate(420 198)">
-        <rect x="0" y="0" width="80" height="36" rx="4" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="80" height="36" rx="4" style={{ fill: "var(--accent)" }} />
         <text x="40" y="22" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="12" fontWeight="600" style={{ fill: "var(--paper)" }}>
           Show file
         </text>
@@ -1484,7 +1491,7 @@ export function FilesPermissionsMockup({ className }: { className?: string }) {
         <text x="148" y="14" fontFamily="var(--font-sans), sans-serif" fontSize="12" style={MUTED}>
           Open With
         </text>
-        <line x1="56" y1="22" x2="124" y2="22" style={{ stroke: "var(--accent-warm)", strokeWidth: 2 }} />
+        <line x1="56" y1="22" x2="124" y2="22" style={{ stroke: "var(--accent)", strokeWidth: 2 }} />
       </g>
 
       <line x1="32" y1="96" x2="428" y2="96" style={RULE} />
@@ -1515,10 +1522,10 @@ export function FilesPermissionsMockup({ className }: { className?: string }) {
 
       {/* the critical checkbox */}
       <rect x="32" y="220" width="396" height="64" rx="8" style={PAPER} />
-      <rect x="32.5" y="220.5" width="395" height="63" rx="7.5" style={{ stroke: "var(--accent-warm)", fill: "none" }} />
+      <rect x="32.5" y="220.5" width="395" height="63" rx="7.5" style={{ stroke: "var(--accent)", fill: "none" }} />
 
       <g transform="translate(52 238)">
-        <rect x="0" y="0" width="18" height="18" rx="3" style={{ fill: "var(--accent-warm)" }} />
+        <rect x="0" y="0" width="18" height="18" rx="3" style={{ fill: "var(--accent)" }} />
         <path d="M 4 9 L 8 13 L 14 5" style={{ stroke: "var(--paper)", strokeWidth: 2.2, fill: "none", strokeLinecap: "round", strokeLinejoin: "round" }} />
       </g>
       <text x="84" y="252" fontFamily="var(--font-sans), sans-serif" fontSize="13" fontWeight="500" style={INK}>
@@ -1529,7 +1536,7 @@ export function FilesPermissionsMockup({ className }: { className?: string }) {
       </text>
 
       {/* arrow */}
-      <g style={{ stroke: "var(--accent-warm)", strokeWidth: 1.4, fill: "none" }}>
+      <g style={{ stroke: "var(--accent)", strokeWidth: 1.4, fill: "none" }}>
         <path d="M 16 252 q 14 8 30 0" />
         <path d="M 42 254 l 5 -4 l -1 7" />
       </g>
