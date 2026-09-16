@@ -60,6 +60,24 @@ export default function DesktopPage() {
               <div className="overflow-hidden rounded-2xl border border-rule bg-paper">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
+                  src={withBase("/screenshots/app/setup-01-welcome.png")}
+                  alt="Sanketra Desktop's first screen: the name, the line Speak. It types., a note promising setup in 30 seconds with no model jargon, and a single Get started button"
+                  width={820}
+                  height={640}
+                  loading="lazy"
+                  className="block h-auto w-full"
+                />
+              </div>
+              <figcaption className="mt-3 text-sm leading-relaxed text-muted">
+                <span className="font-semibold text-ink">It opens asking nothing.</span> One button, and a
+                promise it keeps: thirty seconds, no model names, and every choice changeable later.
+              </figcaption>
+            </figure>
+
+            <figure>
+              <div className="overflow-hidden rounded-2xl border border-rule bg-paper">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={withBase("/screenshots/app/setup-03-hinglish.png")}
                   alt="Sanketra setup asking which languages you dictate in. English and हिन्दी are both selected, so it reads Hindi + English → Hinglish and pre-picks Romanized output, previewing the line: main coffee station par hoon"
                   width={820}
@@ -71,6 +89,24 @@ export default function DesktopPage() {
               <figcaption className="mt-3 text-sm leading-relaxed text-muted">
                 <span className="font-semibold text-ink">Tell it how you talk.</span> Pick Hindi and English
                 together and it knows you mean Hinglish — and writes it the way you&apos;d actually type it.
+              </figcaption>
+            </figure>
+
+            <figure>
+              <div className="overflow-hidden rounded-2xl border border-rule bg-paper">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={withBase("/screenshots/app/setup-04-recap.png")}
+                  alt="The last setup screen, headed You're set: a recap listing languages English and Hindi (Romanized), engine Auto, hotkey Ctrl + Alt and microphone System default, with a Start dictating button"
+                  width={820}
+                  height={640}
+                  loading="lazy"
+                  className="block h-auto w-full"
+                />
+              </div>
+              <figcaption className="mt-3 text-sm leading-relaxed text-muted">
+                <span className="font-semibold text-ink">Then it shows you what it decided.</span> Languages,
+                engine, hotkey, microphone — on one screen, before you start, not buried in a settings tree.
               </figcaption>
             </figure>
 

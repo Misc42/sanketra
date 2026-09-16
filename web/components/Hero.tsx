@@ -2,8 +2,10 @@
 
 // Home hero. Client component because the primary CTA label swaps to the
 // visitor's detected OS post-hydration — same detect ladder as
-// components/install/DownloadHero.tsx (kept inline rather than hoisted to a
-// shared lib/ helper because both call sites are five lines each). SSR
+// components/DownloadCTA.tsx and app/get/page.tsx (kept inline rather than
+// hoisted to a shared lib/ helper because each call site is five lines). The
+// fourth copy lived in components/install/DownloadHero.tsx, which no page had
+// rendered since the 2026-07-03 redesign; deleted 2026-09-16. SSR
 // renders the design's literal fallback copy ("your OS") so there's no
 // hydration mismatch and no flash for JS-off / slow-hydration visitors.
 

@@ -28,8 +28,9 @@ const ARTIFACTS = {
   linux: `${RELEASE_BASE}/Sanketra-Desktop-x86_64.AppImage`
 } as const;
 
-// Inline UA-sniff + redirect. Mirrors detectOS() in DownloadHero.tsx and
-// download/page.tsx — kept in sync intentionally. iPad on iPadOS 13+
+// Inline UA-sniff + redirect. Mirrors detectOS() in components/Hero.tsx,
+// components/DownloadCTA.tsx and download/page.tsx — kept in sync
+// intentionally. iPad on iPadOS 13+
 // reports "Macintosh" in UA, so iphone|ipad|ipod must be checked BEFORE
 // the mac branch; the additional ontouchend hint catches the iPad-on-Mac
 // disguise. location.replace() (not assign) so Back doesn't return here.
