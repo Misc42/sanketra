@@ -32,6 +32,7 @@ const skus: readonly Sku[] = [
     features: [
       "Dictation from any room",
       "Air-trackpad · gyro · screen mirror",
+      "Hear the PC’s audio on the phone",
       "Top accuracy tier unlocked",
       "Custom vocabulary + accent calibration"
     ],

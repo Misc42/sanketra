@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 import { withBase } from "@/lib/basePath";
 
 const features = [
-  ["From the couch", "Your phone is the mic", "Pair over Wi-Fi. Hold to speak; the PC types. Trackpad, pointer, and screen mirror ride along."],
+  ["From the couch", "Your phone is the mic", "Pair over Wi-Fi. Hold to speak; the PC types. Trackpad, pointer, screen mirror and the PC’s own audio ride along."],
   ["At the desk", "One hotkey, any app", "Ctrl + Alt in any text field and dictate with the PC mic. Native app for macOS, Windows, Linux."],
   ["New", "Hindi in, Hinglish out", "Speak Hindi, get Latin-script Hinglish — loanwords land as real English. One on-device engine."]
 ] as const;
@@ -65,7 +65,7 @@ export default function HomePage() {
         <div className="wrap py-[72px]">
           <div className="mb-7 flex items-baseline justify-between">
             <h2 className="text-[38px] font-bold tracking-[-0.025em]">Watch it type.</h2>
-            <span className="text-sm text-faint">45 seconds, no narration</span>
+            <span className="text-sm text-faint">30 seconds, no narration</span>
           </div>
           <div className="aspect-video overflow-hidden rounded-2xl border border-rule bg-[#0F0E14]">
             <video
