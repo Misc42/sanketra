@@ -5,9 +5,10 @@
 // SSR-default label is "your OS" so the static export renders cleanly with
 // no hydration mismatch. Post-hydration we read navigator.userAgent and
 // swap in the detected OS name (macOS / Windows / Linux). Same detect
-// ladder as components/install/DownloadHero.tsx — kept inline rather than
-// hoisted to a shared lib/ helper because both call sites are five lines
-// each and there's no third caller in sight.
+// ladder as components/Hero.tsx and app/get/page.tsx — kept inline rather
+// than hoisted to a shared lib/ helper because each call site is five lines.
+// A fourth copy sat in an unrendered component until 2026-09-16, when it was
+// deleted rather than kept in sync for nobody.
 
 import { useEffect, useState } from "react";
 import { withBase } from "@/lib/basePath";
