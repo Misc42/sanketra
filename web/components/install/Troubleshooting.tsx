@@ -122,7 +122,11 @@ export function Troubleshooting() {
             <p className="deva mt-1 text-lg text-muted">{entry.deva}</p>
             <h3 className="mt-3 text-lg font-semibold leading-snug text-ink">{entry.title}</h3>
             <p className="mt-2 text-sm text-muted">{entry.body}</p>
-            <pre className="command mt-5 overflow-x-auto p-4 text-[0.78rem]">
+            {/* Wraps rather than scrolling sideways: the whole point of this block
+                is that someone copies it, and a command cut off at the card edge
+                reads as the whole command. `.command` sets overflow-x: auto, which
+                is fine for a wide page and wrong inside a two-up card. */}
+            <pre className="command mt-5 whitespace-pre-wrap break-words p-4 text-[0.78rem]">
               <code>{entry.command}</code>
             </pre>
           </article>
