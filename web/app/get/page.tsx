@@ -168,7 +168,8 @@ export default function GetPage() {
             popup-blocked, or Back-button arrivals.
           </p>
           <p className="mt-4 text-[13px] text-faint">
-            Apne PC par auto-install ho jayega — bas correct file ka download finish hone do.
+            Download khatam hone ke baad file ko khud kholo aur install karo — wo apne aap install nahi
+            hoti. Poora guide neeche &ldquo;step-by-step walkthrough&rdquo; mein hai.
           </p>
         </section>
 
