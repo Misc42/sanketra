@@ -19,6 +19,11 @@ export const metadata: Metadata = {
 // with that client, so it must not go live in front of v0.5.1 installers alone:
 // cut the next release first (docs/LAUNCH_READINESS_2026-10-21.md, FL-1).
 //
+// The PC server's Android pairing page links here with #android as the intent
+// fallback when the Android app is not installed (src/server_async.py:7781,
+// fallback_https = ".../sanketra/download#android"), so the Android app card
+// below carries id="android" in BOTH of its states. Keep that id.
+//
 // This QR only opens THIS page on a phone (for someone reading it on the PC).
 // The pairing QR is the one the PC app draws; the copy next to the code says so.
 const pageUrl = "https://misc42.github.io/sanketra/download";
@@ -96,7 +101,10 @@ export default function DownloadPage() {
           </article>
 
           {PLAY_LISTING_LIVE ? (
-            <article className="grid grid-cols-[1fr_auto] gap-6 rounded-2xl border border-rule bg-surface p-[30px]">
+            <article
+              id="android"
+              className="grid scroll-mt-24 grid-cols-[1fr_auto] gap-6 rounded-2xl border border-rule bg-surface p-[30px]"
+            >
               <div>
                 <p className="text-[13px] font-semibold text-muted">Android app · free on Play Store</p>
                 <h2 className="mt-2.5 text-[26px] font-bold tracking-[-0.02em]">Sanketra Phone</h2>
@@ -127,13 +135,17 @@ export default function DownloadPage() {
               </div>
             </article>
           ) : (
-            <article className="rounded-2xl border border-dashed border-rule bg-surface p-[30px]">
+            <article id="android" className="scroll-mt-24 rounded-2xl border border-dashed border-rule bg-surface p-[30px]">
               <p className="text-[13px] font-semibold text-muted">Android app · not on Google Play yet</p>
               <h2 className="mt-2.5 text-[26px] font-bold tracking-[-0.02em]">Sanketra Phone</h2>
               <p className="mt-3.5 text-[14.5px] leading-relaxed text-muted">
                 The Play Store listing isn&rsquo;t live and there is no APK to download, so there is no Android app
                 to install today. The browser client already does dictation, the trackpad, the gyro
                 pointer, screen mirror and the PC&rsquo;s audio.
+              </p>
+              <p className="mt-3 text-[13.5px] leading-relaxed text-muted">
+                Sent here from the PC&rsquo;s pairing page after tapping the app button? Go back and tap{" "}
+                <span className="font-semibold text-ink">Use in browser</span> instead.
               </p>
               <p className="mt-3 text-[13.5px] leading-relaxed text-faint">
                 iPhone has no native app at all; Safari is the iPhone client.
