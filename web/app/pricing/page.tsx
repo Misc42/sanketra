@@ -7,6 +7,11 @@ export const metadata: Metadata = {
     "Lifetime licenses for Sanketra. Phone Pro ₹999, Desktop Pro ₹999, or the Bundle ₹1,499. Pay once, yours forever."
 };
 
+// Checkout stays closed until the license issuer is deployed and one test
+// purchase has minted a key that a real install accepted. The payment links
+// below are live-mode: with no issuer, a buyer is charged and gets nothing.
+const SALES_OPEN = false;
+
 type Sku = {
   id: "phone" | "desktop" | "bundle";
   recommended: boolean;
@@ -128,23 +133,34 @@ export default function PricingPage() {
                   </li>
                 ))}
               </ul>
-              <a
-                href={sku.buyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`mt-[26px] rounded-[10px] py-3 text-center text-[14.5px] font-semibold transition ${
-                  sku.recommended
-                    ? "bg-accent text-paper hover:bg-accent-hover"
-                    : "border border-[color:var(--input-border)] text-ink hover:border-ink"
-                }`}
-              >
-                {sku.ctaLabel}
-              </a>
+              {SALES_OPEN ? (
+                <a
+                  href={sku.buyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`mt-[26px] rounded-[10px] py-3 text-center text-[14.5px] font-semibold transition ${
+                    sku.recommended
+                      ? "bg-accent text-paper hover:bg-accent-hover"
+                      : "border border-[color:var(--input-border)] text-ink hover:border-ink"
+                  }`}
+                >
+                  {sku.ctaLabel}
+                </a>
+              ) : (
+                <span
+                  aria-disabled="true"
+                  className="mt-[26px] cursor-default rounded-[10px] border border-dashed border-rule py-3 text-center text-[14.5px] font-semibold text-faint"
+                >
+                  Opening soon
+                </span>
+              )}
             </article>
           ))}
         </div>
         <p className="mt-6 text-center text-[13.5px] text-faint">
-          UPI · card · netbanking via Razorpay — GST invoice by email, license file within seconds.
+          {SALES_OPEN
+            ? "UPI · card · netbanking via Razorpay — GST invoice by email, license file within seconds."
+            : "Purchases open soon. The free tier works today — download it and start dictating."}
         </p>
       </section>
 
