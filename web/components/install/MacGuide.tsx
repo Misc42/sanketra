@@ -237,48 +237,54 @@ export function MacGuide() {
         }
       >
         <p>
-          The first time Sanketra opens the mic, macOS shows a system dialog asking{" "}
-          <em className="serif-italic">&ldquo;Sanketra would like to access the
-          microphone.&rdquo;</em> Click <strong className="text-ink">Allow</strong>.
+          The first time Sanketra opens the mic, macOS shows its own system dialog asking whether
+          Sanketra may access the microphone. Click <strong className="text-ink">Allow</strong>.
         </p>
         <p>
           Sanketra needs the mic for the obvious reason — that&rsquo;s how dictation works. The
-          dialog text is exactly what you&rsquo;ll see, sourced from Sanketra&rsquo;s own bundle
-          metadata.
+          reason line in the dialog comes from Sanketra&rsquo;s own bundle: it needs your microphone
+          to dictate speech into text, and the audio is processed locally on your Mac.
         </p>
       </StepBlock>
 
       <StepBlock
         index={8}
         total={TOTAL}
-        title="Sanketra asks for Accessibility access"
+        title="Sanketra asks for Accessibility and Input Monitoring access"
         visual={{
           kind: "mockup",
           node: (
             <WarningDialogMockup
-              title="Sanketra needs Accessibility access"
-              body="So the global hotkey works from any app and recognized text can be typed at your cursor. Toggle it on in System Settings → Privacy & Security → Accessibility."
-              rejectLabel="Not now"
+              title="Sanketra needs Accessibility + Input Monitoring access."
+              body="Seeing global key presses needs Input Monitoring; typing into other apps needs Accessibility. Without both, the hotkey silently does nothing."
+              rejectLabel="Later"
               hintLabel="Open Accessibility"
             />
           )
         }}
         reassurance={
           <>
-            Accessibility access on macOS is what lets the global hotkey work from any app and
-            lets Sanketra type the recognized text at your cursor. Without it, the hotkey is
-            silent. This is a one-time grant.
+            Both permissions are needed, not one or the other. Input Monitoring lets Sanketra see
+            your hotkey while you work in other apps; Accessibility lets it type the recognized
+            text at your cursor. Missing either one means the hotkey silently does nothing. Both
+            are one-time grants.
           </>
         }
       >
         <p>
-          Immediately after the mic prompt, Sanketra shows its own dialog:{" "}
-          <em className="serif-italic">&ldquo;Sanketra needs Accessibility access to listen for your
-          dictation hotkey from anywhere and type the recognized text into the focused app.&rdquo;</em>
+          When Sanketra starts and either permission is missing, it asks macOS for both, so you
+          may see a system prompt for each. It then shows its own window, titled{" "}
+          <em className="serif-italic">&ldquo;Sanketra &middot; Permission needed&rdquo;</em>:{" "}
+          <em className="serif-italic">&ldquo;Sanketra needs Accessibility + Input Monitoring
+          access.&rdquo;</em>
         </p>
         <p>
-          Click <strong className="text-ink">Open Accessibility</strong>. macOS&rsquo;s System
-          Settings app launches and jumps straight to the right panel.
+          The window has three buttons: <strong className="text-ink">Open Accessibility</strong>,{" "}
+          <strong className="text-ink">Open Input Monitoring</strong> and{" "}
+          <strong className="text-ink">Later</strong>. The first two open the matching page of
+          System Settings and leave this window open, so you can visit both. <strong
+          className="text-ink">Later</strong> closes it; Sanketra asks again the next time it starts
+          while either permission is still missing.
         </p>
       </StepBlock>
 
@@ -303,7 +309,8 @@ export function MacGuide() {
         }}
       >
         <p>
-          You&rsquo;ll see a list of apps that have requested Accessibility access. Find{" "}
+          Click <strong className="text-ink">Open Accessibility</strong>. System Settings opens at
+          Privacy &amp; Security → Accessibility. Find{" "}
           <strong className="text-ink">Sanketra Desktop</strong> in the list and click the toggle
           to switch it ON. macOS asks for your account password (or Touch ID) to confirm.
         </p>
@@ -312,6 +319,40 @@ export function MacGuide() {
       <StepBlock
         index={10}
         total={TOTAL}
+        title="Toggle Sanketra Desktop ON in Input Monitoring too"
+        visual={{
+          kind: "mockup",
+          node: <InputMonitoringMockup />
+        }}
+        reassurance={
+          <>
+            This is a separate pane from Accessibility. Granting Accessibility alone leaves the
+            hotkey listener with no key events at all and no error message, so if the hotkey
+            does nothing after Accessibility is granted, check this switch first.
+          </>
+        }
+        branch={{
+          title: "Sanketra Desktop is not in the Input Monitoring list yet",
+          body: (
+            <>
+              Click the <strong className="text-ink">+</strong> button at the bottom of the
+              list, choose Sanketra Desktop from Applications, click{" "}
+              <strong className="text-ink">Open</strong>, then switch it on.
+            </>
+          )
+        }}
+      >
+        <p>
+          This step is required, not a fallback. Go back to Sanketra&rsquo;s window and click{" "}
+          <strong className="text-ink">Open Input Monitoring</strong> (or open System Settings →
+          Privacy &amp; Security → Input Monitoring yourself), find{" "}
+          <strong className="text-ink">Sanketra Desktop</strong> and toggle it ON.
+        </p>
+      </StepBlock>
+
+      <StepBlock
+        index={11}
+        total={TOTAL}
         title="Quit Sanketra and relaunch"
         visual={{
           kind: "mockup",
@@ -319,47 +360,15 @@ export function MacGuide() {
         }}
         reassurance={
           <>
-            macOS only registers a freshly-granted Accessibility permission for the next launch —
-            not the running process. This is a system-wide quirk that affects every app needing
-            Accessibility, not just Sanketra.
+            Sanketra&rsquo;s own permission window ends with the same instruction: toggle both,
+            then quit and relaunch Sanketra. Do not skip it.
           </>
         }
       >
         <p>
-          Press <kbd className="font-mono text-accent">⌘ Q</kbd> to quit Sanketra (or right-click
-          its Dock icon → Quit). Then relaunch it from Applications — this time a normal
-          double-click works.
-        </p>
-      </StepBlock>
-
-      <StepBlock
-        index={11}
-        total={TOTAL}
-        title="If the hotkey still doesn't fire, also enable Input Monitoring"
-        visual={{
-          kind: "mockup",
-          node: <InputMonitoringMockup />
-        }}
-        branch={{
-          title: "you don't see a second prompt",
-          body: (
-            <>
-              On some macOS versions (Sonoma 14+ in particular), Accessibility alone is sufficient
-              and no Input Monitoring prompt appears. If your hotkey works after step 10, skip this
-              step entirely.
-            </>
-          )
-        }}
-      >
-        <p>
-          On macOS 10.15 Catalina and newer, keyboard event monitoring is split out into a separate{" "}
-          <strong className="text-ink">Input Monitoring</strong> permission. If your hotkey
-          doesn&rsquo;t fire after step 10, Sanketra shows a second dialog asking you to grant Input
-          Monitoring.
-        </p>
-        <p>
-          Click <strong className="text-ink">Open Input Monitoring</strong>, find Sanketra Desktop
-          in the list, toggle it ON, then quit + relaunch Sanketra one more time.
+          Once both switches are on, press <kbd className="font-mono text-accent">⌘ Q</kbd> to quit
+          Sanketra (or right-click its Dock icon → Quit). Then relaunch it from Applications —
+          this time a normal double-click works, and the permission window does not come back.
         </p>
       </StepBlock>
 
