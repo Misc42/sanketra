@@ -12,6 +12,7 @@
 
 import type { Metadata } from "next";
 import { withBase } from "@/lib/basePath";
+import { MAC_ARCH_SHORT, MAC_DMG_FILE, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Install · Sanketra",
@@ -23,7 +24,7 @@ const RELEASE_BASE =
   "https://github.com/Misc42/sanketra/releases/latest/download";
 
 const ARTIFACTS = {
-  mac: `${RELEASE_BASE}/Sanketra-Desktop-universal.dmg`,
+  mac: `${RELEASE_BASE}/${MAC_DMG_FILE}`,
   windows: `${RELEASE_BASE}/Sanketra-Desktop-Setup-x64.exe`,
   linux: `${RELEASE_BASE}/Sanketra-Desktop-x86_64.AppImage`
 } as const;
@@ -34,6 +35,11 @@ const ARTIFACTS = {
 // reports "Macintosh" in UA, so iphone|ipad|ipod must be checked BEFORE
 // the mac branch; the additional ontouchend hint catches the iPad-on-Mac
 // disguise. location.replace() (not assign) so Back doesn't return here.
+//
+// Android: while the Play listing is not live (PLAY_LISTING_LIVE in lib/facts.ts)
+// there is nothing to install, so an Android visitor goes to /download, whose
+// lead path is the browser client reached through the QR on the PC. iOS goes to
+// the same page. Both flags are interpolated into the script below.
 //
 // Side-effect: also parses ?ref=phone and stamps data-ref="phone" on
 // <html>. We can't await searchParams in a statically-exported page
@@ -54,16 +60,19 @@ const REDIRECT_SCRIPT = `(function(){
 
     var ua = (navigator.userAgent || "").toLowerCase();
     var base = "https://github.com/Misc42/sanketra/releases/latest/download";
+    var playLive = ${JSON.stringify(PLAY_LISTING_LIVE)};
+    var playUrl = ${JSON.stringify(PLAY_STORE_URL)};
+    var phonePage = "/sanketra/download/";
     var target;
     if (ua.indexOf("iphone") !== -1 || ua.indexOf("ipad") !== -1 || ua.indexOf("ipod") !== -1) {
-      target = "/sanketra/download/#ios";
+      target = phonePage;
     } else if (ua.indexOf("android") !== -1) {
-      target = "https://play.google.com/store/apps/details?id=com.miconterm.app";
+      target = playLive ? playUrl : phonePage;
     } else if (ua.indexOf("win") !== -1) {
       target = base + "/Sanketra-Desktop-Setup-x64.exe";
     } else if (ua.indexOf("mac") !== -1) {
-      if ("ontouchend" in document) { target = "/sanketra/download/#ios"; }
-      else { target = base + "/Sanketra-Desktop-universal.dmg"; }
+      if ("ontouchend" in document) { target = phonePage; }
+      else { target = base + "/${MAC_DMG_FILE}"; }
     } else if (ua.indexOf("linux") !== -1) {
       target = base + "/Sanketra-Desktop-x86_64.AppImage";
     } else {
@@ -122,7 +131,8 @@ export default function GetPage() {
               <p className="mt-2 inline-flex items-center justify-center rounded-[10px] bg-accent px-4 py-3 text-[14.5px] font-semibold text-paper transition hover:bg-accent-hover">
                 Download .dmg
               </p>
-              <p className="mt-2 font-mono text-xs text-faint">Sanketra-Desktop-universal.dmg</p>
+              <p className="mt-2 font-mono text-xs text-faint">{MAC_DMG_FILE}</p>
+              <p className="text-xs leading-snug text-muted">{MAC_ARCH_SHORT}</p>
             </a>
 
             <a
@@ -180,14 +190,20 @@ export default function GetPage() {
           <p className="text-[13px] font-semibold text-accent">★ Shared from a phone?</p>
           <p className="mt-3 text-muted">
             You&rsquo;ll want <strong className="text-ink">Sanketra Desktop</strong> on
-            your PC <em className="text-ink">and</em>{" "}
-            <strong className="text-ink">Sanketra Phone</strong> on the
-            Android side. Both are free during beta.{" "}
+            your PC. Your phone then pairs to it through the browser, with no
+            phone app to install: scan the QR the PC shows.{" "}
+            <a
+              href={withBase("/download/")}
+              className="border-b border-rule pb-0.5 text-accent transition hover:border-accent"
+            >
+              Phone steps
+            </a>{" "}
+            ·{" "}
             <a
               href={withBase("/pricing/")}
               className="border-b border-rule pb-0.5 text-accent transition hover:border-accent"
             >
-              See /pricing for the Bundle SKU
+              Pricing
             </a>
             .
           </p>
