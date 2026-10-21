@@ -1048,7 +1048,7 @@ export function QuitRelaunchMockup({ className }: { className?: string }) {
       </text>
 
       <text x="230" y="232" textAnchor="middle" fontFamily="var(--font-deva), serif" fontSize="13" style={FAINT}>
-        फिर से शुरू — accessibility permission registers on next launch
+        फिर से शुरू — relaunch once both permissions are on
       </text>
     </svg>
   );
