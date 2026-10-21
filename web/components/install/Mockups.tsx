@@ -413,11 +413,13 @@ export function WarningDialogMockup({
       <rect x="138" y="40" width="372" height="232" rx="10" style={SURFACE} />
       <rect x="138.5" y="40.5" width="371" height="231" rx="9.5" style={{ stroke: "var(--rule)", fill: "none" }} />
 
-      <text x="158" y="78" fontFamily="var(--font-sans), sans-serif" fontSize="15" fontWeight="600" style={INK}>
-        {title}
-      </text>
+      {/* foreignObject, not <text>: Gatekeeper's titles run past one line (Apple's own
+          wording is "Apple cannot check ... for malicious software") and SVG text does not wrap. */}
+      <foreignObject x="158" y="58" width="332" height="46">
+        <div style={{ font: "600 15px/1.3 var(--font-sans), sans-serif", color: "var(--ink)" }}>{title}</div>
+      </foreignObject>
 
-      <foreignObject x="158" y="98" width="332" height="100">
+      <foreignObject x="158" y="108" width="332" height="100">
         <div style={{ font: "12.5px/1.6 var(--font-sans), sans-serif", color: "var(--ink-muted)" }}>
           {body}
         </div>
@@ -531,7 +533,7 @@ export function FinderDownloadsMockup({ className }: { className?: string }) {
         Sanketra-Desktop-universal.dmg
       </text>
       <text x="440" y="108" fontFamily="var(--font-mono), monospace" fontSize="11" style={MUTED}>
-        112 MB
+        165 MB
       </text>
 
       {/* annotation arrow */}
@@ -701,8 +703,85 @@ export function DragToAppsMockup({ className }: { className?: string }) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* MAC 4 — Right-click context menu                                          */
+/* MAC 4b — System Settings → Privacy & Security → Open Anyway                */
 /* -------------------------------------------------------------------------- */
+// Replaces the right-click flow below for macOS 15 Sequoia and later, where
+// Apple removed Control-click → Open as a way past Gatekeeper. The path shown
+// is Apple's own: support.apple.com/en-us/102445 ("Privacy & Security, scroll
+// down, click Open Anyway"); the button is offered for about an hour after the
+// blocked attempt (support.apple.com/guide/mac-help/mh40617/mac).
+
+export function OpenAnywayMockup({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 560 330"
+      className={className}
+      role="img"
+      aria-label="System Settings, Privacy and Security, Security section: a note that Sanketra Desktop was blocked, with an Open Anyway button"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>Privacy &amp; Security · Security · Open Anyway</title>
+
+      <rect x="0" y="0" width="560" height="330" rx="12" style={SURFACE} />
+      <rect x="0.5" y="0.5" width="559" height="329" rx="11.5" style={{ ...RULE, strokeWidth: 1 }} />
+
+      {/* title bar */}
+      <rect x="0" y="0" width="560" height="40" rx="12" style={SURFACE_2} />
+      <rect x="0" y="28" width="560" height="12" style={SURFACE_2} />
+      <text x="280" y="25" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="12" fontWeight="500" style={MUTED}>
+        System Settings — Privacy &amp; Security
+      </text>
+
+      {/* section heading */}
+      <text x="32" y="78" fontFamily="var(--font-sans), sans-serif" fontSize="13" fontWeight="600" style={INK}>
+        Security
+      </text>
+
+      {/* blocked-app row */}
+      <rect x="32" y="92" width="496" height="84" rx="8" style={PAPER} />
+      <rect x="32.5" y="92.5" width="495" height="83" rx="7.5" style={{ stroke: "var(--rule)", fill: "none" }} />
+      <foreignObject x="48" y="102" width="300" height="64">
+        <div style={{ font: "12.5px/1.5 var(--font-sans), sans-serif", color: "var(--ink-muted)" }}>
+          &ldquo;Sanketra Desktop&rdquo; was blocked to protect your Mac.
+        </div>
+      </foreignObject>
+
+      {/* highlighted Open Anyway button */}
+      <g transform="translate(386 118)">
+        <rect x="-4" y="-4" width="124" height="42" rx="8" style={{ fill: "var(--accent)", opacity: 0.18 }} />
+        <rect x="0" y="0" width="116" height="34" rx="6" style={{ fill: "var(--accent)" }} />
+        <text x="58" y="22" textAnchor="middle" fontFamily="var(--font-sans), sans-serif" fontSize="12" fontWeight="600" style={{ fill: "var(--paper)" }}>
+          Open Anyway
+        </text>
+      </g>
+
+      {/* other settings rows, dimmed, so it reads as a scrolled settings pane */}
+      <rect x="32" y="196" width="496" height="40" rx="8" style={PAPER} />
+      <rect x="32.5" y="196.5" width="495" height="39" rx="7.5" style={{ stroke: "var(--rule)", fill: "none" }} />
+      <text x="48" y="221" fontFamily="var(--font-sans), sans-serif" fontSize="12.5" style={FAINT}>
+        Allow applications from
+      </text>
+      <rect x="32" y="244" width="496" height="40" rx="8" style={PAPER} />
+      <rect x="32.5" y="244.5" width="495" height="39" rx="7.5" style={{ stroke: "var(--rule)", fill: "none" }} />
+      <text x="48" y="269" fontFamily="var(--font-sans), sans-serif" fontSize="12.5" style={FAINT}>
+        FileVault
+      </text>
+
+      {/* annotation */}
+      <text x="552" y="316" textAnchor="end" fontFamily="var(--font-mono), monospace" fontSize="9.5" letterSpacing="1.4" style={SAFFRON}>
+        APPEARS FOR ~1 HOUR AFTER THE BLOCKED OPEN
+      </text>
+    </svg>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* MAC 4 (legacy) — Right-click context menu                                 */
+/* -------------------------------------------------------------------------- */
+// No longer rendered by MacGuide: macOS 15 Sequoia removed Control-click → Open
+// as a Gatekeeper bypass (developer.apple.com/news/?id=saqachfa, 6 Aug 2024).
+// Kept as the depiction of the pre-Sequoia shortcut; do not reinstate it as the
+// primary instruction.
 
 export function RightClickMenuMockup({ className }: { className?: string }) {
   const items = ["Open", "Move to Trash", "Get Info", "Rename", "Compress", "Duplicate", "Make Alias", "Quick Look"];

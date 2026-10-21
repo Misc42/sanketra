@@ -17,7 +17,7 @@ const TERMINAL_PATHS: TerminalEntry[] = [
     deva: "मैक",
     title: "Bypass Gatekeeper from Terminal",
     body:
-      "Strips the quarantine xattr that triggers Gatekeeper. Run after dragging the .app to Applications. Replaces the right-click → Open dance with one command. Re-applies if you reinstall.",
+      "Strips the quarantine xattr that triggers Gatekeeper. Run after dragging the .app to Applications. Replaces the Open Anyway steps (4–6 of the Mac guide) with one command. Re-applies if you reinstall.",
     command: 'xattr -dr com.apple.quarantine "/Applications/Sanketra Desktop.app"'
   },
   {
@@ -40,8 +40,13 @@ const TROUBLE: TroubleEntry[] = [
   // macOS
   {
     os: "macOS",
-    symptom: "Right-clicked → Open, still see no Open button",
-    fix: "Reboot the Mac once. macOS Sequoia 15+ caches a stricter unsigned-app block; a fresh login resets the heuristic. If still blocked, run the xattr command above from Terminal."
+    symptom: "Right-click → Open (or Control-click → Open) does nothing on macOS 15",
+    fix: "Apple removed that shortcut in macOS 15 Sequoia. Double-click the app, click Done on the alert, then open System Settings → Privacy & Security and click Open Anyway (steps 4–6 of the Mac guide). The Open Anyway button only shows for about an hour after the blocked attempt. Or run the xattr command above from Terminal."
+  },
+  {
+    os: "macOS",
+    symptom: "macOS asks to install Rosetta",
+    fix: "The Mac disk image is built for Intel; Apple Silicon Macs run it through Rosetta 2. Click Install, enter your password, then open Sanketra again. Apple lists Rosetta as available on macOS 27 and earlier."
   },
   {
     os: "macOS",

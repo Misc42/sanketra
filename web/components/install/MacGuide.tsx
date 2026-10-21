@@ -1,8 +1,16 @@
-// macOS install walkthrough. 11 steps from .dmg download to first hotkey
+// macOS install walkthrough. 12 steps from .dmg download to first hotkey
 // fire. Tone: reassuring, explicit about every Gatekeeper warning the user
 // will hit, never says "easy" or "just" — those words gaslight non-technical
 // users when they hit friction. Every "this is normal" callout exists because
 // Apple's security UX is correctly aggressive about unsigned apps.
+//
+// The Gatekeeper steps (4-6) follow Apple's current documentation
+// (support.apple.com/en-us/102445 and /guide/mac-help/mh40617/mac): try to open
+// the app once, then System Settings -> Privacy & Security -> Open Anyway, then
+// Open and the login password. macOS 15 Sequoia removed the Control-click ->
+// Open shortcut (developer.apple.com/news/?id=saqachfa), so this guide must
+// never present it as the way in. Build architecture and file size come from
+// lib/facts.ts, read off the published v0.5.1 dmg.
 
 import {
   AccessibilityListMockup,
@@ -10,34 +18,46 @@ import {
   DragToAppsMockup,
   FinderDownloadsMockup,
   InputMonitoringMockup,
+  OpenAnywayMockup,
   PermissionPromptMockup,
   QuitRelaunchMockup,
-  RightClickMenuMockup,
   TrayMenuMockup,
   WarningDialogMockup
 } from "./Mockups";
 import { StepBlock } from "./StepBlock";
+import { MAC_ARCH_NOTE, MAC_DMG_FILE, MAC_DMG_SIZE, MAC_MIN_VERSION } from "@/lib/facts";
 
-const TOTAL = 11;
+const TOTAL = 12;
 
 export function MacGuide() {
   return (
     <div className="grid gap-12">
       <header>
         <p className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-accent">
-          macOS · 11 steps · 5 min
+          macOS · 12 steps · 5 min
         </p>
         <h2 className="mt-2 text-3xl font-semibold text-ink md:text-4xl">
-          Drag, right-click Open,{" "}
+          Drag, Open Anyway,{" "}
           <span className="deva text-accent">अनुमति दो</span>, done.
         </h2>
         <p className="mt-4 max-w-3xl text-muted">
-          macOS will show you <strong className="text-ink">one warning</strong> the first time
-          you launch Sanketra — because we are unsigned during the free beta. The bypass is
-          built into macOS: right-click the app and choose Open. After that, double-click works
-          like any other app. Below is every step, every warning, every prompt — with what to do
-          and what you will see.
+          macOS will stop Sanketra the first time you open it, because the free beta is not
+          notarized by Apple. The way past is Apple&rsquo;s own: try to open the app once, then
+          allow it under <strong className="text-ink">System Settings → Privacy &amp; Security →
+          Open Anyway</strong>. After that, double-click works like any other app. Below is every
+          step, every warning, every prompt — with what to do and what you will see.
         </p>
+        <div className="callout mt-5 max-w-3xl p-5 text-sm text-muted">
+          <p>
+            <strong className="text-ink">Which Macs.</strong> {MAC_MIN_VERSION}. {MAC_ARCH_NOTE}{" "}
+            Apple says Rosetta 2 is available on macOS 27 and earlier.
+          </p>
+          <p className="mt-2">
+            <strong className="text-ink">Not yet tested on a real Mac.</strong> We have not run
+            this disk image on Mac hardware ourselves; the steps follow Apple&rsquo;s
+            documentation. If a screen differs from what is described, please tell us.
+          </p>
+        </div>
       </header>
 
       <StepBlock
@@ -51,9 +71,9 @@ export function MacGuide() {
       >
         <p>
           Click the <em className="serif-italic text-ink">Download for macOS</em> button above. Your
-          browser saves <code className="font-mono text-accent">Sanketra-Desktop-universal.dmg</code> to
-          your <code className="font-mono text-accent">~/Downloads/</code> folder. The file is about
-          112 MB; on a normal connection it lands in under a minute.
+          browser saves <code className="font-mono text-accent">{MAC_DMG_FILE}</code> to
+          your <code className="font-mono text-accent">~/Downloads/</code> folder. The file is{" "}
+          {MAC_DMG_SIZE}; on a normal connection it lands in a minute or two.
         </p>
       </StepBlock>
 
@@ -103,77 +123,107 @@ export function MacGuide() {
       <StepBlock
         index={4}
         total={TOTAL}
-        title="Open Applications → right-click Sanketra Desktop → Open"
+        title="Open Sanketra Desktop from Applications — macOS will refuse"
         visual={{
           kind: "mockup",
-          node: <RightClickMenuMockup />
+          node: (
+            <WarningDialogMockup
+              title="Apple cannot check “Sanketra Desktop” for malicious software"
+              body="This is the expected first-launch block for an app Apple has not notarized. Click Done. Do not click Move to Trash."
+              rejectLabel="Move to Trash"
+              hintLabel="Done"
+            />
+          )
         }}
         reassurance={
           <>
-            <strong className="text-ink">Right-click</strong>, not double-click. This is critical
-            the first time. Double-clicking an unsigned app on a fresh Mac triggers Gatekeeper&rsquo;s
-            hard-block dialog with no Open button. Right-click → Open is Apple&rsquo;s own documented
-            workaround.
+            This alert fires for every app that is not notarized by Apple. Sanketra is in that
+            group during the free beta: Apple&rsquo;s Developer Program signing costs about
+            ₹8,000 a year, which we&rsquo;ll pay for once paying users justify it. The alert is
+            macOS doing its job, not a sign of something wrong.
           </>
         }
+        branch={{
+          title: "you tried Control-click → Open and nothing helped",
+          body: (
+            <>
+              That shortcut worked before macOS 15; Apple removed it in Sequoia, so on macOS 15
+              and later the Open choice never lets you through. The steps here work on every
+              version, so use them instead.
+            </>
+          )
+        }}
       >
         <p>
-          Open the Applications folder (Finder → sidebar → Applications). Find{" "}
-          <strong className="text-ink">Sanketra Desktop</strong>. Right-click (or Control-click) it
-          and choose <strong className="text-ink">Open</strong> from the context menu.
+          Open the Applications folder (Finder → sidebar → Applications) and{" "}
+          <strong className="text-ink">double-click Sanketra Desktop</strong>. macOS shows an
+          alert saying Apple cannot check it for malicious software. It offers only{" "}
+          <strong className="text-ink">Move to Trash</strong> and{" "}
+          <strong className="text-ink">Done</strong>.
         </p>
         <p>
-          You only need this dance once. After macOS records your approval, double-click works
-          like every other app on your Mac.
+          Click <strong className="text-ink">Done</strong>. That closes the alert and leaves the
+          app where it is. This failed attempt is what makes macOS offer the override in the next
+          step.
         </p>
       </StepBlock>
 
       <StepBlock
         index={5}
         total={TOTAL}
-        title="Approve the Gatekeeper warning"
+        title="Allow it in System Settings → Privacy & Security"
         visual={{
           kind: "mockup",
-          node: (
-            <WarningDialogMockup
-              title="macOS cannot verify the developer of Sanketra Desktop"
-              body="This app is from an unidentified developer. By choosing Open, you are confirming you trust the source."
-              rejectLabel="Cancel"
-              hintLabel="Open"
-            />
-          )
+          node: <OpenAnywayMockup />
         }}
-        reassurance={
-          <>
-            This warning fires for every unsigned Mac app — Sanketra is in this category during the
-            free beta because Apple Developer Program signing costs ₹8,000/year, which we&rsquo;ll
-            spend once paying users justify it. The warning is macOS doing its job, not a sign of
-            something wrong.
-          </>
-        }
         branch={{
-          title: "you see “cannot be opened” with no Open button",
+          title: "there is no Open Anyway button",
           body: (
             <>
-              You probably double-clicked instead of right-clicking. Close the dialog, go back to
-              Applications, <strong className="text-ink">right-click</strong> Sanketra Desktop →
-              Open. The Open button appears only in the right-click flow on first launch.
+              macOS offers the button for about an hour after the blocked attempt. If it has
+              gone, repeat step 4 and come straight back to this page of System Settings.
             </>
           )
         }}
       >
         <p>
-          A dialog appears: <em className="serif-italic">&ldquo;macOS cannot verify the developer
-          of Sanketra Desktop. Are you sure you want to open it?&rdquo;</em>
-        </p>
-        <p>
-          Click <strong className="text-ink">Open</strong>. Sanketra launches. macOS remembers your
-          decision and won&rsquo;t ask again unless you reinstall a different version.
+          Choose <strong className="text-ink">Apple menu → System Settings</strong>, click{" "}
+          <strong className="text-ink">Privacy &amp; Security</strong> in the sidebar, and scroll
+          down to the <strong className="text-ink">Security</strong> section. It says Sanketra
+          Desktop was blocked, with an <strong className="text-ink">Open Anyway</strong> button.
+          Click it.
         </p>
       </StepBlock>
 
       <StepBlock
         index={6}
+        total={TOTAL}
+        title="Confirm with Open, then your password"
+        visual={{
+          kind: "mockup",
+          node: (
+            <WarningDialogMockup
+              title="Apple cannot check “Sanketra Desktop” for malicious software"
+              body="You allowed it in System Settings. Confirm once more with Open, then enter your Mac login password."
+              rejectLabel="Move to Trash"
+              hintLabel="Open"
+            />
+          )
+        }}
+      >
+        <p>
+          The warning prompt comes back. This time click <strong className="text-ink">Open</strong>,
+          then enter your Mac login password and click <strong className="text-ink">OK</strong>.
+          Sanketra launches.
+        </p>
+        <p>
+          macOS saves your decision as an exception for this app, so from now on a normal
+          double-click works. A different build you download later may need these steps again.
+        </p>
+      </StepBlock>
+
+      <StepBlock
+        index={7}
         total={TOTAL}
         title="Grant microphone access when prompted"
         visual={{ kind: "mockup", node: <PermissionPromptMockup /> }}
@@ -199,7 +249,7 @@ export function MacGuide() {
       </StepBlock>
 
       <StepBlock
-        index={7}
+        index={8}
         total={TOTAL}
         title="Sanketra asks for Accessibility access"
         visual={{
@@ -233,7 +283,7 @@ export function MacGuide() {
       </StepBlock>
 
       <StepBlock
-        index={8}
+        index={9}
         total={TOTAL}
         title="Toggle Sanketra Desktop ON in Accessibility"
         visual={{
@@ -260,7 +310,7 @@ export function MacGuide() {
       </StepBlock>
 
       <StepBlock
-        index={9}
+        index={10}
         total={TOTAL}
         title="Quit Sanketra and relaunch"
         visual={{
@@ -283,7 +333,7 @@ export function MacGuide() {
       </StepBlock>
 
       <StepBlock
-        index={10}
+        index={11}
         total={TOTAL}
         title="If the hotkey still doesn't fire, also enable Input Monitoring"
         visual={{
@@ -295,7 +345,7 @@ export function MacGuide() {
           body: (
             <>
               On some macOS versions (Sonoma 14+ in particular), Accessibility alone is sufficient
-              and no Input Monitoring prompt appears. If your hotkey works after step 9, skip this
+              and no Input Monitoring prompt appears. If your hotkey works after step 10, skip this
               step entirely.
             </>
           )
@@ -304,7 +354,7 @@ export function MacGuide() {
         <p>
           On macOS 10.15 Catalina and newer, keyboard event monitoring is split out into a separate{" "}
           <strong className="text-ink">Input Monitoring</strong> permission. If your hotkey
-          doesn&rsquo;t fire after step 9, Sanketra shows a second dialog asking you to grant Input
+          doesn&rsquo;t fire after step 10, Sanketra shows a second dialog asking you to grant Input
           Monitoring.
         </p>
         <p>
@@ -314,7 +364,7 @@ export function MacGuide() {
       </StepBlock>
 
       <StepBlock
-        index={11}
+        index={12}
         total={TOTAL}
         title="Hold ⌃ ⌥ (Ctrl + Option), say something, release"
         visual={{ kind: "image", src: "/screenshots/app/main-window.png", alt: "Sanketra Desktop's main window after setup: the Start dictation button, push-to-talk / click-toggle / always-on modes, the Ctrl + Alt hotkey and the microphone privacy switch" }}

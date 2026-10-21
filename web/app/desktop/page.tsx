@@ -6,6 +6,7 @@ import { WindowsGuide } from "@/components/install/WindowsGuide";
 import { LinuxGuide } from "@/components/install/LinuxGuide";
 import { Troubleshooting } from "@/components/install/Troubleshooting";
 import { withBase } from "@/lib/basePath";
+import { MAC_ARCH_SHORT, MAC_DMG_FILE } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Desktop",
@@ -16,9 +17,9 @@ export const metadata: Metadata = {
 const RELEASES_BASE = "https://github.com/Misc42/sanketra/releases/latest/download";
 
 const downloadTiles = [
-  ["macOS", `${RELEASES_BASE}/Sanketra-Desktop-universal.dmg`, "universal.dmg"],
-  ["Windows", `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`, "Setup-x64.exe"],
-  ["Linux", `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage"]
+  ["macOS", `${RELEASES_BASE}/${MAC_DMG_FILE}`, "universal.dmg", MAC_ARCH_SHORT],
+  ["Windows", `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`, "Setup-x64.exe", null],
+  ["Linux", `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage", null]
 ] as const;
 
 export default function DesktopPage() {
@@ -35,7 +36,7 @@ export default function DesktopPage() {
           Whisper-based Hindi + English dictation, running on your own hardware. Hold Ctrl + Alt anywhere you type.
         </p>
         <div className="mt-8 grid max-w-[820px] gap-4 sm:grid-cols-3">
-          {downloadTiles.map(([os, href, file]) => (
+          {downloadTiles.map(([os, href, file, note]) => (
             <a
               key={os}
               href={href}
@@ -43,6 +44,7 @@ export default function DesktopPage() {
             >
               <p className="text-[16.5px] font-bold">{os} ↓</p>
               <p className="mt-1 font-mono text-[13px] text-faint">{file}</p>
+              {note ? <p className="mt-1.5 text-[12.5px] leading-snug text-muted">{note}</p> : null}
             </a>
           ))}
         </div>
@@ -175,12 +177,13 @@ export default function DesktopPage() {
           <div>
             <h2 className="text-[28px] font-bold tracking-[-0.02em]">Then add your phone. One scan.</h2>
             <p className="mt-3.5 text-base leading-relaxed text-muted">
-              Click <span className="font-semibold text-ink">Pair Phone</span> in the tray — a QR appears. Point
-              your phone&rsquo;s camera at it; it deep-links and pairs in two seconds. iPhone scans the same QR
-              into Safari.
+              Click the QR icon (<span className="font-semibold text-ink">Pair Phone</span>) in the app window, or{" "}
+              <span className="font-semibold text-ink">Pair Phone…</span> in the tray menu — a QR appears. Point
+              your phone&rsquo;s camera at it and the browser client opens, already paired: Safari on iPhone, Chrome
+              on Android (tap <span className="font-semibold text-ink">Use in browser</span>). No app to install.
             </p>
             <p className="mt-3 text-sm text-faint">
-              Single-use token, 90-second life, LAN-only — no cloud relay.{" "}
+              Single-use token, five-minute life, LAN-only — no cloud relay.{" "}
               <Link href="/pair" className="text-accent">
                 Pairing troubleshooting
               </Link>
@@ -189,7 +192,7 @@ export default function DesktopPage() {
           </div>
           <div className="grid grid-cols-3 gap-4">
             {[
-              ["90s", "token life, single use"],
+              ["5 min", "token life, single use"],
               ["LAN", "only — nothing leaves Wi-Fi"],
               ["0", "IPs or codes to type"]
             ].map(([value, label]) => (
@@ -219,7 +222,7 @@ export default function DesktopPage() {
           <div>
             <p className="text-[15px] font-semibold">Free during beta.</p>
             <p className="mt-1.5 text-sm leading-relaxed text-muted">
-              Pro (history, top accuracy tiers) becomes a one-time SKU —{" "}
+              A one-time Pro license lifts the free tier&rsquo;s limits (models above small, 200 minutes a month) —{" "}
               <Link href="/pricing" className="text-accent">
                 pricing
               </Link>
