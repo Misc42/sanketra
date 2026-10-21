@@ -8,25 +8,35 @@
 // rendered since the 2026-07-03 redesign; deleted 2026-09-16. SSR
 // renders the design's literal fallback copy ("your OS") so there's no
 // hydration mismatch and no flash for JS-off / slow-hydration visitors.
+//
+// Phones are their own case: the button opens /download/, the phone page, so an
+// Android or iPhone visitor must not be told "Download for Linux" / "for macOS"
+// (their UA says Linux / Mac OS X). They get "Use on your phone".
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { withBase } from "@/lib/basePath";
 
-type OsId = "mac" | "windows" | "linux" | null;
+type OsId = "mac" | "windows" | "linux" | "phone" | null;
 
-function detectOS(userAgent: string): OsId {
+// Phone check goes first: an iPhone UA contains "Mac OS X" and an Android UA
+// contains "Linux". iPadOS 13+ reports "Macintosh", so a Mac UA with touch
+// support counts as a phone too.
+function detectOS(userAgent: string, hasTouch: boolean): OsId {
   const ua = userAgent.toLowerCase();
+  if (/iphone|ipad|ipod|android/.test(ua)) return "phone";
+  if (ua.includes("mac") && hasTouch) return "phone";
   if (ua.includes("mac")) return "mac";
   if (ua.includes("win")) return "windows";
   if (ua.includes("linux")) return "linux";
   return "linux";
 }
 
-const OS_LABEL: Record<NonNullable<OsId>, string> = {
-  mac: "macOS",
-  windows: "Windows",
-  linux: "Linux"
+const CTA_LABEL: Record<NonNullable<OsId>, string> = {
+  mac: "Download for macOS",
+  windows: "Download for Windows",
+  linux: "Download for Linux",
+  phone: "Use on your phone"
 };
 
 export default function Hero() {
@@ -34,11 +44,11 @@ export default function Hero() {
 
   useEffect(() => {
     if (typeof navigator !== "undefined") {
-      setDetected(detectOS(navigator.userAgent));
+      setDetected(detectOS(navigator.userAgent, "ontouchend" in document));
     }
   }, []);
 
-  const osLabel = detected ? OS_LABEL[detected] : "your OS";
+  const ctaLabel = detected ? CTA_LABEL[detected] : "Download for your OS";
 
   return (
     <section className="wrap flex flex-col items-center pb-0 pt-[88px] text-center">
@@ -68,7 +78,7 @@ export default function Hero() {
           href={withBase("/download/")}
           className="rounded-[10px] bg-accent px-7 py-[13px] text-[15px] font-semibold text-paper transition hover:bg-accent-hover"
         >
-          Download for {osLabel} — ₹0
+          {ctaLabel} — ₹0
         </a>
         <Link
           href="/pricing"
