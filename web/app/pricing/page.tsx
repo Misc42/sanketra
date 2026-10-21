@@ -5,26 +5,32 @@ import { ISSUES_URL, PLAY_LISTING_LIVE } from "@/lib/facts";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Lifetime licenses for Sanketra. The free tier has models up to small and 200 minutes a month; Phone Pro ₹999, Desktop Pro ₹999 or the Bundle ₹1,499 lift both limits for their track. Pay once."
+    "Lifetime licenses for Sanketra: Phone Pro ₹999, Desktop Pro ₹999 or the Bundle ₹1,499. Pay once. Purchases are not open yet and nothing is capped today; when they open, the free tier is models up to small and 200 minutes a month, and Pro lifts both for its track."
 };
 
-// What a license changes, and nothing else, is read from src/server_async.py in
-// the source repo: FREE_TIER_MODELS = {tiny, base, small}, FREE_TIER_MONTHLY_MINUTES
-// = 200 (one counter per client kind, resets each UTC month), and the two gates
-// that read them (/api/model/load -> 403 model_requires_pro; the audio WebSocket
-// -> close 4402). History, vocabulary, accent calibration, trackpad, gyro,
-// screen mirror, PC audio and the hotkey have no license check anywhere, so they
-// are free for everyone. Keep this list in step with that code, not with
-// MONETIZATION.md.
+// What a license changes, and nothing else: FREE_TIER_MODELS = {tiny, base, small}
+// and FREE_TIER_MONTHLY_MINUTES = 200 (src/license_core.py:107-108; one counter
+// per client kind, resets each UTC month), and the gates that read them: the
+// server's /api/model/load -> 403 model_requires_pro and the audio WebSocket ->
+// close 4402 (src/server_async.py), and the desktop app's own in-process gate
+// (desktop/sanketra_engine.py, desktop_gate_active), because the desktop app
+// transcribes without going through the server. History, vocabulary, accent
+// calibration, trackpad, gyro, screen mirror, PC audio and the hotkey have no
+// license check anywhere, so they are free for everyone. Keep this list in step
+// with that code, not with MONETIZATION.md.
 //
-// TODO(founder, launch readiness PL-4): the "desktop" gate only runs when the
-// native app routes dictation through its embedded server (SANKETRA_UNIFY=1,
-// default off), so today Desktop Pro unlocks nothing the app enforces. The
-// "Beta note" under the cards says so; delete it when the desktop path is gated
-// (or pull the SKU).
-// TODO(eng, PL-2): there is no license-entry screen yet (the key email points at
-// a Settings -> License screen and a CLI flag that do not exist), so no copy on
-// this site tells a buyer where to paste the key. Add that line when one ships.
+// ONE switch turns every one of those gates on: FREE_TIER_ENFORCED in
+// src/license_core.py:103. It is False while checkout is closed, and the comment
+// there says to flip it in the same release that flips SALES_OPEN below. The
+// copy on this page therefore reads SALES_OPEN: limits "built in, switched off"
+// while it is false, "applied" once it is true.
+//
+// Where a buyer pastes the key: the desktop app's Settings -> License
+// (desktop/sanketra_desktop.py _build_license_section), the history dashboard's
+// Settings tab -> License (static/dashboard.html #license-block), or
+// `sanketra-server --install-license <key>` (src/server_async.py
+// _cli_install_license). The key email says the same (license/issuer.py).
+//
 // TODO(contact): no private support mailbox exists; refunds, upgrades and
 // license questions point at public GitHub issues. Replace when one does.
 
@@ -32,6 +38,20 @@ export const metadata: Metadata = {
 // purchase has minted a key that a real install accepted. The payment links
 // below are live-mode: with no issuer, a buyer is charged and gets nothing.
 const SALES_OPEN = false;
+
+// Phone Pro and the Bundle sell the Android app's Pro features, and that app
+// cannot be installed until the Play listing is live (PLAY_LISTING_LIVE in
+// lib/facts.ts), so their buy buttons need BOTH flags. Desktop Pro needs only
+// SALES_OPEN: the desktop installers are published.
+function canBuy(id: Sku["id"]): boolean {
+  return id === "desktop" ? SALES_OPEN : SALES_OPEN && PLAY_LISTING_LIVE;
+}
+
+// What the disabled button says. A missing Android app is the stronger reason, so
+// it wins over "purchases not open" on the cards that depend on it.
+function closedLabel(id: Sku["id"]): string {
+  return id !== "desktop" && !PLAY_LISTING_LIVE ? "Android app coming soon" : "Opening soon";
+}
 
 type Sku = {
   id: "phone" | "desktop" | "bundle";
@@ -98,9 +118,15 @@ const skus: readonly Sku[] = [
   }
 ] as const;
 
+const code = "rounded bg-surface-2 px-1.5 py-0.5 font-mono text-[13px] text-ink";
+
 const finePrint = [
-  ["What does Pro change?", "Two things, both enforced by your PC’s server: it lets the larger models load (free stops at small), and it removes the 200-minute monthly cap. Nothing else sits behind a license."],
-  ["What stays free?", "Everything in the free list above. A license only lifts those two limits, for the track you bought."],
+  ["What does Pro change?", "Two limits, once they are switched on: it lets the larger models load (free stops at small), and it removes the 200-minute monthly cap. Your PC’s server applies them to phone and browser clients; the desktop app applies the same rules itself, because it transcribes on its own. Nothing else sits behind a license."],
+  ["Are the limits on today?", SALES_OPEN
+    ? "Yes. A free install stops at the small model and 200 minutes a month per client kind, until you add a license for that track."
+    : "No. They are built into the PC server and the desktop app but switched off until purchases open, so today no model is locked and no minutes are capped. They switch on together, in the release that opens purchases."],
+  ["Where does the key go?", <>Paste it under <span className="font-semibold text-ink">Settings → License</span> in the desktop app, or under Settings → License in the history dashboard. On a PC with no screen, run <code className={code}>sanketra-server --install-license &lt;key&gt;</code>.</>],
+  ["What stays free?", "Everything in the always-free list above. A license only lifts those two limits, for the track you bought."],
   ["Browser clients?", "Android Chrome and iPhone Safari always use the free tier, whichever license is installed. A license applies to the Android app (Phone Pro) or the native desktop app (Desktop Pro)."],
   ["Refunds?", <>7 days, no questions asked. Open a GitHub issue with your purchase date and amount, but leave your payment ID out of it. <a href={withBase("/refund-policy/")} className="text-accent underline decoration-rule underline-offset-[3px]">Full policy</a>.</>],
   ["Invoice?", "Razorpay emails you a payment receipt when you pay. We do not generate a separate GST invoice."],
@@ -118,8 +144,9 @@ export default function PricingPage() {
           Pay once. <span className="text-faint">Yours forever.</span>
         </h1>
         <p className="mx-auto mt-[18px] max-w-[520px] text-lg leading-relaxed text-muted">
-          No subscription. The free tier has models up to small and 200 minutes a month; Pro lifts both for the
-          track you buy.
+          {SALES_OPEN
+            ? "No subscription. The free tier has models up to small and 200 minutes a month; Pro lifts both for the track you buy."
+            : "No subscription. Purchases are not open yet and nothing is capped today. When they open, the free tier is models up to small and 200 minutes a month, and Pro lifts both for the track you buy."}
         </p>
       </section>
 
@@ -155,7 +182,7 @@ export default function PricingPage() {
                   </li>
                 ))}
               </ul>
-              {SALES_OPEN ? (
+              {canBuy(sku.id) ? (
                 <a
                   href={sku.buyUrl}
                   target="_blank"
@@ -173,36 +200,47 @@ export default function PricingPage() {
                   aria-disabled="true"
                   className="mt-[26px] cursor-default rounded-[10px] border border-dashed border-rule py-3 text-center text-[14.5px] font-semibold text-faint"
                 >
-                  Opening soon
+                  {closedLabel(sku.id)}
                 </span>
               )}
             </article>
           ))}
         </div>
         <p className="mt-6 text-center text-[13.5px] text-faint">
-          {SALES_OPEN
-            ? "UPI · card · netbanking via Razorpay. Razorpay emails you a payment receipt; the license key follows by email."
-            : "Purchases open soon. The free tier works today — download it and start dictating."}
+          {!SALES_OPEN
+            ? "Purchases open soon. Sanketra works today — download it and start dictating."
+            : PLAY_LISTING_LIVE
+              ? "UPI · card · netbanking via Razorpay. Razorpay emails you a payment receipt; the license key follows by email."
+              : "Desktop Pro is on sale: UPI · card · netbanking via Razorpay, receipt and license key by email. Phone Pro and the Bundle open when the Android app is on Google Play."}
         </p>
 
         <div className="mx-auto mt-10 grid max-w-[820px] gap-3 rounded-2xl border border-rule bg-surface p-6 text-[14.5px] leading-relaxed text-muted">
+          {SALES_OPEN ? (
+            <p>
+              <span className="font-semibold text-ink">Free includes:</span> dictation with the tiny, base and small
+              models and 200 minutes a month, counted separately for the browser, the Android app and the desktop
+              app.
+            </p>
+          ) : (
+            <p>
+              <span className="font-semibold text-ink">Free today:</span> everything, uncapped. The limits are
+              built into the PC server and the desktop app but switched off until purchases open, and they switch
+              on together. Once they are on, the free tier is dictation with the tiny, base and small models and
+              200 minutes a month, counted separately for the browser, the Android app and the desktop app.
+            </p>
+          )}
           <p>
-            <span className="font-semibold text-ink">Free includes:</span> dictation with the tiny, base and small
-            models, 200 minutes a month (counted separately for the browser and the Android app), the trackpad,
+            <span className="font-semibold text-ink">Always free, with or without a license:</span> the trackpad,
             gyro pointer, screen mirror, the PC’s audio on the phone, the global hotkey, transcript history with
             search and export, custom vocabulary and accent calibration.
           </p>
           {PLAY_LISTING_LIVE ? null : (
             <p>
               <span className="font-semibold text-ink">Phone Pro and the Android app:</span> the app is not on
-              Google Play yet, so today’s phone path is the browser client, which is always the free tier.
+              Google Play yet, so today’s phone path is the browser client, which is always the free tier. Phone Pro
+              and the Bundle go on sale once the app is installable.
             </p>
           )}
-          <p>
-            <span className="font-semibold text-ink">Beta note:</span> the native desktop app runs its own engine
-            today and does not apply the free-tier limits itself; the PC server applies them to phone and browser
-            clients. Until that changes, Desktop Pro has nothing to lift inside the desktop app.
-          </p>
         </div>
       </section>
 

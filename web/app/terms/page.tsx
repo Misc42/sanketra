@@ -13,13 +13,15 @@ export const metadata: Metadata = {
 // (src/server_async.py FREE_TIER_MODELS / FREE_TIER_MONTHLY_MINUTES). There is
 // no revocation promise here: the verifier reads a denylist file bundled with
 // the install, nothing updates it, and the issuer ignores refund events.
-// TODO(eng, launch readiness PL-2): no screen exists for pasting a key, so the
-// license section says only that the server checks the key; add the install
-// step when one ships. TODO(contact): GitHub issues are public; replace with a
-// private mailbox when one works.
+// The key is pasted under Settings -> License (desktop app or history dashboard) or
+// with `sanketra-server --install-license`; the pricing page says where. The two
+// limits are built in but switched off until purchases open
+// (src/license_core.py FREE_TIER_ENFORCED = False), so section 1 says so.
+// TODO(contact): GitHub issues are public; replace with a private mailbox when
+// one works.
 
 const EN = [
-  { h: "1. The service", p: "Sanketra is a Hindi-first voice-to-text input layer that runs on your PC. It is free for basic use. Paid SKUs (Phone Pro, Desktop Pro, Bundle) lift two limits of the free tier for the track you buy: they let the larger Whisper models load (medium, large-v3-turbo, distil-large-v3, large-v3) and they remove the 200-minute monthly cap. Everything else is free for everyone." },
+  { h: "1. The service", p: "Sanketra is a Hindi-first voice-to-text input layer that runs on your PC. It is free for basic use. Paid SKUs (Phone Pro, Desktop Pro, Bundle) lift two limits of the free tier for the track you buy: they let the larger Whisper models load (medium, large-v3-turbo, distil-large-v3, large-v3) and they remove the 200-minute monthly cap. Those limits are built in but switched off until purchases open. Everything else is free for everyone." },
   { h: "2. License", p: "Purchasing a paid SKU gets you a signed license key, delivered by email. It is a lifetime license: the key carries no expiry date. It is tied to your purchase email, your own Sanketra server checks it offline, and it is not bound to a single device. Use it on your own devices for personal use; do not publicly share or resell the key." },
   { h: "3. Acceptable use", p: "Use Sanketra for lawful purposes — content creation, accessibility, productivity, education. Do not share, resell, or illegally redistribute license keys. Reverse-engineering, bypassing license verification, or any malicious use breaches these terms and is not eligible for a refund." },
   { h: "4. Refund & cancellation", p: "See the refund policy page for the full version. In short: first-time purchases qualify for a no-questions refund within 7 days; after that, only confirmed technical defects we cannot fix qualify." },
@@ -31,7 +33,7 @@ const EN = [
 ] as const;
 
 const HI = [
-  { h: "1. क्या service है", p: "Sanketra एक Hindi-first voice-to-text input layer है जो आपके PC पर चलती है। यह free है (basic use)। Paid SKUs (Phone Pro, Desktop Pro, Bundle) आपके खरीदे हुए track के लिए free tier की दो limits हटाते हैं: बड़े Whisper models (medium, large-v3-turbo, distil-large-v3, large-v3) load होने देते हैं और 200-minute monthly cap हटा देते हैं। बाकी सब कुछ सबके लिए free है।" },
+  { h: "1. क्या service है", p: "Sanketra एक Hindi-first voice-to-text input layer है जो आपके PC पर चलती है। यह free है (basic use)। Paid SKUs (Phone Pro, Desktop Pro, Bundle) आपके खरीदे हुए track के लिए free tier की दो limits हटाते हैं: बड़े Whisper models (medium, large-v3-turbo, distil-large-v3, large-v3) load होने देते हैं और 200-minute monthly cap हटा देते हैं। ये limits software में हैं, पर purchases खुलने तक बंद हैं। बाकी सब कुछ सबके लिए free है।" },
   { h: "2. License", p: "Paid SKU खरीदने पर आपको एक signed license key मिलती है (email से)। यह lifetime license है: key पर कोई expiry date नहीं होती। यह आपके purchase email से जुड़ी होती है, आपका अपना Sanketra server इसे offline check करता है, और यह किसी एक device से bound नहीं है। अपने personal devices पर इस्तेमाल करें; key को publicly share / resell न करें।" },
   { h: "3. Acceptable use", p: "Sanketra को कानूनी कामों के लिए use करें — content creation, accessibility, productivity, education। License key को share / re-sell / illegally distribute नहीं करना। Reverse-engineer करना, license verification को bypass करना, या malicious purposes के लिए use करना terms का उल्लंघन है और उस पर refund नहीं मिलेगा।" },
   { h: "4. Refund & cancellation", p: "Detailed terms refund policy page पर हैं। Short version: पहली purchase पर 7-day no-questions refund। उसके बाद केवल technical defect (हम fix नहीं कर पा रहे) पर refund।" },
