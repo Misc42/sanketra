@@ -43,7 +43,7 @@ const entries = [
     version: "Desktop v0.3",
     date: "May 18, 2026",
     title: "Cross-platform shim + mic picker",
-    body: "One module now owns every OS-divergent primitive, and Settings grows a microphone picker with live-swap — plug in a USB mic, switch, no restart. Ships unsigned on Mac/Windows for now (right-click → Open / Run anyway)."
+    body: "One module now owns every OS-divergent primitive, and Settings grows a microphone picker with live-swap — plug in a USB mic, switch, no restart. Ships unsigned on Mac/Windows for now; the install guide walks through the one-time warning."
   },
   {
     version: "Phone v1.2.0",
