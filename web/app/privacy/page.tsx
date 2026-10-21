@@ -12,6 +12,11 @@ export const metadata: Metadata = {
 // docs/RAZORPAY_DEPLOY.md in the source repo, not from intent:
 //   * the webhook reads the payment entity's id, email, order_id and notes (the
 //     plan comes from notes.sku), nothing else (issuer.py razorpay_webhook);
+//   * the one outbound request, GET api.razorpay.com/v1/orders/<id> to confirm the
+//     plan against the order, runs only when SANKETRA_VERIFY_ORDER_VIA_API=1; the
+//     default is off (IssuerConfig.verify_order_via_api, issuer.py:569 and :607-609,
+//     gated at :1341). The copy below says what happens by default and names the
+//     option; if the flag is ever switched on in production, say so plainly instead.
 //   * the SQLite tables `issued` and `licenses_by_payment` hold payment_id,
 //     event_id, license_id, license_blob (the signed key, which embeds the email),
 //     track, email and issued_at (issuer.py _open_db);
@@ -69,7 +74,9 @@ export default function PrivacyPage() {
                 <span className="font-semibold text-ink">What the issuer receives.</span> For each completed
                 payment, Razorpay notifies the issuer — a small web service we run. It reads your email address, the
                 payment ID, the order ID and which plan you bought (Phone Pro, Desktop Pro or Bundle), and ignores
-                the rest of the notification. It asks Razorpay for the order to confirm the plan.
+                the rest of the notification. The plan comes from that notification, and by default the issuer makes no
+                further request to Razorpay. An optional check that fetches the order from Razorpay&rsquo;s API to
+                confirm the plan exists, but it is off unless we switch it on.
               </li>
               <li>
                 <span className="font-semibold text-ink">What it stores.</span> Your email, payment ID, plan, a
@@ -127,7 +134,9 @@ export default function PrivacyPage() {
                 <span className="font-semibold text-ink">Issuer को क्या मिलता है।</span> हर पूरे हुए payment पर
                 Razorpay issuer को notify करता है — यह हमारी चलाई एक छोटी web service है। वो आपका email address, payment
                 ID, order ID और आपने कौन-सा plan लिया (Phone Pro, Desktop Pro या Bundle) पढ़ती है, बाकी notification
-                ignore करती है। Plan confirm करने के लिए वो Razorpay से order माँगती है।
+                ignore करती है। Plan उसी notification से आता है, और default में issuer Razorpay से कोई और request नहीं करता।
+                Plan confirm करने के लिए Razorpay API से order मँगवाने वाला एक optional check है, पर वह तभी चलता है जब हम
+                उसे चालू करें; default में बंद रहता है।
               </li>
               <li>
                 <span className="font-semibold text-ink">क्या store होता है।</span> आपका email, payment ID, plan, एक
