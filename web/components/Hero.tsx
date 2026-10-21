@@ -74,10 +74,10 @@ export default function Hero() {
           href="/pricing"
           className="rounded-[10px] border border-[color:var(--input-border)] px-7 py-[13px] text-[15px] font-semibold text-ink transition hover:border-ink"
         >
-          Why ₹999 later
+          Pricing
         </Link>
       </div>
-      <p className="mt-3.5 text-[13px] text-faint">Android · macOS · Windows · Linux</p>
+      <p className="mt-3.5 text-[13px] text-faint">Phone browser (Android, iPhone) · macOS · Windows · Linux</p>
       <div className="mx-auto mt-14 max-w-[980px] overflow-hidden rounded-t-2xl border border-b-0 border-rule bg-[#0F0E14] shadow-[0_32px_64px_-32px_rgba(19,19,21,0.3)]">
         <img
           src={withBase("/hero-soundwave.png")}
