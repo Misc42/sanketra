@@ -11,20 +11,19 @@ export const PLAY_LISTING_LIVE = false;
 export const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.miconterm.app";
 
 // ─── macOS disk image ───────────────────────────────────────────────────────
-// Read from the published v0.5.1 asset itself (Sanketra-Desktop-universal.dmg,
-// sha256 547e7d02…ecad): its main executable and every bundled .so are thin
-// x86_64 Mach-O, LSMinimumSystemVersion is 11.0, and the app is ad-hoc signed
-// and not notarized. The "-universal" in the file name is only a stable-URL
-// convention, it is NOT a universal binary. (desktop/build/macos/README.md and
-// sanketra_mac.spec in the source repo still say "arm64-only"; they describe the
-// intended build, not this artifact. Re-check the Mach-O header of the next dmg
-// before changing any of the lines below.)
-export const MAC_DMG_FILE = "Sanketra-Desktop-universal.dmg";
-export const MAC_DMG_SIZE = "about 165 MB";
+// From v0.5.2 the Mac build is made natively on Apple Silicon and named after
+// its real architecture (build-dmg.sh reads it with lipo). v0.5.1's
+// "Sanketra-Desktop-universal.dmg" was in fact a thin x86_64 build (its Mach-O
+// header, read 2026-10-21) — Intel Macs keep that one: no Intel build of v0.5.2
+// is made (founder's call, 2026-10-21).
+export const MAC_DMG_FILE = "Sanketra-Desktop-arm64.dmg";
+export const MAC_DMG_SIZE = "about 165 MB"; // TODO(release): measure the v0.5.2 arm64 dmg
 export const MAC_MIN_VERSION = "macOS 11 or newer";
-export const MAC_ARCH_SHORT = "Intel build · runs on Apple Silicon through Rosetta 2";
+export const MAC_ARCH_SHORT = "Apple Silicon (M1 or newer)";
 export const MAC_ARCH_NOTE =
-  "This disk image is built for Intel (x86_64) Macs. Apple Silicon Macs run it through Rosetta 2, which macOS offers to install the first time you open the app. The file name says “universal”, but it is not a universal binary.";
+  "Built for Apple Silicon Macs (M1 and newer). On an Intel Mac, use the last Intel build, v0.5.1.";
+export const MAC_INTEL_URL =
+  "https://github.com/Misc42/sanketra/releases/download/v0.5.1/Sanketra-Desktop-universal.dmg";
 
 // ─── Contact ────────────────────────────────────────────────────────────────
 // support@sanketra.app does not resolve (NXDOMAIN, docs/LAUNCH_READINESS_2026-10-21.md
