@@ -4,7 +4,9 @@ import Link from "next/link";
 // Fallback landing for QR-pair scans when the phone can't reach the Sanketra
 // server (different WiFi, server offline, captive portal). Reached at
 // misc42.github.io/sanketra/pair when the browser fails to hit the LAN URL
-// embedded in the QR. Pure static server component — matches
+// embedded in the QR. Facts here (port, QR lifetime, what the phone shows)
+// come from src/server_async.py (/pair route, _QR_PAIR_TOKEN_TTL_SECONDS) and
+// desktop/qr_pair_dialog.py in the source repo. Pure static server component — matches
 // Sanketra Pair.dc.html's plain two-card recovery layout (no per-platform
 // branching; the design treats iOS and everyone else the same way here).
 
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
 const checks = [
   ["CHECK 1", "Same Wi-Fi network", "Phone and PC must share one network. Mobile data, guest networks, and 2.4/5 GHz split SSIDs are the usual culprits."],
   ["CHECK 2", "Desktop is running", "Look for the स in the tray (Win/Linux) or menu bar (Mac). Launch it, then regenerate the QR."],
-  ["CHECK 3", "Port 8765 isn't blocked", "Firewalls and corporate VPNs silently drop LAN traffic. Allow-list Sanketra, or pause the VPN to test."]
+  ["CHECK 3", "The port isn't blocked", "The pairing window shows the port: 5000 by default, 5001–5009 if 5000 was taken (macOS AirPlay Receiver often holds it). Firewalls and corporate VPNs silently drop LAN traffic, so allow Sanketra through, or pause the VPN to test."]
 ] as const;
 
 export default function PairPage() {
@@ -30,7 +32,7 @@ export default function PairPage() {
         </h1>
         <p className="mt-[18px] max-w-[620px] text-[17px] leading-relaxed text-muted">
           The QR points at a local address on your Wi-Fi (like{" "}
-          <span className="font-mono text-[14.5px] text-ink">192.168.x.x:8765</span>). If it didn&rsquo;t respond,
+          <span className="font-mono text-[14.5px] text-ink">192.168.x.x:5000</span>). If it didn&rsquo;t respond,
           one of three things is usually wrong.
         </p>
       </section>
@@ -65,12 +67,14 @@ export default function PairPage() {
           <article className="rounded-2xl border border-rule bg-paper p-[30px]">
             <h2 className="text-[22px] font-bold tracking-[-0.015em]">Still stuck?</h2>
             <p className="mt-2.5 text-[15px] leading-relaxed text-muted">
-              The QR lives 90 seconds — if it expired mid-scan, click{" "}
-              <span className="font-semibold text-ink">Regenerate</span> on the PC. The 4-digit code (Phone →
-              Manual setup) is the always-works fallback.
+              A pairing QR works once and lives five minutes. If it expired or was already used, click{" "}
+              <span className="font-semibold text-ink">Regenerate</span> in the pairing window on the PC and scan
+              the new one. The browser client has no code box, so it always pairs through a fresh QR.
             </p>
             <p className="mt-3.5 text-sm text-faint">
-              iPhone? Safari opens the mic client from the same QR — the PC must be on the same Wi-Fi.
+              iPhone: Safari opens the browser client from the QR. Android: tap{" "}
+              <span className="font-semibold text-ink">Use in browser</span>. Either way the phone shows a
+              certificate warning the first time (the PC&rsquo;s own certificate); continue past it.
             </p>
           </article>
         </div>
