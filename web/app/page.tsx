@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 import { withBase } from "@/lib/basePath";
 
 const features = [
-  ["From the couch", "Your phone is the mic", "Pair over Wi-Fi. Hold to speak; the PC types. Trackpad, pointer, screen mirror and the PC’s own audio ride along."],
+  ["From the couch", "Your phone is the mic", "Scan the PC’s QR over Wi-Fi and your phone’s browser is the mic. The PC types. Trackpad, pointer, screen mirror and the PC’s own audio ride along."],
   ["At the desk", "One hotkey, any app", "Ctrl + Alt in any text field and dictate with the PC mic. Native app for macOS, Windows, Linux."],
   ["New", "Hindi in, Hinglish out", "Speak Hindi, get Latin-script Hinglish — loanwords land as real English. One on-device engine."]
 ] as const;
@@ -11,7 +11,7 @@ const features = [
 const privacyPoints = [
   ["Speech-to-text runs on your PC.", "No cloud STT bill, no audio uploads."],
   ["No account, no tracking.", "Install and speak. That's the whole onboarding."],
-  ["Pay once, later.", "₹0 during beta; a one-time ₹999 license after. No subscription."]
+  ["Free to start, pay once for more.", "Free covers models up to small and 200 minutes a month; a one-time license unlocks the rest. No subscription."]
 ] as const;
 
 export default function HomePage() {

@@ -1,11 +1,32 @@
 import type { Metadata } from "next";
 import { withBase } from "@/lib/basePath";
+import { ISSUES_URL, PLAY_LISTING_LIVE } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Lifetime licenses for Sanketra. Phone Pro ₹999, Desktop Pro ₹999, or the Bundle ₹1,499. Pay once, yours forever."
+    "Lifetime licenses for Sanketra. The free tier has models up to small and 200 minutes a month; Phone Pro ₹999, Desktop Pro ₹999 or the Bundle ₹1,499 lift both limits for their track. Pay once."
 };
+
+// What a license changes, and nothing else, is read from src/server_async.py in
+// the source repo: FREE_TIER_MODELS = {tiny, base, small}, FREE_TIER_MONTHLY_MINUTES
+// = 200 (one counter per client kind, resets each UTC month), and the two gates
+// that read them (/api/model/load -> 403 model_requires_pro; the audio WebSocket
+// -> close 4402). History, vocabulary, accent calibration, trackpad, gyro,
+// screen mirror, PC audio and the hotkey have no license check anywhere, so they
+// are free for everyone. Keep this list in step with that code, not with
+// MONETIZATION.md.
+//
+// TODO(founder, launch readiness PL-4): the "desktop" gate only runs when the
+// native app routes dictation through its embedded server (SANKETRA_UNIFY=1,
+// default off), so today Desktop Pro unlocks nothing the app enforces. The
+// "Beta note" under the cards says so; delete it when the desktop path is gated
+// (or pull the SKU).
+// TODO(eng, PL-2): there is no license-entry screen yet (the key email points at
+// a Settings -> License screen and a CLI flag that do not exist), so no copy on
+// this site tells a buyer where to paste the key. Add that line when one ships.
+// TODO(contact): no private support mailbox exists; refunds, upgrades and
+// license questions point at public GitHub issues. Replace when one does.
 
 // Checkout stays closed until the license issuer is deployed and one test
 // purchase has minted a key that a real install accepted. The payment links
@@ -33,13 +54,11 @@ const skus: readonly Sku[] = [
     deva: "फ़ोन प्रो",
     price: 999,
     priceNote: "one-time · lifetime",
-    tagline: "From your couch — phone as mic, trackpad, gyro pointer.",
+    tagline: "For the Android app: larger models, no monthly cap.",
     features: [
-      "Dictation from any room",
-      "Air-trackpad · gyro · screen mirror",
-      "Hear the PC’s audio on the phone",
-      "Top accuracy tier unlocked",
-      "Custom vocabulary + accent calibration"
+      "Models medium, large-v3-turbo, distil-large-v3 and large-v3 for the Android app",
+      "No 200-minute monthly cap for the Android app",
+      "Installed once on your PC; browser clients stay on the free tier"
     ],
     buyUrl: "https://rzp.io/rzp/6UkS3s2N",
     ctaLabel: "Buy Phone Pro"
@@ -51,12 +70,12 @@ const skus: readonly Sku[] = [
     deva: "बंडल",
     price: 1499,
     priceNote: "save ₹499",
-    tagline: "Phone Pro + Desktop Pro. Couch and desk, one license file.",
+    tagline: "Phone Pro + Desktop Pro on one license key.",
     features: [
       "Everything in Phone Pro",
       "Everything in Desktop Pro",
-      "One license, both tracks",
-      "Future track SKUs auto-unlock"
+      "One key covers both tracks",
+      "Browser clients stay on the free tier"
     ],
     buyUrl: "https://rzp.io/rzp/6r3tm3x",
     ctaLabel: "Buy Bundle"
@@ -68,12 +87,11 @@ const skus: readonly Sku[] = [
     deva: "डेस्कटॉप प्रो",
     price: 999,
     priceNote: "one-time · lifetime",
-    tagline: "At your desk — global hotkey, native app, transcript history.",
+    tagline: "For the native desktop app: larger models, no monthly cap.",
     features: [
-      "macOS · Windows · Linux",
-      "Ctrl + Alt in any app",
-      "History with search + export",
-      "Top accuracy tier unlocked"
+      "Models medium, large-v3-turbo, distil-large-v3 and large-v3 for the native desktop app (macOS · Windows · Linux)",
+      "No 200-minute monthly cap for the native desktop app",
+      "Phone and browser clients stay on the free tier"
     ],
     buyUrl: "https://rzp.io/rzp/QazIhoT",
     ctaLabel: "Buy Desktop Pro"
@@ -81,12 +99,15 @@ const skus: readonly Sku[] = [
 ] as const;
 
 const finePrint = [
-  ["Refunds?", <>7 days, no questions asked. Email your payment ID. <a href={withBase("/refund-policy/")} className="text-accent underline decoration-rule underline-offset-[3px]">Full policy</a>.</>],
-  ["Multi-device?", "One license per buyer, every PC you personally use. No DRM lockouts — we trust you."],
-  ["Upgrade Phone → Bundle?", "Pay the ₹500 difference — email support with your payment ID."],
-  ["Updates?", "All v1.x and v2.x updates included — same license, new features."],
-  ["Does the license call home?", "No. Verification runs on your PC — no servers checking up on you."],
-  ["What stays free?", "Core dictation, forever. Pro adds accuracy tiers, history, vocabulary."]
+  ["What does Pro change?", "Two things, both enforced by your PC’s server: it lets the larger models load (free stops at small), and it removes the 200-minute monthly cap. Nothing else sits behind a license."],
+  ["What stays free?", "Everything in the free list above. A license only lifts those two limits, for the track you bought."],
+  ["Browser clients?", "Android Chrome and iPhone Safari always use the free tier, whichever license is installed. A license applies to the Android app (Phone Pro) or the native desktop app (Desktop Pro)."],
+  ["Refunds?", <>7 days, no questions asked. Open a GitHub issue with your purchase date and amount, but leave your payment ID out of it. <a href={withBase("/refund-policy/")} className="text-accent underline decoration-rule underline-offset-[3px]">Full policy</a>.</>],
+  ["Invoice?", "Razorpay emails you a payment receipt when you pay. We do not generate a separate GST invoice."],
+  ["Multi-device?", "One license per buyer, for every PC you personally use. The key is not tied to a device, so nothing locks you out — we trust you."],
+  ["Upgrade Phone → Bundle?", <>Pay the ₹500 difference. There is no automated upgrade yet, so <a href={ISSUES_URL} target="_blank" rel="noopener noreferrer" className="text-accent underline decoration-rule underline-offset-[3px]">open a GitHub issue</a> before you buy.</>],
+  ["Updates?", "The key has no expiry date and no version limit, so it keeps unlocking on newer releases."],
+  ["Does the license call home?", "No. Your PC checks the key’s signature offline. The only time anything reaches our server is when you buy."]
 ] as const;
 
 export default function PricingPage() {
@@ -97,7 +118,8 @@ export default function PricingPage() {
           Pay once. <span className="text-faint">Yours forever.</span>
         </h1>
         <p className="mx-auto mt-[18px] max-w-[520px] text-lg leading-relaxed text-muted">
-          No subscription, no usage cap. The free tier stays free — Pro unlocks the conveniences worth paying for.
+          No subscription. The free tier has models up to small and 200 minutes a month; Pro lifts both for the
+          track you buy.
         </p>
       </section>
 
@@ -159,9 +181,29 @@ export default function PricingPage() {
         </div>
         <p className="mt-6 text-center text-[13.5px] text-faint">
           {SALES_OPEN
-            ? "UPI · card · netbanking via Razorpay — GST invoice by email, license file within seconds."
+            ? "UPI · card · netbanking via Razorpay. Razorpay emails you a payment receipt; the license key follows by email."
             : "Purchases open soon. The free tier works today — download it and start dictating."}
         </p>
+
+        <div className="mx-auto mt-10 grid max-w-[820px] gap-3 rounded-2xl border border-rule bg-surface p-6 text-[14.5px] leading-relaxed text-muted">
+          <p>
+            <span className="font-semibold text-ink">Free includes:</span> dictation with the tiny, base and small
+            models, 200 minutes a month (counted separately for the browser and the Android app), the trackpad,
+            gyro pointer, screen mirror, the PC’s audio on the phone, the global hotkey, transcript history with
+            search and export, custom vocabulary and accent calibration.
+          </p>
+          {PLAY_LISTING_LIVE ? null : (
+            <p>
+              <span className="font-semibold text-ink">Phone Pro and the Android app:</span> the app is not on
+              Google Play yet, so today’s phone path is the browser client, which is always the free tier.
+            </p>
+          )}
+          <p>
+            <span className="font-semibold text-ink">Beta note:</span> the native desktop app runs its own engine
+            today and does not apply the free-tier limits itself; the PC server applies them to phone and browser
+            clients. Until that changes, Desktop Pro has nothing to lift inside the desktop app.
+          </p>
+        </div>
       </section>
 
       <section className="border-t border-rule bg-surface">
