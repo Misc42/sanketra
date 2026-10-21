@@ -222,7 +222,8 @@ export default function DesktopPage() {
           <div>
             <p className="text-[15px] font-semibold">Free during beta.</p>
             <p className="mt-1.5 text-sm leading-relaxed text-muted">
-              A one-time Pro license lifts the free tier&rsquo;s limits (models above small, 200 minutes a month) —{" "}
+              Nothing is capped today. When purchases open, the free tier stops at the small model and 200 minutes a
+              month, and a one-time Pro license lifts both —{" "}
               <Link href="/pricing" className="text-accent">
                 pricing
               </Link>

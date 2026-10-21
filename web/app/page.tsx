@@ -11,7 +11,7 @@ const features = [
 const privacyPoints = [
   ["Speech-to-text runs on your PC.", "No cloud STT bill, no audio uploads."],
   ["No account, no tracking.", "Install and speak. That's the whole onboarding."],
-  ["Free to start, pay once for more.", "Free covers models up to small and 200 minutes a month; a one-time license unlocks the rest. No subscription."]
+  ["Free to start, pay once for more.", "Everything is free and uncapped today. When purchases open, free covers models up to small and 200 minutes a month, and a one-time license lifts both. No subscription."]
 ] as const;
 
 export default function HomePage() {
