@@ -45,8 +45,8 @@ const TROUBLE: TroubleEntry[] = [
   },
   {
     os: "macOS",
-    symptom: "macOS asks to install Rosetta",
-    fix: "The Mac disk image is built for Intel; Apple Silicon Macs run it through Rosetta 2. Click Install, enter your password, then open Sanketra again. Apple lists Rosetta as available on macOS 27 and earlier."
+    symptom: "The app will not open on an Intel Mac",
+    fix: "The current Mac build is for Apple Silicon (M1 and newer) only. On an Intel Mac, install the last Intel build, v0.5.1, from the download page."
   },
   {
     os: "macOS",

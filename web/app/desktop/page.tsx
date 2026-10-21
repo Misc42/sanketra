@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const RELEASES_BASE = "https://github.com/Misc42/sanketra/releases/latest/download";
 
 const downloadTiles = [
-  ["macOS", `${RELEASES_BASE}/${MAC_DMG_FILE}`, "universal.dmg", MAC_ARCH_SHORT],
+  ["macOS", `${RELEASES_BASE}/${MAC_DMG_FILE}`, "arm64.dmg", MAC_ARCH_SHORT],
   ["Windows", `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`, "Setup-x64.exe", null],
   ["Linux", `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage", null]
 ] as const;

@@ -477,10 +477,10 @@ export function FinderDownloadsMockup({ className }: { className?: string }) {
       viewBox="0 0 560 360"
       className={className}
       role="img"
-      aria-label="Finder window showing Sanketra-Desktop-universal.dmg in the Downloads folder"
+      aria-label="Finder window showing Sanketra-Desktop-arm64.dmg in the Downloads folder"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Finder · Downloads · Sanketra-Desktop-universal.dmg</title>
+      <title>Finder · Downloads · Sanketra-Desktop-arm64.dmg</title>
 
       {/* window frame */}
       <rect x="0" y="0" width="560" height="360" rx="12" style={SURFACE} />
@@ -530,7 +530,7 @@ export function FinderDownloadsMockup({ className }: { className?: string }) {
         </text>
       </g>
       <text x="208" y="108" fontFamily="var(--font-sans), sans-serif" fontSize="12.5" fontWeight="500" style={INK}>
-        Sanketra-Desktop-universal.dmg
+        Sanketra-Desktop-arm64.dmg
       </text>
       <text x="440" y="108" fontFamily="var(--font-mono), monospace" fontSize="11" style={MUTED}>
         165 MB
