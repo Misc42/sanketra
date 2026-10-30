@@ -98,18 +98,36 @@ install_runtime_tools_linux() {
     elif [[ -z "$PKG" ]]; then
         warn "No supported package manager (apt/dnf/pacman) — install manually: ${want[*]}"
     else
+        # Probe for USABLE sudo before invoking it. On a clean minimal box (user
+        # not in sudoers, sudo absent) a bare `sudo apt-get` would (a) HANG on a
+        # tty password prompt under `curl|bash` (the `||` is never reached) and
+        # (b) abort main() under `set -e` before the server binary is even
+        # downloaded — yet the input/screen tools are OPTIONAL (server degrades
+        # without them). So use `sudo -n` (non-interactive) and warn-skip if it
+        # isn't available, matching the no-pkg-manager branch above.
+        local SUDO=""
+        if [[ $EUID -eq 0 ]]; then
+            SUDO=""
+        elif command -v sudo >/dev/null 2>&1 && sudo -n true >/dev/null 2>&1; then
+            SUDO="sudo -n"
+        else
+            warn "No usable sudo (absent or password-locked) — input/screen tools NOT installed: ${want[*]}"
+            warn "  Install them manually then re-run, or ignore (typing/screen-mirror degrade gracefully)."
+            return 0
+        fi
         case "$PKG" in
-            apt)    sudo apt-get update -qq && sudo apt-get install -y -qq "${want[@]}" ;;
-            dnf)    sudo dnf install -y -q "${want[@]}" ;;
-            pacman) sudo pacman -Sy --noconfirm --needed "${want[@]}" ;;
+            apt)    $SUDO apt-get update -qq && $SUDO apt-get install -y -qq "${want[@]}" || warn "Runtime input/screen tools not installed — typing/screen-mirror disabled" ;;
+            dnf)    $SUDO dnf install -y -q "${want[@]}" || warn "Runtime input/screen tools not installed — typing/screen-mirror disabled" ;;
+            pacman) $SUDO pacman -Sy --noconfirm --needed "${want[@]}" || warn "Runtime input/screen tools not installed — typing/screen-mirror disabled" ;;
         esac
-        info "Installed: ${want[*]}"
+        info "Runtime tool install attempted: ${want[*]}"
     fi
 
     # Wayland: ydotool needs its daemon running for uinput access.
     if [[ "$display" == "wayland" ]] && command -v ydotoold >/dev/null 2>&1; then
         if ! pgrep -x ydotoold >/dev/null 2>&1; then
-            sudo systemctl enable --now ydotoold 2>/dev/null || true
+            # `sudo -n` so a curl|bash run can't hang on a password prompt.
+            sudo -n systemctl enable --now ydotoold 2>/dev/null || true
         fi
     fi
 }
@@ -163,6 +181,43 @@ download_and_extract() {
     fi
     info "Downloaded $(du -h "$archive" | cut -f1)"
 
+    # Verify the published .sha256 sidecar to catch a truncated / CDN-corrupt /
+    # bit-rotted download before extracting. NOTE: this is an integrity check,
+    # not an anti-MITM control — the sidecar travels the same HTTPS channel as
+    # the archive. Skipped for file:// (the dry-run harness ships no sidecar),
+    # and a MISSING sidecar (older release / 404) is a warning, not a failure,
+    # so pre-sidecar releases still install. The sidecar body records the BARE
+    # basename ("<sha>  <asset>"), so `-c` must run with $tmp as CWD.
+    if [[ "$url" != file://* ]]; then
+        local sha_url="$url.sha256"
+        local sha_file="$archive.sha256"
+        local got_sidecar=0
+        if command -v curl >/dev/null 2>&1; then
+            curl -fsSL --retry 3 --proto '=https' -o "$sha_file" "$sha_url" && got_sidecar=1
+        elif command -v wget >/dev/null 2>&1; then
+            wget -q -O "$sha_file" "$sha_url" && got_sidecar=1
+        fi
+        if [[ "$got_sidecar" -eq 1 ]]; then
+            local sha_tool=""
+            if command -v sha256sum >/dev/null 2>&1; then
+                sha_tool="sha256sum"
+            elif command -v shasum >/dev/null 2>&1; then
+                sha_tool="shasum -a 256"
+            fi
+            if [[ -n "$sha_tool" ]]; then
+                if ( cd "$tmp" && $sha_tool -c "$asset.sha256" >/dev/null 2>&1 ); then
+                    info "Checksum verified"
+                else
+                    fail "Checksum mismatch — download is corrupt. Re-run the installer."
+                fi
+            else
+                warn "No sha256sum/shasum available — skipping checksum verification"
+            fi
+        else
+            warn "No .sha256 sidecar published for this release — skipping checksum verification"
+        fi
+    fi
+
     # Extract into a fresh dir, then atomically swap so a failed extract never
     # leaves a half-written install behind.
     step "Installing to $INSTALL_DIR"
@@ -208,11 +263,24 @@ install_service_linux() {
     mkdir -p "$unit_dir"
     local unit_path="$unit_dir/sanketra.service"
 
+    # Login-scoped, NOT lingered — mirrors the canonical deploy/systemd/
+    # sanketra.service. The server captures the mic via PipeWire/PulseAudio,
+    # whose socket lives in the user's GRAPHICAL session ($XDG_RUNTIME_DIR).
+    # Binding to graphical-session.target starts it on login and stops it on
+    # logout, with the session audio env present. `loginctl enable-linger`
+    # would bring the user manager up at BOOT with no graphical session — no
+    # audio socket, no DISPLAY — so mic init would fail ("cannot open shared
+    # connection to PulseAudio"). Do NOT add linger here.
     cat > "$unit_path" <<EOF
 [Unit]
 Description=Sanketra Server
-After=network-online.target
-Wants=network-online.target
+# Start only once the graphical session (and its audio socket) is up.
+After=graphical-session.target
+PartOf=graphical-session.target
+# Crash-loop guard: at most 5 restarts in 60s, then stop. [Unit] directives —
+# systemd silently ignores StartLimit* if placed under [Service].
+StartLimitIntervalSec=60
+StartLimitBurst=5
 
 [Service]
 Type=simple
@@ -222,18 +290,37 @@ Restart=on-failure
 RestartSec=5
 TimeoutStopSec=10
 KillSignal=SIGTERM
-Environment=DISPLAY=:0
-Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/%U/bus
 
 [Install]
-WantedBy=default.target
+# Login-scoped: pulled in when the graphical session starts, torn down on
+# logout. NOT default.target (that would survive logout without audio env).
+WantedBy=graphical-session.target
 EOF
 
     info "Unit written: $unit_path"
-    systemctl --user daemon-reload 2>/dev/null || true
-    systemctl --user enable sanketra 2>/dev/null || true
-    systemctl --user restart sanketra 2>/dev/null || true
-    info "Service enabled + started (systemd user)"
+    # daemon-reload doubles as the cheapest user-bus probe: on a no-bus box
+    # (SSH-only headless first install, `sudo -i`/`su -` into the install user,
+    # container) every `systemctl --user` call exits 1 with "Failed to connect
+    # to bus". The old `2>/dev/null || true` swallowed that and printed success
+    # anyway — a flat lie, with the service never started and zero diagnostic.
+    if systemctl --user daemon-reload 2>/dev/null; then
+        # enable (no --now): the unit is WantedBy=graphical-session.target on
+        # purpose (needs the session's PipeWire/PulseAudio socket), so it must be
+        # pulled in by the target, not force-started here. The separate restart
+        # does the start; is-active then reports from ACTUAL state, not assertion.
+        systemctl --user enable sanketra 2>/dev/null || true
+        systemctl --user restart sanketra 2>/dev/null || true
+        if systemctl --user is-active --quiet sanketra; then
+            info "Service running (systemd user)"
+        else
+            warn "Service not active. Check:"
+            warn "  systemctl --user status sanketra"
+            warn "  journalctl --user -u sanketra -n 50"
+        fi
+    else
+        warn "No user D-Bus session bus reachable — unit written but NOT enabled/started."
+        warn "  After a graphical login, run: systemctl --user enable --now sanketra"
+    fi
 }
 
 install_service_macos() {
@@ -276,7 +363,17 @@ EOF
     info "Agent written: $plist_path"
     launchctl unload "$plist_path" 2>/dev/null || true
     launchctl load "$plist_path" 2>/dev/null || true
-    info "Service loaded (launchd)"
+    # Verify REGISTRATION instead of asserting it. `load`'s exit + stderr were
+    # being swallowed, so a genuinely-failed load (bad $BINARY_PATH, malformed
+    # plist) still printed green. NOTE: this confirms the agent is registered,
+    # not that it stays running — with KeepAlive{SuccessfulExit=false}+RunAtLoad
+    # a binary that boot-crashes on bind can still list with a nonzero exit.
+    if launchctl list 2>/dev/null | grep -q com.miconterm.server; then
+        info "Service loaded (launchd)"
+    else
+        warn "launchctl load failed — the LaunchAgent is not registered."
+        warn "  Try: launchctl bootstrap gui/$(id -u) \"$plist_path\""
+    fi
 }
 
 # ─── macOS: port 5000 AirPlay conflict notice ─────────────────────────
@@ -284,8 +381,9 @@ check_macos_port() {
     [[ "$OS" == "macos" ]] || return 0
     if lsof -iTCP:5000 -sTCP:LISTEN >/dev/null 2>&1; then
         warn "Port 5000 in use (probably AirPlay Receiver)"
-        echo "    Server will auto-fallback to port 5001"
-        echo "    Or: System Settings -> General -> AirDrop & Handoff -> AirPlay Receiver -> OFF"
+        echo "    Server will try to fall back to port 5001."
+        echo "    If the server still fails to bind, free port 5000:"
+        echo "    System Settings -> General -> AirDrop & Handoff -> AirPlay Receiver -> OFF"
     fi
 }
 
@@ -298,7 +396,18 @@ check_linux_port() {
     # clean-machine case: nothing on :5000) would abort the whole installer.
     local pid=""
     pid=$(ss -ltnHp 2>/dev/null | grep ':5000 ' | grep -oE 'pid=[0-9]+' | head -1 | cut -d= -f2 || true)
-    [[ -z "$pid" ]] && return 0
+    if [[ -z "$pid" ]]; then
+        # Empty pid does NOT mean the port is free: ss/lsof hide the owner PID
+        # for sockets we don't own (cross-user / system service) without root.
+        # Split "port occupied" from "PID identified" — warn if occupied so the
+        # user isn't told it's free when the server will boot-crash on bind.
+        if ss -ltnH 2>/dev/null | grep -q ':5000 '; then
+            warn "Port 5000 is in use but I couldn't identify the owner (may need sudo/lsof)."
+            echo "    The Linux server binds 5000 directly and does NOT auto-fallback —"
+            echo "    free it, or run the server with --port <free-port>."
+        fi
+        return 0
+    fi
 
     local cmdline=""
     [[ -r "/proc/$pid/cmdline" ]] && cmdline=$(tr '\0' ' ' < "/proc/$pid/cmdline")
@@ -320,7 +429,9 @@ check_linux_port() {
     else
         warn "Port 5000 in use by an unrelated process (PID $pid):"
         echo "    $cmdline"
-        echo "    Sanketra will auto-fallback to port 5001"
+        echo "    Free port 5000 (stop that process) before starting Sanketra,"
+        echo "    or run the server with --port <free-port>. The Linux server"
+        echo "    binds 5000 directly and does NOT auto-fallback."
     fi
 }
 
