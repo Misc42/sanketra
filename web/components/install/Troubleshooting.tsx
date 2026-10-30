@@ -3,6 +3,8 @@
 // scroll through it. Users who actually hit an obscure failure mode reach
 // for ctrl-F and find their error here.
 
+import { MAC_ARM64_ON_LATEST } from "@/lib/facts";
+
 type TerminalEntry = {
   os: string;
   deva: string;
@@ -46,7 +48,9 @@ const TROUBLE: TroubleEntry[] = [
   {
     os: "macOS",
     symptom: "The app will not open on an Intel Mac",
-    fix: "The current Mac build is for Apple Silicon (M1 and newer) only. On an Intel Mac, install the last Intel build, v0.5.1, from the download page."
+    fix: MAC_ARM64_ON_LATEST
+      ? "The current Mac build is for Apple Silicon (M1 and newer) only. On an Intel Mac, install the last Intel build, v0.5.1, from the download page."
+      : "The Mac download is currently v0.5.1, an Intel build, so it opens on an Intel Mac. If it still will not open, check the Gatekeeper steps above."
   },
   {
     os: "macOS",

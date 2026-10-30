@@ -20,6 +20,7 @@
 // --accent (green), --accent-warm (accent).
 
 import type { CSSProperties } from "react";
+import { MAC_DMG_FILE } from "@/lib/facts";
 
 const PAPER: CSSProperties = { fill: "var(--paper)" };
 const SURFACE: CSSProperties = { fill: "var(--surface)" };
@@ -477,10 +478,10 @@ export function FinderDownloadsMockup({ className }: { className?: string }) {
       viewBox="0 0 560 360"
       className={className}
       role="img"
-      aria-label="Finder window showing Sanketra-Desktop-arm64.dmg in the Downloads folder"
+      aria-label={`Finder window showing ${MAC_DMG_FILE} in the Downloads folder`}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Finder · Downloads · Sanketra-Desktop-arm64.dmg</title>
+      <title>{`Finder · Downloads · ${MAC_DMG_FILE}`}</title>
 
       {/* window frame */}
       <rect x="0" y="0" width="560" height="360" rx="12" style={SURFACE} />
@@ -530,7 +531,7 @@ export function FinderDownloadsMockup({ className }: { className?: string }) {
         </text>
       </g>
       <text x="208" y="108" fontFamily="var(--font-sans), sans-serif" fontSize="12.5" fontWeight="500" style={INK}>
-        Sanketra-Desktop-arm64.dmg
+        {MAC_DMG_FILE}
       </text>
       <text x="440" y="108" fontFamily="var(--font-mono), monospace" fontSize="11" style={MUTED}>
         165 MB
