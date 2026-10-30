@@ -22,7 +22,7 @@ export const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com
 // download points at v0.5.1's dmg (an Intel build Apple Silicon runs through
 // Rosetta), so the Mac button never 404s on `latest`. Flip this in the push
 // that follows the arm64 upload, and measure MAC_DMG_SIZE off that file.
-export const MAC_ARM64_ON_LATEST = false;
+export const MAC_ARM64_ON_LATEST = true;
 export const MAC_INTEL_URL =
   "https://github.com/Misc42/sanketra/releases/download/v0.5.1/Sanketra-Desktop-universal.dmg";
 const MAC_ARM64_URL =
@@ -32,8 +32,8 @@ export const MAC_DMG_FILE = MAC_ARM64_ON_LATEST
   ? "Sanketra-Desktop-arm64.dmg"
   : "Sanketra-Desktop-universal.dmg";
 export const MAC_DMG_LABEL = MAC_ARM64_ON_LATEST ? "arm64.dmg" : "v0.5.1 .dmg";
-// v0.5.1's dmg is 164,835,727 bytes. TODO(release): measure the arm64 dmg.
-export const MAC_DMG_SIZE = "about 165 MB";
+// v0.5.2's arm64 dmg is 125,825,802 bytes (v0.5.1's universal one: 164,835,727).
+export const MAC_DMG_SIZE = MAC_ARM64_ON_LATEST ? "about 126 MB" : "about 165 MB";
 export const MAC_MIN_VERSION = "macOS 11 or newer";
 export const MAC_ARCH_SHORT = MAC_ARM64_ON_LATEST
   ? "Apple Silicon (M1 or newer)"
