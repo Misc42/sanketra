@@ -6,7 +6,7 @@ import { WindowsGuide } from "@/components/install/WindowsGuide";
 import { LinuxGuide } from "@/components/install/LinuxGuide";
 import { Troubleshooting } from "@/components/install/Troubleshooting";
 import { withBase } from "@/lib/basePath";
-import { MAC_ARCH_SHORT, MAC_DMG_FILE } from "@/lib/facts";
+import { MAC_ARCH_SHORT, MAC_DMG_LABEL, MAC_DMG_URL } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Desktop",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const RELEASES_BASE = "https://github.com/Misc42/sanketra/releases/latest/download";
 
 const downloadTiles = [
-  ["macOS", `${RELEASES_BASE}/${MAC_DMG_FILE}`, "arm64.dmg", MAC_ARCH_SHORT],
+  ["macOS", MAC_DMG_URL, MAC_DMG_LABEL, MAC_ARCH_SHORT],
   ["Windows", `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`, "Setup-x64.exe", null],
   ["Linux", `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage", null]
 ] as const;
@@ -26,7 +26,7 @@ export default function DesktopPage() {
   return (
     <main>
       <section id="downloads" className="wrap pb-14 pt-20">
-        <p className="masthead mb-3.5">v0.5.1 · free during beta</p>
+        <p className="masthead mb-3.5">v0.5.2 · free during beta</p>
         <h1 className="max-w-[800px] text-[clamp(2.5rem,4.6vw,3.75rem)] font-bold leading-[1.04] tracking-[-0.03em]">
           Sanketra Desktop.
           <br />

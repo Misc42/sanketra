@@ -10,6 +10,12 @@ export const metadata: Metadata = {
 
 const entries = [
   {
+    version: "Desktop v0.5.2",
+    date: "Oct 30, 2026",
+    title: "The phone's browser works as a mic again, and dictation types only what you said",
+    body: "Pairing a phone and dictating from its browser works again. It had been blocked since March. Releasing the mic no longer types a stray word after your sentence. If you speak both Hindi and English, English sentences stay English instead of coming out in Devanagari. Licences are lifetime and can be entered in the app. Linux gets a working Install Update and opens on a stock Ubuntu desktop. The Mac build of this release is still being finished; until it is out, Macs get v0.5.1."
+  },
+  {
     version: "Desktop v0.5.1",
     date: "Jul 16, 2026",
     title: "Installers no longer carry the source, and Mac pairing works again",

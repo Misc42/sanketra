@@ -25,7 +25,7 @@ import {
   WarningDialogMockup
 } from "./Mockups";
 import { StepBlock } from "./StepBlock";
-import { MAC_ARCH_NOTE, MAC_DMG_FILE, MAC_DMG_SIZE, MAC_INTEL_URL, MAC_MIN_VERSION } from "@/lib/facts";
+import { MAC_ARCH_NOTE, MAC_ARM64_ON_LATEST, MAC_DMG_FILE, MAC_DMG_SIZE, MAC_INTEL_URL, MAC_MIN_VERSION } from "@/lib/facts";
 
 const TOTAL = 12;
 
@@ -49,7 +49,7 @@ export function MacGuide() {
         </p>
         <div className="callout mt-5 max-w-3xl p-5 text-sm text-muted">
           <p>
-            <strong className="text-ink">Which Macs.</strong> {MAC_MIN_VERSION}. {MAC_ARCH_NOTE}{" "}<a href={MAC_INTEL_URL} className="text-accent underline decoration-rule underline-offset-[3px]">Intel build (v0.5.1)</a>.
+            <strong className="text-ink">Which Macs.</strong> {MAC_MIN_VERSION}. {MAC_ARCH_NOTE}{MAC_ARM64_ON_LATEST && (<>{" "}<a href={MAC_INTEL_URL} className="text-accent underline decoration-rule underline-offset-[3px]">Intel build (v0.5.1)</a>.</>)}
           </p>
           <p className="mt-2">
             <strong className="text-ink">Not yet tested on a real Mac.</strong> We have not run

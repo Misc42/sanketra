@@ -12,7 +12,7 @@
 
 import type { Metadata } from "next";
 import { withBase } from "@/lib/basePath";
-import { MAC_ARCH_SHORT, MAC_DMG_FILE, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
+import { MAC_ARCH_SHORT, MAC_DMG_FILE, MAC_DMG_URL, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Install · Sanketra",
@@ -24,7 +24,7 @@ const RELEASE_BASE =
   "https://github.com/Misc42/sanketra/releases/latest/download";
 
 const ARTIFACTS = {
-  mac: `${RELEASE_BASE}/${MAC_DMG_FILE}`,
+  mac: MAC_DMG_URL,
   windows: `${RELEASE_BASE}/Sanketra-Desktop-Setup-x64.exe`,
   linux: `${RELEASE_BASE}/Sanketra-Desktop-x86_64.AppImage`
 } as const;
@@ -72,7 +72,7 @@ const REDIRECT_SCRIPT = `(function(){
       target = base + "/Sanketra-Desktop-Setup-x64.exe";
     } else if (ua.indexOf("mac") !== -1) {
       if ("ontouchend" in document) { target = phonePage; }
-      else { target = base + "/${MAC_DMG_FILE}"; }
+      else { target = "${MAC_DMG_URL}"; }
     } else if (ua.indexOf("linux") !== -1) {
       target = base + "/Sanketra-Desktop-x86_64.AppImage";
     } else {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import QRCode from "@/components/QRCode";
-import { ISSUES_URL, MAC_ARCH_SHORT, MAC_DMG_FILE, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
+import { ISSUES_URL, MAC_ARCH_SHORT, MAC_DMG_LABEL, MAC_DMG_URL, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Download — Phone",
@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 // not attached yet, so the QR must point at the host that actually serves the
 // page. Flip back to https://sanketra.app/download at apex cutover.
 //
-// TODO(release): the browser client's mic is broken in the published v0.5.1
-// server (CSP script-src lacks blob:, fixed on master only). This page leads
-// with that client, so it must not go live in front of v0.5.1 installers alone:
-// cut the next release first (docs/LAUNCH_READINESS_2026-10-21.md, FL-1).
+// The browser client's mic is broken in v0.5.1 (CSP script-src lacks blob:)
+// and works from v0.5.2. This page leads with that client, so it went live
+// only once v0.5.2 was the latest release. The Mac download stays v0.5.1 until
+// its arm64 dmg is uploaded, and lib/facts.ts says so on the Mac rows.
 //
 // The PC server's Android pairing page links here with #android as the intent
 // fallback when the Android app is not installed (src/server_async.py:7781,
@@ -32,7 +32,7 @@ const RELEASES_BASE = "https://github.com/Misc42/sanketra/releases/latest/downlo
 
 const pcInstallers = [
   ["Windows", `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`, "Setup-x64.exe", null],
-  ["macOS", `${RELEASES_BASE}/${MAC_DMG_FILE}`, "arm64.dmg", MAC_ARCH_SHORT],
+  ["macOS", MAC_DMG_URL, MAC_DMG_LABEL, MAC_ARCH_SHORT],
   ["Linux", `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage", null]
 ] as const;
 
