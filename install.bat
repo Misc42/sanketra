@@ -28,7 +28,9 @@ net session >nul 2>&1
 if %errorlevel% equ 0 (
     echo  [i] Running as Administrator
 ) else (
-    echo  [i] Running as normal user ^(recommended^)
+    echo  [i] Running as normal user
+    echo      ^(Note: firewall rules for LAN phone access need admin - if the
+    echo       phone can't reach this PC, re-run this installer as Administrator.^)
 )
 echo.
 
@@ -36,6 +38,10 @@ echo.
 echo  -- Stopping any running Sanketra service...
 schtasks /end /tn "sanketra" >nul 2>&1
 taskkill /im "%BINARY_NAME%" /f >nul 2>&1
+:: taskkill returns before the kernel unmaps the killed exe image; give the
+:: file lock a moment to release so the reinstall swap below isn't racing a
+:: delete-pending handle (killed exe / Defender / indexer).
+timeout /t 2 /nobreak >nul 2>&1
 
 :: ── Download the server binary ───────────────────────────────────────
 echo.
@@ -53,6 +59,37 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 echo  [OK] Downloaded
+
+:: ── Verify the published .sha256 sidecar ─────────────────────────────
+:: install.sh has done this since it was written; this installer did not, so
+:: Windows was the one platform that extracted and ran an unverified binary.
+:: Same contract as the shell sibling: an integrity check, not an anti-MITM
+:: control (the sidecar travels the same HTTPS channel), a MISSING sidecar is a
+:: warning so pre-sidecar releases still install, and a MISMATCH is fatal.
+:: (Audit 2026-08-11.)
+set "TMP_SHA=%TMP_ZIP%.sha256"
+if exist "%TMP_SHA%" del /q "%TMP_SHA%" >nul 2>&1
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+    "$ErrorActionPreference='Stop'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -UseBasicParsing -Uri '%ASSET_URL%.sha256' -OutFile '%TMP_SHA%'" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo  [!] No checksum sidecar published for this release - skipping verification.
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+        "$ErrorActionPreference='Stop'; $want=((Get-Content -Raw '%TMP_SHA%').Trim() -split '\s+')[0].ToLower(); $got=(Get-FileHash -Algorithm SHA256 '%TMP_ZIP%').Hash.ToLower(); if ($want -ne $got) { Write-Host ('      expected ' + $want); Write-Host ('      actual   ' + $got); exit 1 }"
+    rem !errorlevel!, not %errorlevel%: inside a parenthesised block the percent
+    rem form is substituted when the block is PARSED, before powershell has run,
+    rem so the mismatch branch would never fire. setlocal enabledelayedexpansion
+    rem is already on at the top of this file.
+    if !errorlevel! neq 0 (
+        echo  [X] Checksum mismatch - the download is corrupt.
+        echo      Re-run this installer. If it keeps failing, report the URL:
+        echo      %ASSET_URL%
+        del /q "%TMP_ZIP%" >nul 2>&1
+        pause
+        exit /b 1
+    )
+    echo  [OK] Checksum verified
+)
 
 :: ── Extract to a staging dir, then swap into place ───────────────────
 echo.
@@ -82,14 +119,19 @@ if not defined BUNDLE_SRC (
     exit /b 1
 )
 
-:: Swap into place
-if exist "%INSTALL_DIR%" rmdir /s /q "%INSTALL_DIR%" >nul 2>&1
-move "%BUNDLE_SRC%" "%INSTALL_DIR%" >nul
-if %errorlevel% neq 0 (
-    echo  [X] Could not move the server into %INSTALL_DIR%.
+:: Swap into place. On reinstall, `move` won't overwrite an existing dir target
+:: and `rmdir` can leave it delete-pending if a handle is still held, so the
+:: move fails and the old install is gone = NO install. robocopy /MIR mirrors
+:: the bundle onto INSTALL_DIR (tolerates a pre-existing target) with built-in
+:: retry (/R:5 /W:1) - exit code < 8 is success, >= 8 is failure.
+robocopy "%BUNDLE_SRC%" "%INSTALL_DIR%" /MIR /R:5 /W:1 /NFL /NDL /NJH /NJS /NP >nul 2>&1
+if %errorlevel% geq 8 (
+    echo  [X] Could not install the server into %INSTALL_DIR% ^(file lock or permissions^).
+    echo      Close any running Sanketra, then run this installer again.
     pause
     exit /b 1
 )
+rmdir /s /q "%BUNDLE_SRC%" >nul 2>&1
 rmdir /s /q "%STAGING%" >nul 2>&1
 del /q "%TMP_ZIP%" >nul 2>&1
 
@@ -121,12 +163,21 @@ if "%FW_OK%"=="1" (
 echo.
 echo  -- Installing service ^(auto-start on login^)...
 schtasks /delete /tn "sanketra" /f >nul 2>&1
-schtasks /create /tn "sanketra" /sc ONLOGON /rl HIGHEST /tr "\"%SERVER_EXE%\" --service" /f >nul 2>&1
+:: NO /rl HIGHEST - a standard (non-admin) user cannot create a HIGHEST task
+:: (ERROR: Access is denied), and the recommended install path IS non-admin.
+:: The server needs no elevation: it binds 5000/TCP + 5001/UDP (both >1024,
+:: unprivileged on Windows), installs under %USERPROFILE%, and writes no
+:: HKLM/Program Files/firewall itself. Default run level (LIMITED) is what a
+:: standard user can create. Log the output so a real failure is visible.
+schtasks /create /tn "sanketra" /sc ONLOGON /tr "\"%SERVER_EXE%\" --service" /f >"%TEMP%\sanketra-task.log" 2>&1
 if %errorlevel% neq 0 (
-    echo  [!] Service registration had issues. Server may need manual start.
+    echo  [!] Service registration FAILED - auto-start on login will not work:
+    type "%TEMP%\sanketra-task.log"
+    echo      You can still start the server manually: "%SERVER_EXE%" --service
 ) else (
     echo  [OK] Logon task registered
 )
+del /q "%TEMP%\sanketra-task.log" >nul 2>&1
 
 :: ── Start Service ────────────────────────────────────────────────────
 echo.
@@ -139,6 +190,24 @@ if %errorlevel% equ 0 (
 )
 
 :: ── Done ─────────────────────────────────────────────────────────────
+:: If the firewall rules could not be added (non-admin token), the phone
+:: cannot reach this PC over the LAN - the installer's primary documented use
+:: case. Do NOT print "ready" in that case; fail loud so the user re-runs
+:: elevated rather than chasing a silent connection-refused on the phone.
+if "%FW_OK%"=="0" (
+    echo.
+    echo  ========================================
+    echo   [X] INCOMPLETE: firewall rules were not added.
+    echo.
+    echo   The server is installed, but WITHOUT the firewall rules your phone
+    echo   cannot reach this PC over the LAN. Re-run this installer as
+    echo   Administrator ^(right-click -^> Run as administrator^) to finish.
+    echo  ========================================
+    echo.
+    pause
+    exit /b 1
+)
+
 echo.
 echo  ========================================
 echo   Sanketra is ready!
