@@ -71,7 +71,17 @@ const TROUBLE: TroubleEntry[] = [
   {
     os: "Windows",
     symptom: "Defender / Bitdefender / Kaspersky deletes sanketra-desktop.exe",
-    fix: "False-positive on pynput's global keyboard hook (the anti-keylogger heuristic). Restore the file from the AV quarantine, then add %LOCALAPPDATA%\\SanketraDesktop\\ as an exclusion. Until we have a code-signing cert, this happens to ~5% of installs."
+    fix: "False-positive on pynput's global keyboard hook (the anti-keylogger heuristic). Restore the file from the AV quarantine, then add %LOCALAPPDATA%\\SanketraDesktop\\ as an exclusion. Until Sanketra Desktop is code-signed, some antivirus products flag it."
+  },
+  {
+    os: "Windows",
+    symptom: '"Smart App Control blocked an app that may be unsafe" (no Run anyway button)',
+    fix: "Smart App Control blocks apps that are neither code-signed nor already known to Microsoft. Sanketra Desktop is new and not signed yet, so there is no way past it while it is on. To install Sanketra, turn it off in Windows Security → App & browser control → Smart App Control settings. On Windows 11 24H2 or 25H2 with the April 2026 update or later you can switch it back on afterwards; on older builds it cannot be switched back on without resetting Windows."
+  },
+  {
+    os: "Windows",
+    symptom: "Dictation runs but nothing gets typed",
+    fix: "The text goes to whichever window has focus. Click inside the app you want to type into (Notepad, a browser text box) before holding Ctrl+Alt; if Sanketra's own window was in front, the words had nowhere to go. Every dictation is also kept in Sanketra's History."
   },
   {
     os: "Windows",
