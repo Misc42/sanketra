@@ -81,7 +81,12 @@ export default function DownloadPage() {
                   <span className="font-semibold text-accent">4</span>
                   <span>
                     The browser warns that the connection isn&rsquo;t private. That is your PC&rsquo;s own
-                    certificate on your own network; continue past it.
+                    certificate on your own network; continue past it. On iPhone, if dictation won&rsquo;t start
+                    or the page keeps reconnecting, see{" "}
+                    <a href="#ios" className="text-accent">
+                      iPhone and iPad
+                    </a>{" "}
+                    below.
                   </span>
                 </li>
               </ol>
@@ -152,6 +157,60 @@ export default function DownloadPage() {
               </p>
             </article>
           )}
+        </div>
+      </section>
+
+      {/* The README and the PC app link to /download#ios; keep the id. Full trust
+          needs a server certificate with the serverAuth key usage, which Safari
+          requires (support.apple.com/103769). Releases up to v0.5.2 issue one
+          without it, so this route only works on a newer PC app; the click-through
+          above is what works on every release. */}
+      <section id="ios" className="wrap scroll-mt-24 pb-14">
+        <div className="rounded-2xl border border-rule bg-surface p-[30px]">
+          <p className="text-[13px] font-semibold text-accent">iPhone and iPad · optional, one time</p>
+          <h2 className="mt-2.5 text-[26px] font-bold tracking-[-0.02em]">Trust your PC, and the warning is gone</h2>
+          <p className="mt-3 max-w-[720px] text-[14.5px] leading-relaxed text-muted">
+            Safari is stricter than Chrome about a PC&rsquo;s own certificate. If the page keeps saying it is
+            reconnecting, or you would rather not see the warning every time, install the PC&rsquo;s certificate
+            once:
+          </p>
+          <ol className="mt-4 grid max-w-[720px] gap-2.5 text-[14.5px] text-muted">
+            <li className="flex gap-2.5">
+              <span className="font-semibold text-accent">1</span>
+              <span>
+                With the PC app open, open Safari on the iPhone and go to the PC&rsquo;s address with{" "}
+                <span className="font-mono text-[13.5px] text-ink">/cert.mobileconfig</span> on the end, for example{" "}
+                <span className="font-mono text-[13.5px] text-ink">https://192.168.1.20:5000/cert.mobileconfig</span>
+                . The address is the one Safari shows after you scan the pairing QR. Tap{" "}
+                <span className="font-semibold text-ink">Allow</span>.
+              </span>
+            </li>
+            <li className="flex gap-2.5">
+              <span className="font-semibold text-accent">2</span>
+              <span>
+                Open <span className="font-semibold text-ink">Settings</span>, tap{" "}
+                <span className="font-semibold text-ink">Profile Downloaded</span> near the top, then{" "}
+                <span className="font-semibold text-ink">Install</span>. The profile is called Sanketra.
+              </span>
+            </li>
+            <li className="flex gap-2.5">
+              <span className="font-semibold text-accent">3</span>
+              <span>
+                Go to <span className="font-semibold text-ink">Settings → General → About → Certificate Trust
+                Settings</span> and turn on <span className="font-semibold text-ink">localhost</span>.
+              </span>
+            </li>
+            <li className="flex gap-2.5">
+              <span className="font-semibold text-accent">4</span>
+              <span>Scan the pairing QR again. Safari opens it with no warning.</span>
+            </li>
+          </ol>
+          <p className="mt-4 max-w-[720px] text-[13.5px] leading-relaxed text-faint">
+            Full trust needs a PC app newer than v0.5.2; on v0.5.2 and earlier, continue past the warning instead.
+            If your PC gets a new certificate, for example after it moves to a new Wi-Fi address, remove the old
+            profile in <span className="font-semibold text-ink">Settings → General → VPN &amp; Device Management</span>{" "}
+            and repeat these steps. Screen mirror on iPhone needs iOS 16.4 or later.
+          </p>
         </div>
       </section>
 
