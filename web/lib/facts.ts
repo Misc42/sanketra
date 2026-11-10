@@ -25,8 +25,11 @@ export const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com
 export const MAC_ARM64_ON_LATEST = true;
 export const MAC_INTEL_URL =
   "https://github.com/Misc42/sanketra/releases/download/v0.5.1/Sanketra-Desktop-universal.dmg";
+// v0.5.3 has no Mac build yet (no Mac to build it on), so `latest` carries no
+// dmg: the Mac button names v0.5.2 directly instead of 404ing on latest.
+// Point it back at latest/download once a v0.5.3 arm64 dmg is uploaded.
 const MAC_ARM64_URL =
-  "https://github.com/Misc42/sanketra/releases/latest/download/Sanketra-Desktop-arm64.dmg";
+  "https://github.com/Misc42/sanketra/releases/download/v0.5.2/Sanketra-Desktop-arm64.dmg";
 export const MAC_DMG_URL = MAC_ARM64_ON_LATEST ? MAC_ARM64_URL : MAC_INTEL_URL;
 export const MAC_DMG_FILE = MAC_ARM64_ON_LATEST
   ? "Sanketra-Desktop-arm64.dmg"
@@ -42,7 +45,7 @@ export const MAC_ARCH_SHORT = MAC_ARM64_ON_LATEST
 // policy blocks the audio worklet; fixed in v0.5.2), so say so rather than
 // let a Mac user find out on the phone.
 export const MAC_ARCH_NOTE = MAC_ARM64_ON_LATEST
-  ? "Built for Apple Silicon Macs (M1 and newer). On an Intel Mac, use the last Intel build, v0.5.1."
+  ? "Built for Apple Silicon Macs (M1 and newer). The Mac download is v0.5.2; its v0.5.3 build follows. On an Intel Mac, use the last Intel build, v0.5.1."
   : "The Mac download is still v0.5.1 while the v0.5.2 Apple Silicon build is finished. It is an Intel build; Apple Silicon Macs run it through Rosetta, which macOS offers to install the first time. In v0.5.1 a phone's browser cannot be used as the microphone; that is fixed in v0.5.2.";
 
 // ─── Contact ────────────────────────────────────────────────────────────────

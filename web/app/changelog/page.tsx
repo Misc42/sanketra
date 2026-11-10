@@ -10,6 +10,12 @@ export const metadata: Metadata = {
 
 const entries = [
   {
+    version: "Desktop v0.5.3",
+    date: "Nov 10, 2026",
+    title: "Windows installs and uninstalls safely, and upgrades really upgrade",
+    body: "On Windows, uninstalling no longer deletes the folder you installed into if you had picked one of your own. The installer always installs for you, without asking for an administrator. Upgrading from v0.5.0 now replaces its old phone server instead of leaving it running. If the app cannot start, or its speech model cannot load, it says why and offers a retry. Dictation is never typed into Sanketra's own window, iPhone and iPad can trust the PC's certificate, and NVIDIA PCs with a broken CUDA install fall back to the CPU. The Mac download stays v0.5.2 until its v0.5.3 build is made."
+  },
+  {
     version: "Desktop v0.5.2",
     date: "Oct 30, 2026",
     title: "The phone's browser works as a mic again, and dictation types only what you said",
