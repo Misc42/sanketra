@@ -8,6 +8,7 @@ import {
   LinuxDownloadMockup,
   TrayMenuMockup
 } from "./Mockups";
+import { LINUX_APPIMAGE_MB } from "@/lib/facts";
 import { StepBlock } from "./StepBlock";
 
 const TOTAL = 5;
@@ -44,7 +45,7 @@ export function LinuxGuide() {
         <p>
           Click <em className="serif-italic text-ink">Download for Linux</em> above. Your browser
           saves <code className="font-mono text-accent">Sanketra-Desktop-x86_64.AppImage</code> to{" "}
-          <code className="font-mono text-accent">~/Downloads/</code> (about 104 MB).
+          <code className="font-mono text-accent">~/Downloads/</code> (about {LINUX_APPIMAGE_MB}).
         </p>
       </StepBlock>
 

@@ -36,7 +36,13 @@ export const MAC_DMG_FILE = MAC_ARM64_ON_LATEST
   : "Sanketra-Desktop-universal.dmg";
 export const MAC_DMG_LABEL = MAC_ARM64_ON_LATEST ? "arm64.dmg" : "v0.5.1 .dmg";
 // v0.5.2's arm64 dmg is 125,825,802 bytes (v0.5.1's universal one: 164,835,727).
-export const MAC_DMG_SIZE = MAC_ARM64_ON_LATEST ? "about 126 MB" : "about 165 MB";
+export const MAC_DMG_MB = MAC_ARM64_ON_LATEST ? "126 MB" : "165 MB";
+export const MAC_DMG_SIZE = `about ${MAC_DMG_MB}`;
+// Measured off the v0.5.3 release assets (2026-11-12): the Windows installer is
+// 570,001,402 bytes (it carries NVIDIA's GPU libraries, used only when an NVIDIA
+// card is present), the AppImage 255,521,984. Re-measure on every release.
+export const WIN_EXE_MB = "570 MB";
+export const LINUX_APPIMAGE_MB = "256 MB";
 export const MAC_MIN_VERSION = "macOS 11 or newer";
 export const MAC_ARCH_SHORT = MAC_ARM64_ON_LATEST
   ? "Apple Silicon (M1 or newer)"

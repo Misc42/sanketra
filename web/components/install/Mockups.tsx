@@ -20,7 +20,7 @@
 // --accent (green), --accent-warm (accent).
 
 import type { CSSProperties } from "react";
-import { MAC_DMG_FILE } from "@/lib/facts";
+import { LINUX_APPIMAGE_MB, MAC_DMG_FILE, MAC_DMG_MB, WIN_EXE_MB } from "@/lib/facts";
 
 const PAPER: CSSProperties = { fill: "var(--paper)" };
 const SURFACE: CSSProperties = { fill: "var(--surface)" };
@@ -534,7 +534,7 @@ export function FinderDownloadsMockup({ className }: { className?: string }) {
         {MAC_DMG_FILE}
       </text>
       <text x="440" y="108" fontFamily="var(--font-mono), monospace" fontSize="11" style={MUTED}>
-        165 MB
+        {MAC_DMG_MB}
       </text>
 
       {/* annotation arrow */}
@@ -1068,7 +1068,7 @@ export function EdgeDownloadBarMockup({ className }: { className?: string }) {
       aria-label="Browser download bar showing Sanketra-Desktop-Setup-x64.exe completing"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Browser download · Sanketra-Desktop-Setup-x64.exe · 98 MB</title>
+      <title>{`Browser download · Sanketra-Desktop-Setup-x64.exe · ${WIN_EXE_MB}`}</title>
 
       <rect x="0" y="0" width="560" height="300" rx="12" style={SURFACE} />
       <rect x="0.5" y="0.5" width="559" height="299" rx="11.5" style={{ ...RULE, strokeWidth: 1 }} />
@@ -1109,7 +1109,7 @@ export function EdgeDownloadBarMockup({ className }: { className?: string }) {
         Sanketra-Desktop-Setup-x64.exe
       </text>
       <text x="100" y="258" fontFamily="var(--font-mono), monospace" fontSize="10" style={MUTED}>
-        98 MB · downloaded just now
+        {WIN_EXE_MB} · downloaded just now
       </text>
 
       {/* open / show actions */}
@@ -1487,7 +1487,7 @@ export function LinuxDownloadMockup({ className }: { className?: string }) {
       aria-label="Firefox or Chromium download bar showing Sanketra-Desktop-x86_64.AppImage completed"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Browser · Sanketra-Desktop-x86_64.AppImage saved · 104 MB</title>
+      <title>{`Browser · Sanketra-Desktop-x86_64.AppImage saved · ${LINUX_APPIMAGE_MB}`}</title>
 
       <rect x="0" y="0" width="560" height="280" rx="12" style={SURFACE} />
       <rect x="0.5" y="0.5" width="559" height="279" rx="11.5" style={{ ...RULE, strokeWidth: 1 }} />
@@ -1522,7 +1522,7 @@ export function LinuxDownloadMockup({ className }: { className?: string }) {
         Sanketra-Desktop-x86_64.AppImage
       </text>
       <text x="100" y="230" fontFamily="var(--font-mono), monospace" fontSize="10" style={MUTED}>
-        104 MB · saved to ~/Downloads/
+        {LINUX_APPIMAGE_MB} · saved to ~/Downloads/
       </text>
 
       <g transform="translate(420 198)">

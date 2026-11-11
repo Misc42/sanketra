@@ -12,6 +12,7 @@ import {
   WarningDialogMockup,
   WinMicToastMockup
 } from "./Mockups";
+import { WIN_EXE_MB } from "@/lib/facts";
 import { StepBlock } from "./StepBlock";
 
 const TOTAL = 8;
@@ -51,7 +52,7 @@ export function WindowsGuide() {
           <code className="font-mono text-accent">C:\Users\you\Downloads\</code>.
         </p>
         <p>
-          The .exe is about 98 MB. Edge may add an extra &ldquo;this file isn&rsquo;t commonly
+          The .exe is about {WIN_EXE_MB}. Edge may add an extra &ldquo;this file isn&rsquo;t commonly
           downloaded&rdquo; nudge on the download itself — click the three dots → Keep. We address
           why in the next step.
         </p>
