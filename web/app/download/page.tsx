@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import QRCode from "@/components/QRCode";
-import { ISSUES_URL, MAC_ARCH_SHORT, MAC_DMG_LABEL, MAC_DMG_URL, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
+import { ISSUES_URL, MAC_ARCH_SHORT, MAC_DMG_LABEL, MAC_DMG_URL, MAC_INTEL_URL, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Download — Phone",
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 //
 // The browser client's mic is broken in v0.5.1 (CSP script-src lacks blob:)
 // and works from v0.5.2. This page leads with that client, so it went live
-// only once v0.5.2 was the latest release. The Mac download stays v0.5.1 until
-// its arm64 dmg is uploaded, and lib/facts.ts says so on the Mac rows.
+// only once v0.5.2 was the latest release. From v0.5.3 the Mac rows link the
+// latest release's arm64 and Intel dmgs (lib/facts.ts).
 //
 // The PC server's Android pairing page links here with #android as the intent
 // fallback when the Android app is not installed (src/server_async.py:7781,
@@ -33,6 +33,7 @@ const RELEASES_BASE = "https://github.com/Misc42/sanketra/releases/latest/downlo
 const pcInstallers = [
   ["Windows", `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`, "Setup-x64.exe", null],
   ["macOS", MAC_DMG_URL, MAC_DMG_LABEL, MAC_ARCH_SHORT],
+  ["macOS (Intel)", MAC_INTEL_URL, "x86_64.dmg", "Intel Macs, macOS 11+"],
   ["Linux", `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage", null]
 ] as const;
 

@@ -10,49 +10,33 @@
 export const PLAY_LISTING_LIVE = false;
 export const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.miconterm.app";
 
-// ─── macOS disk image ───────────────────────────────────────────────────────
-// From v0.5.2 the Mac build is made natively on Apple Silicon and named after
-// its real architecture (build-dmg.sh reads it with lipo). v0.5.1's
-// "Sanketra-Desktop-universal.dmg" was in fact a thin x86_64 build (its Mach-O
-// header, read 2026-10-21) — Intel Macs keep that one: no Intel build of v0.5.2
-// is made (founder's call, 2026-10-21).
-//
-// The arm64 dmg is built on a Mac by hand and reaches the release after the
-// Windows and Linux builds. Until it is on the LATEST release, every Mac
-// download points at v0.5.1's dmg (an Intel build Apple Silicon runs through
-// Rosetta), so the Mac button never 404s on `latest`. Flip this in the push
-// that follows the arm64 upload, and measure MAC_DMG_SIZE off that file.
-export const MAC_ARM64_ON_LATEST = true;
-export const MAC_INTEL_URL =
-  "https://github.com/Misc42/sanketra/releases/download/v0.5.1/Sanketra-Desktop-universal.dmg";
-// v0.5.3 has no Mac build yet (no Mac to build it on), so `latest` carries no
-// dmg: the Mac button names v0.5.2 directly instead of 404ing on latest.
-// Point it back at latest/download once a v0.5.3 arm64 dmg is uploaded.
-const MAC_ARM64_URL =
-  "https://github.com/Misc42/sanketra/releases/download/v0.5.2/Sanketra-Desktop-arm64.dmg";
-export const MAC_DMG_URL = MAC_ARM64_ON_LATEST ? MAC_ARM64_URL : MAC_INTEL_URL;
-export const MAC_DMG_FILE = MAC_ARM64_ON_LATEST
-  ? "Sanketra-Desktop-arm64.dmg"
-  : "Sanketra-Desktop-universal.dmg";
-export const MAC_DMG_LABEL = MAC_ARM64_ON_LATEST ? "arm64.dmg" : "v0.5.1 .dmg";
-// v0.5.2's arm64 dmg is 125,825,802 bytes (v0.5.1's universal one: 164,835,727).
-export const MAC_DMG_MB = MAC_ARM64_ON_LATEST ? "126 MB" : "165 MB";
+// ─── macOS disk images ──────────────────────────────────────────────────────
+// v0.5.3 ships two Mac builds, each on the LATEST release under a stable name:
+// Apple Silicon (arm64, needs macOS 12.3: scipy's arm64 binaries are built for
+// 12.3) and Intel (x86_64, needs macOS 11). Both were checked binary by binary
+// for the macOS they claim (source repo F-Nov12-02: the v0.5.2 dmg needed
+// macOS 26 while claiming 11). A browser cannot tell the two kinds of Mac
+// apart (Apple Silicon Safari reports "Intel" too), so the default button is
+// Apple Silicon and the Intel build sits next to it.
+const RELEASES_LATEST = "https://github.com/Misc42/sanketra/releases/latest/download";
+export const MAC_INTEL_URL = `${RELEASES_LATEST}/Sanketra-Desktop-x86_64.dmg`;
+const MAC_ARM64_URL = `${RELEASES_LATEST}/Sanketra-Desktop-arm64.dmg`;
+export const MAC_DMG_URL = MAC_ARM64_URL;
+export const MAC_DMG_FILE = "Sanketra-Desktop-arm64.dmg";
+export const MAC_DMG_LABEL = "arm64.dmg";
+// v0.5.3 dmgs: arm64 140,488,208 bytes, x86_64 181,233,072 bytes (2026-11-12).
+export const MAC_DMG_MB = "141 MB";
+export const MAC_INTEL_DMG_MB = "182 MB";
 export const MAC_DMG_SIZE = `about ${MAC_DMG_MB}`;
 // Measured off the v0.5.3 release assets (2026-11-12): the Windows installer is
 // 570,001,402 bytes (it carries NVIDIA's GPU libraries, used only when an NVIDIA
 // card is present), the AppImage 255,521,984. Re-measure on every release.
 export const WIN_EXE_MB = "570 MB";
 export const LINUX_APPIMAGE_MB = "256 MB";
-export const MAC_MIN_VERSION = "macOS 11 or newer";
-export const MAC_ARCH_SHORT = MAC_ARM64_ON_LATEST
-  ? "Apple Silicon (M1 or newer)"
-  : "v0.5.1 · Intel and Apple Silicon";
-// v0.5.1 serves a phone page whose microphone cannot start (its security
-// policy blocks the audio worklet; fixed in v0.5.2), so say so rather than
-// let a Mac user find out on the phone.
-export const MAC_ARCH_NOTE = MAC_ARM64_ON_LATEST
-  ? "Built for Apple Silicon Macs (M1 and newer). The Mac download is v0.5.2; its v0.5.3 build follows. On an Intel Mac, use the last Intel build, v0.5.1."
-  : "The Mac download is still v0.5.1 while the v0.5.2 Apple Silicon build is finished. It is an Intel build; Apple Silicon Macs run it through Rosetta, which macOS offers to install the first time. In v0.5.1 a phone's browser cannot be used as the microphone; that is fixed in v0.5.2.";
+export const MAC_MIN_VERSION = "Apple Silicon Macs need macOS 12.3 or newer, Intel Macs macOS 11 or newer";
+export const MAC_ARCH_SHORT = "Apple Silicon (M1 or newer)";
+export const MAC_ARCH_NOTE =
+  "The main download is for Apple Silicon Macs (M1 and newer). For an Intel Mac, use the Intel build.";
 
 // ─── Contact ────────────────────────────────────────────────────────────────
 // support@sanketra.app does not resolve (NXDOMAIN, docs/LAUNCH_READINESS_2026-10-21.md

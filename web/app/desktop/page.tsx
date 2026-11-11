@@ -6,7 +6,7 @@ import { WindowsGuide } from "@/components/install/WindowsGuide";
 import { LinuxGuide } from "@/components/install/LinuxGuide";
 import { Troubleshooting } from "@/components/install/Troubleshooting";
 import { withBase } from "@/lib/basePath";
-import { MAC_ARCH_SHORT, MAC_DMG_LABEL, MAC_DMG_URL } from "@/lib/facts";
+import { MAC_ARCH_SHORT, MAC_DMG_LABEL, MAC_DMG_URL, MAC_INTEL_URL } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Desktop",
@@ -18,6 +18,7 @@ const RELEASES_BASE = "https://github.com/Misc42/sanketra/releases/latest/downlo
 
 const downloadTiles = [
   ["macOS", MAC_DMG_URL, MAC_DMG_LABEL, MAC_ARCH_SHORT],
+  ["macOS (Intel)", MAC_INTEL_URL, "x86_64.dmg", "Intel Macs, macOS 11+"],
   ["Windows", `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`, "Setup-x64.exe", null],
   ["Linux", `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage", null]
 ] as const;
