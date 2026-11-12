@@ -12,7 +12,7 @@
 
 import type { Metadata } from "next";
 import { withBase } from "@/lib/basePath";
-import { MAC_ARCH_SHORT, MAC_DMG_FILE, MAC_DMG_URL, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
+import { MAC_ARCH_SHORT, MAC_DMG_FILE, MAC_DMG_URL, MAC_INTEL_URL, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Install · Sanketra",
@@ -25,6 +25,7 @@ const RELEASE_BASE =
 
 const ARTIFACTS = {
   mac: MAC_DMG_URL,
+  macIntel: MAC_INTEL_URL,
   windows: `${RELEASE_BASE}/Sanketra-Desktop-Setup-x64.exe`,
   linux: `${RELEASE_BASE}/Sanketra-Desktop-x86_64.AppImage`
 } as const;
@@ -72,13 +73,28 @@ const REDIRECT_SCRIPT = `(function(){
       target = base + "/Sanketra-Desktop-Setup-x64.exe";
     } else if (ua.indexOf("mac") !== -1) {
       if ("ontouchend" in document) { target = phonePage; }
-      else { target = "${MAC_DMG_URL}"; }
+      else {
+        // Safari says "Intel Mac OS X" on every Mac, so the UA cannot tell
+        // Apple Silicon from Intel, and the arm64 dmg does not open on an
+        // Intel Mac. Chromium's client hints can tell; anything else stays
+        // here and picks one of the two Mac buttons. A wrong "x86" answer on
+        // Apple Silicon is still safe: the Intel build runs under Rosetta.
+        document.documentElement.dataset.macPick = "1";
+        var uad = navigator.userAgentData;
+        if (uad && uad.getHighEntropyValues) {
+          uad.getHighEntropyValues(["architecture"]).then(function (v) {
+            var arch = ((v && v.architecture) || "").toLowerCase();
+            if (arch === "arm") { window.location.replace("${MAC_DMG_URL}"); }
+            else if (arch === "x86") { window.location.replace("${MAC_INTEL_URL}"); }
+          }).catch(function () {});
+        }
+      }
     } else if (ua.indexOf("linux") !== -1) {
       target = base + "/Sanketra-Desktop-x86_64.AppImage";
     } else {
       target = "/sanketra/desktop/";
     }
-    window.location.replace(target);
+    if (target) { window.location.replace(target); }
   } catch (e) {}
 })();`;
 
@@ -88,6 +104,8 @@ const REDIRECT_SCRIPT = `(function(){
 const REF_STYLE = `
   [data-shared-from-phone] { display: none; }
   html[data-ref="phone"] [data-shared-from-phone] { display: block; }
+  [data-mac-pick-note] { display: none; }
+  html[data-mac-pick="1"] [data-mac-pick-note] { display: block; }
 `;
 
 export default function GetPage() {
@@ -123,17 +141,28 @@ export default function GetPage() {
         {/* ─── OS picker (primary CTA, above the fold on phone) ────────── */}
         <section className="mt-10">
           <div className="grid gap-4 md:grid-cols-3">
-            <a
-              href={ARTIFACTS.mac}
-              className="card flex flex-col gap-2 p-6 transition hover:border-ink"
-            >
+            <div className="card flex flex-col gap-2 p-6">
               <p className="masthead">macOS · <span className="deva normal-case tracking-normal">मैक</span></p>
-              <p className="mt-2 inline-flex items-center justify-center rounded-[10px] bg-accent px-4 py-3 text-[14.5px] font-semibold text-paper transition hover:bg-accent-hover">
-                Download .dmg
-              </p>
-              <p className="mt-2 font-mono text-xs text-faint">{MAC_DMG_FILE}</p>
+              <a
+                href={ARTIFACTS.mac}
+                className="mt-2 inline-flex items-center justify-center rounded-[10px] bg-accent px-4 py-3 text-[14.5px] font-semibold text-paper transition hover:bg-accent-hover"
+              >
+                Download for Apple Silicon
+              </a>
+              <p className="font-mono text-xs text-faint">{MAC_DMG_FILE}</p>
               <p className="text-xs leading-snug text-muted">{MAC_ARCH_SHORT}</p>
-            </a>
+              <a
+                href={ARTIFACTS.macIntel}
+                className="mt-2 inline-flex items-center justify-center rounded-[10px] border border-rule px-4 py-3 text-[14.5px] font-semibold text-ink transition hover:border-ink"
+              >
+                Download for Intel Mac
+              </a>
+              <p className="font-mono text-xs text-faint">Sanketra-Desktop-x86_64.dmg</p>
+              <p className="text-xs leading-snug text-muted">
+                Not sure? Apple menu → About This Mac: &ldquo;Chip: Apple M…&rdquo; is Apple Silicon,
+                &ldquo;Processor: Intel&rdquo; is Intel.
+              </p>
+            </div>
 
             <a
               href={ARTIFACTS.windows}
@@ -166,6 +195,10 @@ export default function GetPage() {
             If JavaScript is on, we&rsquo;ve already kicked off the right file
             for your OS. The cards above are the manual route — for JS-off,
             popup-blocked, or Back-button arrivals.
+          </p>
+          <p data-mac-pick-note className="mt-4 max-w-2xl text-lg text-ink">
+            On a Mac, pick your chip in the macOS card above: this browser
+            does not tell us whether your Mac is Apple Silicon or Intel.
           </p>
           <p className="mt-4 text-[13px] text-faint">
             Download khatam hone ke baad file ko khud kholo aur install karo — wo apne aap install nahi
