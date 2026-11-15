@@ -60,8 +60,8 @@ const entries = [
   {
     version: "Phone v1.2.0",
     date: "Apr 21, 2026",
-    title: "Dashboard, Chrome extension, Android polish",
-    body: "PC dashboard with searchable transcript history and export, Chrome extension v1, custom vocabulary UI, accent calibration, and OEM battery walkthroughs for Xiaomi / OPPO / Samsung."
+    title: "Dashboard, Android polish",
+    body: "PC dashboard with searchable transcript history and export, custom vocabulary UI, accent calibration, and OEM battery walkthroughs for Xiaomi / OPPO / Samsung."
   }
 ] as const;
 
