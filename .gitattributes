@@ -1,0 +1,3 @@
+# license-data/ holds the PUBLIC signing key (PEM) and the denylist. Keep their
+# bytes identical on every OS: no CRLF conversion on Windows checkouts.
+license-data/** -text
