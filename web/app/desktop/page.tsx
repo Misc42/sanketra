@@ -27,7 +27,7 @@ export default function DesktopPage() {
   return (
     <main>
       <section id="downloads" className="wrap pb-14 pt-20">
-        <p className="masthead mb-3.5">v0.6.0 on Windows · v0.5.3 on Mac and Linux · free during beta</p>
+        <p className="masthead mb-3.5">v0.6.1 on Windows · v0.5.3 on Mac and Linux · free during beta</p>
         <h1 className="max-w-[800px] text-[clamp(2.5rem,4.6vw,3.75rem)] font-bold leading-[1.04] tracking-[-0.03em]">
           Sanketra Desktop.
           <br />

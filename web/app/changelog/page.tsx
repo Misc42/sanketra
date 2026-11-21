@@ -10,6 +10,12 @@ export const metadata: Metadata = {
 
 const entries = [
   {
+    version: "Desktop v0.6.1 (Windows)",
+    date: "Nov 21, 2026",
+    title: "Model downloads never hang, and the PC starts on the model you picked",
+    body: "A model download behind a proxy that goes silent now ends with a reason instead of hanging. Cancel stops the load you cancelled, and a model switch waits for anyone still speaking. After a restart the PC loads the model you last picked by hand, and choosing Auto on the phone or the dashboard is told to the PC. Errors are worded by your phone from their code. Linux and Intel Mac builds follow."
+  },
+  {
     version: "Desktop v0.6.0 (Windows)",
     date: "Nov 21, 2026",
     title: "The cursor keeps up, Hindi stays Hindi, and you can type from the phone",

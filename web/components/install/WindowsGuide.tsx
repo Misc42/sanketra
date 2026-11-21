@@ -162,9 +162,10 @@ export function WindowsGuide() {
           </li>
           <li>
             <strong className="text-ink">Select Additional Tasks</strong> — leave{" "}
-            <em className="serif-italic">Launch at startup</em> checked if you want Sanketra in the
-            tray on boot. <em className="serif-italic">Create desktop icon</em> is your call →
-            Next.
+            <em className="serif-italic">Launch Sanketra Desktop when I sign in to Windows</em>{" "}
+            ticked if you want Sanketra quietly in the tray each time you sign in (you can change it
+            later in Settings → STARTUP). <em className="serif-italic">Create desktop icon</em> is
+            your call → Next.
           </li>
         </ol>
       </StepBlock>
