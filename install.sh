@@ -12,7 +12,9 @@ set -euo pipefail
 # ─── Config ───────────────────────────────────────────────────────────
 # Versionless "latest" download base. Override RELEASE_BASE to install from a
 # local file:// URL (used by the dry-run harness) or a pinned release tag.
-RELEASE_BASE="${RELEASE_BASE:-https://github.com/Misc42/sanketra/releases/latest/download}"
+# Pinned to v0.5.3 (2026-11-21): v0.6.0 shipped for Windows only, so its release
+# has no Linux or Mac server. Set back to releases/latest/download when it does.
+RELEASE_BASE="${RELEASE_BASE:-https://github.com/Misc42/sanketra/releases/download/v0.5.3}"
 LINUX_ASSET="${LINUX_ASSET:-Sanketra-Server-x86_64.tar.gz}"
 MACOS_ASSET="${MACOS_ASSET:-Sanketra-Server-universal.tar.gz}"
 INSTALL_DIR="${INSTALL_DIR:-$HOME/sanketra-server}"

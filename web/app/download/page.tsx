@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import QRCode from "@/components/QRCode";
-import { ISSUES_URL, MAC_ARCH_SHORT, MAC_DMG_LABEL, MAC_DMG_URL, MAC_INTEL_URL, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
+import { ISSUES_URL, MAC_ARCH_SHORT, MAC_DMG_LABEL, MAC_DMG_URL, MAC_INTEL_URL, PLAY_LISTING_LIVE, PLAY_STORE_URL, NON_WINDOWS_DOWNLOAD } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Download — Phone",
@@ -34,7 +34,7 @@ const pcInstallers = [
   ["Windows", `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`, "Setup-x64.exe", null],
   ["macOS", MAC_DMG_URL, MAC_DMG_LABEL, MAC_ARCH_SHORT],
   ["macOS (Intel)", MAC_INTEL_URL, "x86_64.dmg", "Intel Macs, macOS 11+"],
-  ["Linux", `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage", null]
+  ["Linux", `${NON_WINDOWS_DOWNLOAD}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage", null]
 ] as const;
 
 export default function DownloadPage() {

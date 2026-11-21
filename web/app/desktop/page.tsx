@@ -6,7 +6,7 @@ import { WindowsGuide } from "@/components/install/WindowsGuide";
 import { LinuxGuide } from "@/components/install/LinuxGuide";
 import { Troubleshooting } from "@/components/install/Troubleshooting";
 import { withBase } from "@/lib/basePath";
-import { MAC_ARCH_SHORT, MAC_DMG_LABEL, MAC_DMG_URL, MAC_INTEL_URL } from "@/lib/facts";
+import { MAC_ARCH_SHORT, MAC_DMG_LABEL, MAC_DMG_URL, MAC_INTEL_URL, NON_WINDOWS_DOWNLOAD } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Desktop",
@@ -20,14 +20,14 @@ const downloadTiles = [
   ["macOS", MAC_DMG_URL, MAC_DMG_LABEL, MAC_ARCH_SHORT],
   ["macOS (Intel)", MAC_INTEL_URL, "x86_64.dmg", "Intel Macs, macOS 11+"],
   ["Windows", `${RELEASES_BASE}/Sanketra-Desktop-Setup-x64.exe`, "Setup-x64.exe", null],
-  ["Linux", `${RELEASES_BASE}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage", null]
+  ["Linux", `${NON_WINDOWS_DOWNLOAD}/Sanketra-Desktop-x86_64.AppImage`, "x86_64.AppImage", null]
 ] as const;
 
 export default function DesktopPage() {
   return (
     <main>
       <section id="downloads" className="wrap pb-14 pt-20">
-        <p className="masthead mb-3.5">v0.5.3 · free during beta</p>
+        <p className="masthead mb-3.5">v0.6.0 on Windows · v0.5.3 on Mac and Linux · free during beta</p>
         <h1 className="max-w-[800px] text-[clamp(2.5rem,4.6vw,3.75rem)] font-bold leading-[1.04] tracking-[-0.03em]">
           Sanketra Desktop.
           <br />

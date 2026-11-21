@@ -18,9 +18,16 @@ export const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com
 // macOS 26 while claiming 11). A browser cannot tell the two kinds of Mac
 // apart (Apple Silicon Safari reports "Intel" too), so the default button is
 // Apple Silicon and the Intel build sits next to it.
-const RELEASES_LATEST = "https://github.com/Misc42/sanketra/releases/latest/download";
-export const MAC_INTEL_URL = `${RELEASES_LATEST}/Sanketra-Desktop-x86_64.dmg`;
-const MAC_ARM64_URL = `${RELEASES_LATEST}/Sanketra-Desktop-arm64.dmg`;
+// v0.6.0 (2026-11-21) shipped for Windows only. Its release carries no Mac or
+// Linux file, on purpose: the in-app updaters offer a version only when the
+// latest release has their file, so copying v0.5.3 files into v0.6.0 would
+// make Mac and Linux apps "update" to the build they already run, again and
+// again. Until their v0.6.0 builds exist, every Mac and Linux download points
+// at the v0.5.3 release by name. When they ship: set this back to
+// releases/latest/download and drop the pin in install.sh.
+export const NON_WINDOWS_DOWNLOAD = "https://github.com/Misc42/sanketra/releases/download/v0.5.3";
+export const MAC_INTEL_URL = `${NON_WINDOWS_DOWNLOAD}/Sanketra-Desktop-x86_64.dmg`;
+const MAC_ARM64_URL = `${NON_WINDOWS_DOWNLOAD}/Sanketra-Desktop-arm64.dmg`;
 export const MAC_DMG_URL = MAC_ARM64_URL;
 export const MAC_DMG_FILE = "Sanketra-Desktop-arm64.dmg";
 export const MAC_DMG_LABEL = "arm64.dmg";

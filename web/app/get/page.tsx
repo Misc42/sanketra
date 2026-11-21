@@ -12,7 +12,7 @@
 
 import type { Metadata } from "next";
 import { withBase } from "@/lib/basePath";
-import { MAC_ARCH_SHORT, MAC_DMG_FILE, MAC_DMG_URL, MAC_INTEL_URL, PLAY_LISTING_LIVE, PLAY_STORE_URL } from "@/lib/facts";
+import { MAC_ARCH_SHORT, MAC_DMG_FILE, MAC_DMG_URL, MAC_INTEL_URL, PLAY_LISTING_LIVE, PLAY_STORE_URL, NON_WINDOWS_DOWNLOAD } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Install · Sanketra",
@@ -27,7 +27,7 @@ const ARTIFACTS = {
   mac: MAC_DMG_URL,
   macIntel: MAC_INTEL_URL,
   windows: `${RELEASE_BASE}/Sanketra-Desktop-Setup-x64.exe`,
-  linux: `${RELEASE_BASE}/Sanketra-Desktop-x86_64.AppImage`
+  linux: `${NON_WINDOWS_DOWNLOAD}/Sanketra-Desktop-x86_64.AppImage`
 } as const;
 
 // Inline UA-sniff + redirect. Mirrors detectOS() in components/Hero.tsx,
@@ -90,7 +90,7 @@ const REDIRECT_SCRIPT = `(function(){
         }
       }
     } else if (ua.indexOf("linux") !== -1) {
-      target = base + "/Sanketra-Desktop-x86_64.AppImage";
+      target = "${NON_WINDOWS_DOWNLOAD}/Sanketra-Desktop-x86_64.AppImage";
     } else {
       target = "/sanketra/desktop/";
     }

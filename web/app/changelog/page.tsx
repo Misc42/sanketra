@@ -10,6 +10,12 @@ export const metadata: Metadata = {
 
 const entries = [
   {
+    version: "Desktop v0.6.0 (Windows)",
+    date: "Nov 21, 2026",
+    title: "The cursor keeps up, Hindi stays Hindi, and you can type from the phone",
+    body: "On busy Wi-Fi the PC cursor no longer trails the phone by seconds, and the trackpad now uses your Windows mouse speed. A sentence no longer takes the language of the one before it, and the phone shows the dictation mode. The phone page sends clearer audio, keeps long sentences whole, has a keyboard that types on the PC (Hindi keyboards too), puts the mic and main buttons within thumb reach, stays connected while open and comes back in seconds after a call or a Wi-Fi change. New: media buttons for the video under the PC pointer, a Free up this PC switch, start at sign-in, clean-up of old copies (it asks first), a list of your phones on the PC, and a short Overview guide. Mac and Linux builds of this version follow in a few days."
+  },
+  {
     version: "Desktop v0.5.3",
     date: "Nov 10, 2026",
     title: "Windows installs and uninstalls safely, and upgrades really upgrade",
